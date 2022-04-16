@@ -16,11 +16,11 @@ public class ClientSystem : IClientSystem
     }
 
     /// <summary>
-    /// ��ǰ״̬
+    /// ��ǰ״̬
     /// </summary>
     protected EnumClienSystemState mCurState = EnumClienSystemState.onNone;
     /// <summary>
-    /// �ϴ�״̬
+    /// �ϴ�״̬
     /// </summary>
     protected EnumClienSystemState mLastState = EnumClienSystemState.onNone;
 
@@ -82,6 +82,8 @@ public class ClientSystem : IClientSystem
         if(curState != EnumClienSystemState.onError)
         {
             curState = EnumClienSystemState.onTick;
+
+            BattleMain.OpenBattle(EnumBattleType.DunGeon, EnumSyncMode.LocalFrame);
 
             OnEnter();
         }

@@ -4,11 +4,8 @@ using UnityEngine;
 
 public class ClientSystemBattle : ClientSystem
 {
-    public LogicWorld logicWorld;
-
     public override void OnEnter()
     {
-        logicWorld = new LogicWorld();
     }
 
     public override void OnStart(SystemContent systemContent)
@@ -23,9 +20,6 @@ public class ClientSystemBattle : ClientSystem
 
     protected override void OnUpdate(float deltaTime)
     {
-        if(logicWorld != null)
-        {
-            logicWorld.Update(deltaTime);
-        }
+        BattleMain.Instance.Update();
     }
 }

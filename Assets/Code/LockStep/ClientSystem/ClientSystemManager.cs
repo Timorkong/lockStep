@@ -28,7 +28,7 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
     {
         if(CurrentSystem != null)
         {
-            Debug.LogError("³õÊ¼»¯ÏµÍ³£¬±ØÐëÎª¿Õ");
+            Debug.LogError("ï¿½ï¿½Ê¼ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½");
         }
 
         Type t = typeof(T);
@@ -55,17 +55,17 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
     {
         if(CurrentSystem != null && CurrentSystem.GetType() == typeof(T))
         {
-            Debug.LogErrorFormat("¡¾ÏµÍ³ÇÐ»»¡¿ ÎÞ·¨Ö§³Ö´Ó {0} -> {0}", typeof(T).Name);
+            Debug.LogErrorFormat("ï¿½ï¿½ÏµÍ³ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½Ö§ï¿½Ö´ï¿½ {0} -> {0}", typeof(T).Name);
             return;
         }
 
         if(TargetSystem != null)
         {
-            Debug.LogErrorFormat("[ÏµÍ³ÇÐ»»] ÉÏÒ»¸öÏµÍ³ÕýÔÚÇÐ»» {0}", null != TargetSystem ? TargetSystem.GetType().Name : "[invalid]");
+            Debug.LogErrorFormat("[ÏµÍ³ï¿½Ð»ï¿½] ï¿½ï¿½Ò»ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½ {0}", null != TargetSystem ? TargetSystem.GetType().Name : "[invalid]");
             return;
         }
 
-        Debug.LogError("¿ªÊ¼ÇÐ»»ÏµÍ³");
+        Debug.LogError("ï¿½ï¿½Ê¼ï¿½Ð»ï¿½ÏµÍ³");
 
         Type t = typeof(T);
         IClientSystem nextClientSystem = null;
@@ -73,7 +73,7 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
         TargetSystem = nextClientSystem;
         if(TargetSystem == null)
         {
-            TargetSystem = Activator.CreateInstance<T>() as IClientSystem;
+            TargetSystem = Activator.CreateInstance<T>();
             ClientSystem system = TargetSystem as ClientSystem;
             system.SystemManager = this;
             system.SetName(t.Name);

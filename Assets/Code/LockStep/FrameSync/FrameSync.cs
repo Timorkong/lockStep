@@ -2,39 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnmuSyncMode
-{
-    None,
-    /// <summary>
-    /// ±¾µØ²âÊÔ
-    /// </summary>
-    LocalFrame,
-    /// <summary>
-    /// ·þÎñÆ÷Í¬²½
-    /// </summary>
-    SyncFrame,
-}
-
 public enum EnumFrameSyncState
 {
     /// <summary>
-    /// ´´½¨Á´½Ó
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     OnCreate,
     /// <summary>
-    /// ¿ªÊ¼Í¬²½
+    /// ï¿½ï¿½Ê¼Í¬ï¿½ï¿½
     /// </summary>
     OnStart,
     /// <summary>
-    /// Í¬²½ÖÐ
+    /// Í¬ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     OnTick,
     /// <summary>
-    /// ÖØÁ¬
+    /// ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     OnReconnect,
     /// <summary>
-    /// ½áÊø
+    /// ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     OnEnd,
 }
@@ -47,11 +34,11 @@ public class FrameSync:Singleton<FrameSync>
 
     static int debugCurFrameNeedUpdate = 0;
 
-    private EnmuSyncMode syncMode = EnmuSyncMode.LocalFrame;
+    private EnumSyncMode syncMode = EnumSyncMode.LocalFrame;
 
     private EnumFrameSyncState frameSyncState = EnumFrameSyncState.OnCreate;
 
-    private LogicWorld mLogicWorld = null;
+    private IDungeonManager mMainLogic = null;
 
     private float _timePre = 0;
 
@@ -98,14 +85,14 @@ public class FrameSync:Singleton<FrameSync>
         }
     }
  
-    public void SetLogicWorld(LogicWorld logicWorld)
+    public void SetMainLogic(IDungeonManager mainLogic)
     {
-        mLogicWorld = logicWorld;
+        mMainLogic = mainLogic;
     }
-    
+
     public void StartFrameSync()
     {
-        Debug.LogError("[Ö¡Í¬²½] ¿ªÊ¼Ö¡Í¬²½");
+        Debug.LogError("[Ö¡Í¬ï¿½ï¿½] ï¿½ï¿½Ê¼Ö¡Í¬ï¿½ï¿½");
     }
 
     public void FirtFrameCommand(IFrameCommand cmd , bool force = false)
@@ -114,7 +101,7 @@ public class FrameSync:Singleton<FrameSync>
 
         switch (syncMode)
         {
-            case EnmuSyncMode.LocalFrame:
+            case EnumSyncMode.LocalFrame:
                 {
                     frameQueue.Enqueue(cmd);
 
@@ -124,7 +111,7 @@ public class FrameSync:Singleton<FrameSync>
 
                     break;
                 }
-            case EnmuSyncMode.SyncFrame:
+            case EnumSyncMode.SyncFrame:
                 {
                     break;
                 }
@@ -135,14 +122,15 @@ public class FrameSync:Singleton<FrameSync>
     {
         switch (syncMode)
         {
-            case EnmuSyncMode.LocalFrame:
+            case EnumSyncMode.LocalFrame:
                 {
                     UpdateLocalFrame();
 
                     break;
                 }
-            case EnmuSyncMode.SyncFrame:
+            case EnumSyncMode.SyncFrame:
                 {
+                    UpdateSyncFrame();
                     break;
                 }
         }
@@ -204,7 +192,7 @@ public class FrameSync:Singleton<FrameSync>
 
                     FrameCommandID frameCmdID = (FrameCommandID)frameCmd.GetID();
 
-                    Debug.LogFormat("[Ö¡Í¬²½] ÊÕµ½ Êý¾ÝÀàÐÍ {0}", frameCmdID);
+                    Debug.LogFormat("[Ö¡Í¬ï¿½ï¿½] ï¿½Õµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ {0}", frameCmdID);
 
                     if (isGetStartFrame == false)
                     {
@@ -245,7 +233,7 @@ public class FrameSync:Singleton<FrameSync>
 
         float frameRate = logicFrameStep / 1000f;
 
-        //±¾µØÄÜÅÜ¶à¿é¾Í¶à¿é
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¶ï¿½ï¿½Í¶ï¿½ï¿½
 
         while(fLocalAcc >= frameRate)
         {
@@ -253,9 +241,9 @@ public class FrameSync:Singleton<FrameSync>
 
             UpdateLocalFrameCommand();
 
-            if(mLogicWorld != null)
+            if(mMainLogic != null)
             {
-                mLogicWorld.Update(frameRate);
+                mMainLogic.Update(frameRate);
             }
 
             fLocalAcc -= frameRate;

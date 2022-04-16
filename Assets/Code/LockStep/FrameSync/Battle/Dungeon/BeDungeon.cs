@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LogicRoom
+public class BeDungeon : IDungeonManager
 {
-    public void Init()
-    {
-
-    }
-
     public void Update(float deltaTime)
     {
         
