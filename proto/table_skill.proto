@@ -1,0 +1,20 @@
+// 技能基本表
+
+import "common_quality.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+message SKILL_ATTR
+{
+    optional uint32             idx                = 1;
+    optional Common.QualityType type               = 2;
+    optional float              base_percent       = 3;
+    optional float              up_per_lev_percent = 4;
+    repeated Common.GameRes     consume_list       = 5;
+}
+
+message SKILL_ATTR_ARRAY
+{
+    repeated SKILL_ATTR rows = 1;
+}

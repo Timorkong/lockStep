@@ -1,0 +1,50 @@
+// 运营活动相关定义
+
+import "common_game_res.proto";
+
+package Common;
+
+// 运营活动类型
+enum OperationType
+{
+    OPERATION_TYPE_INVALID      = 0;
+    OPERATION_TYPE_PAY_ONCE     = 1;    // 单充
+    OPERATION_TYPE_PAY_SUM      = 2;    // 累充
+    OPERATION_TYPE_EXPEND       = 3;    // 消费
+    OPERATION_TYPE_PAY_DAYS     = 4;    // 充值天数
+}
+
+// 运营活动状态
+enum OperationState
+{
+    OPERATION_STATE_UNFINISHED  = 1;
+    OPERATION_STATE_FINISHED    = 2;
+    OPERATION_STATE_AWARDED     = 3;
+}
+
+// 运营活动
+message Operation
+{
+    optional uint32         id              = 1;
+    optional string         name            = 2;
+    optional string         desc            = 3;
+    optional sfixed64       begin_timestamp = 4;
+    optional sfixed64       end_timestamp   = 5;
+    optional OperationType  type            = 6;
+    optional sint64         curr_amount     = 7;
+    optional bool           today_recharged = 8;
+
+    message Entry
+    {
+        optional uint32         id          = 1;
+        optional string         desc        = 2;
+        optional sint64         amount      = 3;
+        repeated Common.GameRes award_list  = 4;
+        optional OperationState state       = 5 [default = OPERATION_STATE_UNFINISHED];
+        optional sint32     awarded_count   = 6;    // 已奖励次数
+        optional sint32     award_count     = 7;    // 可奖励次数
+
+    }
+    repeated Entry entry_list = 15;
+}
+

@@ -1,0 +1,52 @@
+// 称号系统相关协议
+
+import "common_title.proto";
+import "common_role.proto";
+import "common_pack_item.proto";
+
+package Cmd.User;
+
+message QUERY_TITLE_LIST_REQ
+{
+}
+
+message QUERY_TITLE_LIST_RSP
+{
+    repeated Common.Title title_list = 1;
+}
+
+message ACTIVE_TITLE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message ACTIVE_TITLE_RSP
+{
+    optional Common.Pack     bag_pack       = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message PUT_ON_TITLE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message PUT_ON_TITLE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message PUT_OFF_TITLE_REQ
+{
+}
+
+message PUT_OFF_TITLE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message TITIE_EXPIRE_NOTICE
+{
+    repeated uint32          title_list = 1;
+    optional Common.RoleInfo role_info  = 2;
+}

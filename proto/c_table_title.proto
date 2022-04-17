@@ -1,0 +1,40 @@
+// 称号
+
+import "common_title.proto";
+import "common_effect.proto";
+import "common_game_res.proto";
+
+package Table;
+
+message TITLE
+{
+    optional uint32 id      = 1;
+
+    optional string name    = 2;
+
+    optional Common.TitleType type        = 3[default = INVAILD_TITLE];
+
+    repeated Common.GameRes exchange_cost = 4; 
+
+    optional sint32         need_fame     = 5;
+
+    repeated Common.Effect  base_effect   = 6;
+
+    repeated Common.Effect  put_on_effect = 7;
+
+    optional sint32         mission_type  = 8;
+
+    repeated sint32         param_list    = 9;
+
+    optional Common.TitleQuality quality  = 10[default = Title_QUALITY_INVALID];
+
+    optional string         effect_name   = 11;
+
+    optional string desc    = 12;
+
+}
+
+message TITLE_ARRAY
+{
+    repeated TITLE rows = 1;
+}

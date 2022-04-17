@@ -1,0 +1,38 @@
+// 活跃度
+
+import "common_activity.proto";
+import "common_game_res.proto";
+
+package Table;
+
+message HERO_PRACTICE_EXCHANGE
+{
+    optional uint32 hero_soul_lev		= 1;	//英雄碎片等级
+	optional float	ratio				= 2;	//比例(碎片 * 比例 = 洗练石数量)
+	optional uint32 practice_id			= 3;	//洗练石ID
+}
+
+message HERO_PRACTICE_EXCHANGE_ARRAY
+{
+    repeated HERO_PRACTICE_EXCHANGE rows = 1;
+}
+
+message SOULID_TO_HEROID
+{
+	optional uint32 hero_soul_id		= 1;	//英雄灵魂石ID
+	repeated uint32 hero_id					= 2;	//英雄id
+}
+message SOULID_TO_HEROID_ARRAY
+{
+    repeated SOULID_TO_HEROID rows = 1;
+}
+
+message PRACTICE_MAX_PROPERTY
+{
+	optional uint32 id						= 1;	//属性id
+	optional uint32	property				= 2;	//属性最大值
+}
+message PRACTICE_MAX_PROPERTY_ARRAY
+{
+    repeated PRACTICE_MAX_PROPERTY rows = 1;
+}

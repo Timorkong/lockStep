@@ -1,0 +1,340 @@
+// 跨服PK相关协议
+
+import "common_pk.proto";
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+import "common_system.proto";
+
+package Cmd.User;
+
+// 注意: 所有请求协议中编号大于 10 的字段都是不需要客户端填充的 !!!
+
+message LOGIN_TRANSMIT_SERVER_REQ
+{
+    optional string sign               = 1; 
+    optional Common.RoleInfo role_info = 2; 
+    optional bool   visitor            = 3[default = false];
+}
+
+message LOGIN_TRANSMIT_SERVER_RSP
+{
+    optional sfixed64 countdown = 1; // 开始倒计时(毫秒)
+    optional bool     left      = 2[default = false];
+}
+
+// 准备
+message READY_PK_REQ
+{
+}
+
+// 结束准备通知，开始行动
+message FINISH_READY_PK_NOTICE
+{
+}
+
+
+message UPDATE_PK_SCENE_NOTICE
+{
+    repeated Common.RoleInfo    role_list = 1;
+}
+
+// 查询PK信息(积分，排名等)
+message QUERY_PK_INFO_REQ
+{
+    optional uint32 role_id = 10;
+}
+
+// 当玩家一次PK都没参加过时，
+// 当所在段位不是最强王者时，排名为百分比，rank_num = 22 表示 22%
+// 当所在段位是最强王者时，排名为实际排名，rank_num = 22 表示 22 名
+message QUERY_PK_INFO_RSP
+{
+    optional sint32 rank_section    = 1;   // 所在段位
+    optional sint32 star            = 2;   // 星星
+    optional sint32 rank_num        = 3;   // 排名
+    optional sint32 award_count     = 4;   // 可领奖次数
+    optional sint32 remain_days     = 5;   // 赛季剩余天数
+    optional bool   speed_check     = 6[default = false]; // 是否检查加速
+    optional float  speed_param     = 7;   // 加速参数(比如1.5表示可以允许1.5倍以下速度)
+    optional sint32 section_award   = 8;   // 段位奖励
+}
+
+// 寻找比赛
+message SEARCH_PK_REQ
+{
+    optional uint32 role_id  = 10;
+    optional sint64 role_fc  = 11;
+    optional sint32 streaking_count = 12; // 连胜次数;
+}
+
+message SEARCH_PK_RSP
+{
+}
+
+// 取消搜索比赛
+message CANCEL_SEARCH_PK_REQ
+{
+    optional uint32 role_id = 10;
+}
+
+message CANCEL_SEARCH_PK_RSP
+{
+}
+
+// 取消比赛
+message CANCEL_PK_REQ
+{
+    optional uint32 role_id = 10;
+}
+
+message CANCEL_PK_RSP
+{
+}
+
+// 开始比赛通知
+message START_PK_NOTICE
+{
+    optional string ip         = 1;
+    optional sint32 port       = 2;
+    optional string sign       = 3;
+    optional uint64 scene_guid = 4;
+}
+
+// 监测比赛是否存在
+message CHECK_PK_EXIST_REQ
+{
+    optional uint64 scene_guid = 1;
+}
+
+message CHECK_PK_EXIST_RSP
+{
+    optional bool exist = 1;
+}
+
+// 完成比赛(只有胜利的一方才发)
+message COMPLETE_PK_REQ
+{
+    optional bool   winflag = 1;
+    optional Common.PlayerBattleInfo player_battle_info = 2;
+    optional uint32 role_id = 10;
+}
+
+message COMPLETE_PK_RSP
+{
+}
+
+// 结束比赛通知
+message FINISH_PK_NOTICE
+{
+    optional bool   winflag = 1;
+    optional bool   give_up = 2;
+    optional sint32 star    = 3;
+}
+
+// 赛季结束领奖通知
+message SEASON_AWARD_NOTICE
+{
+    message RoleSection
+    {
+        optional uint32 role_id      = 1;
+        optional uint32 section      = 2;
+        optional uint32 star         = 4;
+        optional uint32 rank_percent = 3;
+    }
+    
+    repeated RoleSection role_section_list = 1;
+}
+
+// 踢掉正在PK的玩家
+message KICK_OUT_PK_ROLE_NOTICE
+{
+    optional uint32 role_id = 1;
+}
+
+// 查询赛季奖励
+message QUERY_SEASON_AWARD_REQ
+{
+}
+
+message QUERY_SEASON_AWARD_RSP
+{
+    optional uint32         section       = 1;
+    optional uint32         rank_percent  = 2;
+    optional uint32         star          = 3;
+    repeated Common.GameRes game_res_list = 4;
+}
+
+// 领取赛季奖励
+message AWARD_SEASON_AWARD_REQ
+{
+}
+
+message AWARD_SEASON_AWARD_RSP
+{
+    optional Common.Pack     pack           = 1;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message CHECK_PK_STARTED_REQ
+{
+}
+
+message CHECK_PK_STARTED_RSP
+{
+    optional bool started   = 1;
+}
+
+// -----------------------------------------------------------------------------
+// GM 指令
+// -----------------------------------------------------------------------------
+message GM_ADD_PK_SCORE_NOTICE
+{
+    optional uint32 role_id = 1;
+    optional sint32 score   = 2;
+}
+
+message GM_REFRESH_SEASON
+{
+}
+
+// -----------------------------------------------------------------------------
+// 王者争霸奖励
+// -----------------------------------------------------------------------------
+// 领取段位奖励
+message FETCH_PK_SECTION_AWARD_REQ
+{
+}
+
+message FETCH_PK_SECTION_AWARD_RSP
+{
+    optional sint32 section_award = 1;   // 段位奖励
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 查询每日奖励
+message QUERY_PK_DAILY_AWARD_REQ
+{
+}
+
+message QUERY_PK_DAILY_AWARD_RSP
+{
+    optional sint32 section     = 1;    // 段位
+    optional sint32 progress    = 2;    // 进度
+    optional bool   awarded     = 3;    // 已奖励标记
+}
+
+// 领取每日奖励
+message FETCH_PK_DAILY_AWARD_REQ
+{
+}
+
+message FETCH_PK_DAILY_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// -----------------------------------------------------------------------------
+// PK挑战
+// -----------------------------------------------------------------------------
+
+// 开启PK挑战
+message START_PK_CHALLENGE_REQ
+{
+    optional string p2_name = 1;    // 被挑战者名字
+
+    // 以下不需要客户端填充
+    optional Common.PKRoleInfo p1 = 15;
+}
+
+message START_PK_CHALLENGE_RSP
+{
+    optional sfixed64 timestamp = 1;
+}
+
+// 取消PK挑战
+message CANCEL_PK_CHALLENGE_REQ
+{
+    // 以下不需要客户端填充
+    optional uint32 p1_id = 15;
+}
+
+message CANCEL_PK_CHALLENGE_RSP
+{
+}
+
+// PK挑战确认
+message CONFIRM_PK_CHALLENGE_REQ
+{
+    optional bool confirm   = 1;
+
+    // 以下不需要客户端填充
+    optional Common.PKRoleInfo p2 = 15;
+}
+
+message CONFIRM_PK_CHALLENGE_RSP
+{
+}
+
+// PK挑战完成
+message FINISH_PK_CHALLENGE_REQ
+{
+    optional bool   winflag = 1;
+
+    // 以下不需要客户端填充
+    optional uint32 role_id = 15;
+}
+
+message FINISH_PK_CHALLENGE_RSP
+{
+}
+
+// 取消PK挑战通知
+message CANCEL_PK_CHALLENGE_NOTICE
+{
+}
+
+// PK挑战确认通知
+message CONFIRM_PK_CHALLENGE_NOTICE
+{
+    optional string     p1_name     = 1;    // 挑战者名字
+    optional sfixed64   timestamp   = 2;
+}
+
+// PK挑战开始通知
+message START_PK_CHALLENGE_NOTICE
+{
+    optional string ip         = 1;
+    optional sint32 port       = 2;
+    optional string sign       = 3;
+    optional uint64 scene_guid = 4;
+}
+
+// PK挑战完成通知
+message FINISH_PK_CHALLENGE_NOTICE
+{
+    optional bool winflag = 1;
+    optional bool give_up = 2;
+}
+
+// PK挑战设置
+message SETTING_PK_CHALLENGE_REQ
+{
+    optional Common.PKChallengeSettings settings   = 1;
+}
+
+message SETTING_PK_CHALLENGE_RSP
+{
+    optional Common.PKChallengeSettings settings   = 1;
+}
+
+message GM_CONTROL_PK_REQ
+{
+    optional string cmd = 10;
+}
+
+message GM_CONTROL_PK_RSP
+{
+}

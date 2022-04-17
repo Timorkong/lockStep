@@ -1,0 +1,31 @@
+// 跨服协议
+
+import "common_pk.proto";
+
+package Cmd.PK;
+
+enum CMD
+{
+    CMD_QUERY_REAL_ONLINE_ROLE_LIST_REQ = 0x0900;
+    CMD_QUERY_REAL_ONLINE_ROLE_LIST_RSP = 0x0901;
+
+    //CMD_CLEAR_PK_STATE_NOTICE           = 0x0902;
+    CMD_CLEAR_PK_STATE_NOTICE           = 0x0902;
+}
+
+// 查询在线角色
+message QUERY_REAL_ONLINE_ROLE_LIST_REQ
+{
+}
+
+message QUERY_REAL_ONLINE_ROLE_LIST_RSP
+{
+    repeated Common.PKRoleInfo list = 1;
+}
+
+// 清除PK状态通知(PK状态下线后重新登录)
+message CLEAR_PK_STATE_NOTICE
+{
+    optional uint32 role_id = 1;
+}
+

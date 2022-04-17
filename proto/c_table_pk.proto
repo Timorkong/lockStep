@@ -1,0 +1,38 @@
+import "common_game_res.proto";
+package Table;
+
+message PVP_GRADING
+{
+	optional uint32                	id      	= 1; // ID
+	optional string 				name		= 2; // 名字
+    repeated Common.GameRes         rewards     = 3; // 奖励
+    optional string 				file_name	= 4; // 图标文件名
+}
+
+message PVP_GRADING_ARRAY
+{
+	repeated PVP_GRADING rows = 1;
+}
+
+message PK_SECTION_AWARD
+{
+    optional uint32         section    		= 1; // 分段
+	optional string			section_name	= 2; // 段位名
+    repeated Common.GameRes award_list 		= 3; // 奖励
+}
+
+message PK_SECTION_AWARD_ARRAY
+{
+    repeated PK_SECTION_AWARD rows = 1;
+}
+
+message PK_DAILY_AWARD
+{
+    optional uint32         section    = 1; // 分段
+    repeated Common.GameRes award_list = 3;
+}
+
+message PK_DAILY_AWARD_ARRAY
+{
+    repeated PK_DAILY_AWARD rows = 1;
+}

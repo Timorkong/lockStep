@@ -1,0 +1,73 @@
+// 竞技场协议
+
+import "common_role.proto";
+import "common_game_res.proto";
+
+package Cmd.User;
+
+message ArenaInfo
+{
+    message Competitor // 对手
+    {
+        optional uint32             rank        = 1;
+        optional Common.RoleInfo    role_info   = 2;
+    }
+
+    optional uint32     my_rank             = 1;    // 竞技场排名
+    optional sint32     challenge_count     = 2;    // 剩余挑战次数
+    optional uint32     cd_seconds          = 3;    // CD剩余时间(秒)
+    optional sint64     fame                = 4;    // 当前声望
+    optional uint32     clear_cd_gold       = 5;    // 清除CD消耗(钻石)
+    optional bool       reset_challenged    = 6[default = false];    // 是否已经重置过竞技场
+    
+    repeated Competitor competitor_list = 10;    // 对手列表
+}
+
+message RESET_ARENA_CHANLLENGE_REQ
+{
+}
+
+message RESET_ARENA_CHANLLENGE_RSP
+{
+    optional ArenaInfo info = 1;
+
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_ARENA_INFO_REQ
+{
+}
+
+message QUERY_ARENA_INFO_RSP
+{
+    optional ArenaInfo info = 1;
+}
+
+message ARENA_FIGHT_REQ
+{
+    optional uint32 competitor_rank = 1;
+    optional bool   winflag         = 2;
+    optional sint32 competitor_hero_id   = 3;
+    optional sint32 competitor_hero_star = 4;
+    optional sint64 competitor_fc   = 5;
+}
+
+message ARENA_FIGHT_RSP
+{
+    optional ArenaInfo info = 1;
+    repeated Common.GameRes award_list = 2;
+	
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+message CLEAR_ARENA_CD_REQ
+{
+}
+
+message CLEAR_ARENA_CD_RSP
+{
+    optional ArenaInfo info = 1;
+
+	optional Common.RoleInfo diff_role_info = 15;
+}
+

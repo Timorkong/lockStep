@@ -1,0 +1,144 @@
+//  日常奖励
+
+import "common_game_res.proto";
+import "common_award.proto";
+
+package TABLE;
+
+message DAILY_AWARD
+{
+    optional uint32         id         = 1;		// day
+    repeated Common.GameRes award_list  = 2;
+}
+
+message DAILY_AWARD_ARRAY
+{
+    repeated DAILY_AWARD rows   = 1;
+}
+
+message SIGN_AWARD
+{
+    optional sint32         month       = 1;
+    optional sint32         day         = 2;
+    repeated Common.GameRes award_list  = 3;
+    optional sint32         vip_lev     = 4;
+    optional sint32         multiple    = 5;
+}
+
+message SIGN_AWARD_ARRAY
+{
+    repeated SIGN_AWARD rows   = 1;
+}
+
+// 七日奖励
+message WEEK_AWARD
+{
+    // 登录奖励
+    optional sint32         day              = 1;
+    repeated Common.GameRes daily_award_list = 2;
+    optional uint32         hero_id          = 3;
+    
+    // 累充奖励
+    optional sint32         recharged_money     = 4;
+    repeated Common.GameRes recharge_award_list = 5;
+    
+    // 特惠抢购
+    optional sint32         gold_count     = 6;
+    repeated Common.GameRes output_list    = 7;
+    optional sint32         pre_gold_count = 8;
+    optional uint32         output_hero    = 9;
+}
+
+message WEEK_AWARD_ARRAY
+{
+    repeated WEEK_AWARD rows = 1;
+}
+
+// VIP每日奖励
+message VIP_DAILY_AWARD
+{
+    optional sint32         vip_lev    = 1;
+    repeated Common.GameRes award_list = 2;
+}
+
+message VIP_DAILY_AWARD_ARRAY
+{
+    repeated VIP_DAILY_AWARD rows = 1;
+}
+
+// 美味包子额外奖励
+message MEAT_BUN_AWARD
+{
+    optional sint32         id          = 1;
+    repeated Common.GameRes award_list  = 2;
+    optional sint32         probability = 3;
+}
+
+message MEAT_BUN_AWARD_ARRAY
+{
+    repeated MEAT_BUN_AWARD rows = 1;
+}
+
+// Vip 每周礼包
+message VIP_WEEK_AWARD
+{
+    optional sint32     vip_lev        = 1;
+    repeated Common.GameRes award_list = 2;
+    optional sint32     old_price      = 3;
+    optional sint32     new_price      = 4;
+}
+
+message VIP_WEEK_AWARD_ARRAY
+{
+    repeated VIP_WEEK_AWARD rows    = 1;
+}
+
+// 累计签到奖励
+message CUMULATIVE_SIGN_AWARD
+{    
+    optional sint32         day         = 1;
+    repeated Common.GameRes award_list  = 2;
+}
+
+message CUMULATIVE_SIGN_AWARD_ARRAY
+{
+    repeated CUMULATIVE_SIGN_AWARD rows = 1;    
+}
+
+// 么么奖励
+message MOMO_AWARD
+{
+    optional sint32         count       = 1;
+    repeated Common.GameRes award_list  = 2;
+}
+
+message MOMO_AWARD_ARRAY
+{
+    repeated MOMO_AWARD     rows        = 1;    
+}
+
+// 分享奖励
+message SHARE_AWARD
+{
+    optional uint32            id         = 1;
+    repeated Common.GameRes    award_list = 2;
+    optional sint32            count      = 3;
+    optional Common.ShareType  type       = 5;
+    repeated sint32            param_list = 6;
+}
+
+message SHARE_AWARD_ARRAY
+{
+    repeated SHARE_AWARD rows = 1;
+}
+
+message RECALL_PLAYER_LOGIN_AWARD
+{
+    optional int32          day        = 1;
+    repeated Common.GameRes award_list = 2;
+}
+
+message RECALL_PLAYER_LOGIN_AWARD_ARRAY
+{
+    repeated RECALL_PLAYER_LOGIN_AWARD rows = 1;
+}

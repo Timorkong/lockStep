@@ -1,0 +1,130 @@
+// 消息通知和公告
+
+import "common_game_res.proto";
+
+package Common;
+
+message MsgParam
+{
+    optional string content   = 1;
+    optional bool   translate = 2[default = false];
+}
+
+// 统一化消息结构
+message UnifiedMsg
+{
+    //optional uint32   id         = 1;
+    //repeated MsgParam param_list = 2;
+    optional uint32     template_id     = 1;    // 模版ID
+    repeated MsgParam   template_args   = 2;    // 模版参数
+    optional string     text            = 3;    // 非模版内容
+}
+
+// 奖励消息类型
+enum AwardMsgType
+{
+    AWARD_MSG_TYPE_INVALID          = 0;
+    AWARD_MSG_TYPE_ARENA_RANK       = 1;  // 竞技场排名奖励
+    AWARD_MSG_TYPE_EXAM_RANK        = 2;  // 答题榜排名奖励
+    AWARD_MSG_TYPE_CLIMB_TOWER_RANK = 3;  // 实力试练奖励
+    AWARD_MSG_TYPE_SUPPER_TERR_WIN  = 4;  // 制霸地盘战胜奖励
+    AWARD_MSG_TYPE_SUPPER_TERR_FAIL = 5;  // 制霸地盘战败奖励
+    AWARD_MSG_TYPE_PORTAL           = 6;  // 后台发放的奖励
+    AWARD_MSG_TYPE_WORLD_BOSS_RANK  = 7;  // 世界BOSS排名奖励
+    AWARD_MSG_TYPE_RECHARGE         = 8;  // 充值返还（月卡）
+    AWARD_MSG_TYPE_GROUP_FIGHT      = 9;  // 公会大乱斗
+    AWARD_MSG_TYPE_MAGIC_REFINE     = 10; // 附魔精炼
+    AWARD_MSG_TYPE_TOURNAMENT       = 11; // 武道会
+    AWARD_MSG_TYPE_DAILY_SCORE      = 12; // 每日积分奖励
+    AWARD_MSG_TYPE_OPERATION_DELAY  = 13; // 运营活动补发 
+    AWARD_MSG_TYPE_MOCK_EXAM        = 14; // 模拟考试
+    AWARD_MSG_TYPE_EGG_LOTTERY_RANK = 15; // 扭蛋抽奖钻石消耗排行榜奖励
+    AWARD_MSG_TYPE_RUNNING_RACE_RANK = 16; // 人气赛跑排行榜奖励
+}
+
+// 奖励消息
+// rank: 是一个通用字段，竞技场|答题榜是名次，实力试练是层数
+message AwardMsg
+{
+    optional AwardMsgType   type        = 1;
+    repeated GameRes        award_list  = 2;
+    optional int32          rank        = 3;
+    optional string         name        = 4;    // 角色名
+    optional string         msg         = 5;    // 附带消息 
+    optional UnifiedMsg     unified_msg = 6;    // 附带消息 
+    optional sfixed64       timestamp   = 10;   // 发生的时间(格林时间)
+    optional GameResSource  award_source= 15[default = GAME_RES_SOURCE_UNSPICIFIED];   // 源
+}
+
+// 互动消息类型
+enum InteractiveMsgType
+{
+    INTER_MSG_TYPE_INVALID           = 0;
+    INTER_MSG_TYPE_ANENA_WIN         = 1;    // 竞技场胜
+    INTER_MSG_TYPE_ANENA_FAIL        = 2;    // 竞技场败
+    INTER_MSG_TYPE_LEV_RANK_CHANGED  = 3;    // 等级排名发生改变
+    INTER_MSG_TYPE_FC_RANK_CHANGED   = 4;    // 战斗力排行榜发生改变
+    INTER_MSG_TYPE_VIP_UPGRADE       = 5;    // VIP
+    INTER_MSG_TYPE_BE_FRIEND         = 6;    // 与某人成为好友
+    INTER_MSG_TYPE_MOMO_FRIEND       = 7;    // 么么好友
+    INTER_MSG_TYPE_JOIN_GROUP        = 8;    // 加入社团
+    INTER_MSG_TYPE_MYSTERY_SHOP_OPEN = 9;    // 神秘商店开启
+    INTER_MSG_TYPE_NORMAL            = 10;   // 普通消息(显示msg)
+    INTER_MSG_TYPE_GROUP_EQUIP_OPEN  = 11;   // 社团装备开启
+    INTER_MSG_TYPE_GROUP_EQUIP_LEVUP = 12;   // 社团装备升级
+}
+
+// 互动消息(所有成员的含义视互动消息类型而定)
+message InteractiveMsg
+{
+    optional InteractiveMsgType type = 1;
+    optional string name             = 2; // 角色名(对手名|好友名)
+    optional int32  pos              = 3; // 当前(排名|VIP等级)
+    optional int32  old_pos          = 4; // 旧的(排名)
+    optional uint32 role_id          = 5; // 好友的角色ID
+    optional string msg              = 6; // 附带消息 
+    optional UnifiedMsg unified_msg  = 7; // 附带消息 
+    optional uint32 group_equip_id   = 8; // 社团装备ID 
+    optional uint32 group_equip_lev  = 9; // 社团装备等级 
+    
+    optional sfixed64 timestamp      = 10; // 发生的时间(格林时间)
+    
+    optional bool   captain          = 11[default = false]; // 是否是会长 
+}
+
+message ActivityBulletinMsg
+{
+    optional string headline        = 1;
+    repeated string subtitle        = 2;
+    repeated string content         = 3;
+    optional sint32 display         = 4;
+}
+// 角色活动/行为剩余CD时长
+enum RoleActionType
+{
+    ROLE_ACTION_TYPE_INVALID            = 0;
+    ROLE_ACTION_TYPE_SANBAGS_WAR        = 1; // 沙包大战
+    ROLE_ACTION_TYPE_MOCK_EXAM          = 2; // 模拟考试
+    ROLE_ACTION_TYPE_TERR_COLLECT       = 3; // 地盘收租
+    ROLE_ACTION_TYPE_TERR_FORWARD_POINT = 4; // 地盘骰子
+    ROLE_ACTION_TYPE_SP                 = 5; // 体力
+    ROLE_ACTION_TYPE_EXTRA_SP           = 6; // 额外体力
+}
+
+message RoleActionRemainCD
+{
+    optional RoleActionType type       = 1;
+    optional sfixed64       remain_sec = 2; // 剩余的秒数
+}
+
+enum RollMsgType
+{
+    RIGHT_LEFT_ROLL = 1;
+    BOTTOM_UP_ROLL  = 2;
+}
+
+enum RollMsgSource
+{
+    ROLL_MSG_SOURCE_DEFAULT     = 1;
+    ROLL_MSG_SOURCE_TURNTABLE   = 2;
+}

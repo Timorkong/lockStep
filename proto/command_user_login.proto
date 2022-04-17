@@ -1,0 +1,59 @@
+// 登录相关协议
+
+import "dir.proto";
+import "common_role.proto";
+import "common_scene.proto";
+
+package Cmd.User;
+
+// 设备信息
+message DeviceInfo
+{
+    optional string guid        = 1;    // 唯一ID
+    optional string model       = 2;    // 型号
+    optional string os          = 3;    // 操作系统
+    optional string resolution  = 4;    // 分辨率
+    optional string network     = 5;    // 网络类型
+    optional string carrier     = 6;    // 运营商([operator]是C++关键字 0_0!!)
+    optional string mac_address = 7;    // mac地址
+    optional string imei        = 8;    // IMEI
+
+    optional string graphics_device_name            = 10 [deprecated = true];
+    optional string graphics_device_version         = 11;       // opengl ?
+    optional int32  graphics_memory_size            = 12;       // 显存
+    optional int32  graphics_shader_level           = 13;       // shader
+    optional int32  graphics_render_target_count    = 14;       // renderTarget 数量
+
+    optional int32  processor_count = 20;   // cpu 核数
+    optional string processor_type  = 21;   // cpu 类型
+}
+
+message LOGIN_REQ
+{
+    // 从dir获取的角色签名串
+    optional string     sign        = 1;
+    // 断线重连标记
+    optional bool       reconn      = 2;    
+    // 设备信息
+    optional DeviceInfo device_info = 5;
+    
+    optional string     psign       = 6;
+    
+    optional string     version     = 7;
+
+    // 客户端不要填充这个，服务器用的
+    optional Dir.Sign   _sign       = 10;
+}
+
+message LOGIN_RSP
+{
+    optional Common.RoleInfo    role_info   = 1;
+    optional Common.SceneInfo   scene_info  = 2;
+}
+
+// 踢下线通知
+message KICK_NOTICE
+{
+    optional string reason = 1;
+}
+

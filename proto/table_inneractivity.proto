@@ -1,0 +1,30 @@
+// 内置活动表格定义
+
+import "common_game_res.proto";
+import "common_inner_activity.proto";
+
+package TABLE;
+
+message INNER_ACTIVITY
+{
+    optional sint32 id       = 1; // 活动ID
+    optional sint32 duration = 3; // 活动持续时间
+}
+
+message INNER_ACTIVITY_ARRAY
+{
+    repeated INNER_ACTIVITY rows = 1;
+}
+
+message IA_TASK
+{
+    optional sint32               task_id     = 1;
+    optional sint32               activity_id = 2;
+    optional Common.IAFinishCond  finish_cond = 4;
+    repeated Common.GameRes       award_list  = 5;
+}
+
+message IA_TASK_ARRAY
+{
+    repeated IA_TASK rows = 1;
+}

@@ -1,0 +1,9 @@
+// 时间存档
+
+package Archive;
+
+message Time
+{
+    optional sfixed64 timestamp = 1;
+}
+

@@ -1,0 +1,110 @@
+// 时装相关协议
+
+import "common_role.proto";
+import "common_clothes.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+
+package Cmd.User;
+
+// 查询时装
+message QUERY_CLOTHES_REQ
+{
+    repeated uint32 hero_id_list = 1; // 备注: 主角 hero_id = 0
+}
+
+message QUERY_CLOTHES_RSP
+{
+    message HeroClothes
+    {
+        optional uint32 hero_id         = 1;  // 英雄时装
+        optional int32  cur_layer       = 2;  // 当前层编号
+        repeated uint32 clothes_id_list = 3;  // 当前层合成的时装ID
+    }
+    
+    repeated HeroClothes clothes_list = 1;
+}
+
+// 合成时装
+message COLLECT_CLOTHES_REQ
+{
+    optional uint32 clothes_id = 1;
+}
+
+message COLLECT_CLOTHES_RSP
+{
+    optional Common.Pack     bag_pack       = 1;
+    optional Common.RoleInfo diff_role_info = 2;
+}
+
+// 装备时装
+message PUT_ON_CLOTHES_REQ
+{
+    optional uint64 guid    = 1;
+    optional uint32 hero_id = 2;
+    optional bool   gold_fill = 3[default = false]; // 是否用钻石补齐
+    optional uint32 item_id = 4; // 钻石补齐时填
+}
+
+message PUT_ON_CLOTHES_RSP
+{
+    repeated uint32          clothes_id_list = 1;  // 当前层合成的时装ID
+    optional Common.Pack     bag_pack        = 2;
+    optional Common.RoleInfo diff_role_info  = 15;
+}
+
+// 进阶时装
+message ADVANCED_CLOTHES_REQ
+{
+    optional uint32 hero_id = 1;
+}
+
+message ADVANCED_CLOTHES_RSP
+{
+    optional int32 cur_layer = 1; // 当前层编号
+    optional Common.RoleInfo diff_role_info  = 15;
+}
+
+// 查询时装属性
+message QUERY_CLOTHES_ATTR_REQ
+{
+}
+
+message QUERY_CLOTHES_ATTR_RSP
+{
+    optional Common.Numeric numeric = 1;
+}
+
+//------------------------------------------------------------------------------
+// 附魔精炼相关
+//------------------------------------------------------------------------------
+message QUERY_MAGIC_REFINE_REQ
+{
+}
+
+message QUERY_MAGIC_REFINE_RSP
+{
+    optional Common.MagicRefine magic_refine = 1;
+}
+
+message REFINE_MAGIC_GOODS_REQ
+{
+    optional uint32 idx = 1; // 物品位置
+}
+
+message REFINE_MAGIC_GOODS_RSP
+{
+    optional Common.MagicRefine magic_refine  = 1;
+    optional Common.RoleInfo    diff_role_info = 15;
+}
+
+message FINISH_MAGIC_GOODS_REQ
+{
+    optional uint32 idx = 1; // 物品位置，只有状态为精炼中才能【立即完成】
+}
+
+message FINISH_MAGIC_GOODS_RSP
+{
+    optional Common.MagicRefine magic_refine  = 1;
+    optional Common.RoleInfo    diff_role_info = 15;
+}

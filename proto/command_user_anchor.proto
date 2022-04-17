@@ -1,0 +1,84 @@
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_anchor.proto";
+
+package Cmd.User;
+
+message QUERY_ANCHOR_ACTIVIY_INFO_REQ
+{
+}
+
+message QUERY_ANCHOR_ACTIVIY_INFO_RSP
+{
+    optional sfixed64 open_time  = 1;
+    optional sfixed64 end_time   = 2;
+    optional string   rank_label = 3;
+    optional bool     open       = 4[default = false];
+}
+
+message QUERY_ANCHOR_RANK_REQ
+{
+
+}
+
+message QUERY_ANCHOR_RANK_RSP
+{
+    optional sint64            fans_score = 1;
+    optional Common.AnchorRank rank_table = 2;
+    optional uint32            praised_anchor = 3;
+}
+
+message PRAISE_ANCHOR_REQ
+{
+    optional uint32 anchor_id = 1;
+}
+
+message PRAISE_ANCHOR_RSP
+{
+
+    optional sint64 fans_score = 1;
+}
+
+message SEND_ANCHOR_GIFT_REQ
+{
+    optional uint32 id = 1; // 礼物ID   
+    optional uint32 anchor_id = 2;
+}
+
+message SEND_ANCHOR_GIFT_RSP
+{
+    optional sint64 fans_score  = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_FANS_SCORE_AWARD_REQ
+{
+}
+
+message QUERY_FANS_SCORE_AWARD_RSP
+{
+    repeated uint32 awarded_list = 1;
+    optional sint64 fans_score   = 2;
+}
+
+message AWARD_FANS_SCORE_REQ
+{
+    optional uint32 id = 1; 
+}
+
+message AWARD_FANS_SCORE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_FANS_RANK_REQ
+{
+    optional uint32 anchor_id = 1; 
+}
+
+message QUERY_FANS_RANK_RSP
+{
+    optional Common.FansRank rank_table = 1;
+    optional sint64          fans_score = 2;
+}

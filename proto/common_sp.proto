@@ -1,0 +1,12 @@
+// 体力和额外体力
+
+package Common;
+
+message RoleSP
+{
+    optional int32    nature_sp      = 1 [default = 120]; // 自然体力
+    optional sfixed64 last_timestamp = 2;                 // 上一次更新自然体力时间戳
+    optional int32    buy_count      = 3;                 // 当天体力购买次数
+    
+    optional int32    extra_sp       = 8;                 // 额外体力
+}

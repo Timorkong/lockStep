@@ -1,0 +1,63 @@
+
+import "common_pack_item.proto";
+import "common_effect.proto";
+import "common_game_res.proto";
+import "common_role.proto";
+
+package Table;
+
+message RECHARGE
+{
+    optional uint32         id    		  = 1;
+	
+	optional uint32 		cumulative    = 2;
+	
+    repeated Common.GameRes award_list 	  = 3;
+	
+	repeated uint32 		HeroId		  = 4;
+	optional string 		heroHeadName  = 5;
+	
+	optional uint32         heroDesId     = 6;
+	optional uint32         backGroundId  = 7;
+
+	optional string         des           = 8;
+	
+	optional int32			is_refresh	  = 9;//是否每日都刷新
+}
+
+message RECHARGE_ARRAY
+{
+    repeated RECHARGE   rows    = 1;
+}
+
+message RECHARGE_PRODUCT
+{
+    optional uint32 id                  = 1;
+	optional string goods_name			= 2;
+    optional sint32 price               = 3;
+    optional sint32 divide_days         = 4;
+    optional sint64 output_gold         = 5;
+    optional sint32 double_output_count = 6;
+	optional string icon_file_name      = 7;
+	optional string des_of_product		= 8;
+	optional int32	tag		      		= 9;
+	optional uint32 is_show_in_recharge_ui = 10; //判断是否显示在充值界面里
+}
+
+message RECHARGE_PRODUCT_ARRAY
+{
+    repeated RECHARGE_PRODUCT rows = 1;
+}
+
+message FIRST_RECHARGE
+{
+	optional uint32 id						= 1;
+	optional string desc					= 2;
+	repeated Common.GameRes award_list 	  	= 3;
+	optional sint32 show_in_firstrecharge_ui= 4;//是否在首冲界面里显示，超值一元购
+}
+
+message FIRST_RECHARGE_ARRAY
+{
+    repeated FIRST_RECHARGE rows = 1;
+}

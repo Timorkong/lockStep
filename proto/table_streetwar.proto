@@ -1,0 +1,80 @@
+// 街头争霸奖励
+
+import "common_game_res.proto";
+import "common_quality.proto";
+
+package TABLE;
+
+
+// 奖励表
+message STREET_WAR_AWARD_LEV
+{
+    optional    uint32      lev                = 1; //等级
+    repeated    uint32      award_id_list      = 2;
+}
+
+message STREET_WAR_AWARD_LEV_ARRAY
+{
+    repeated STREET_WAR_AWARD_LEV rows      = 1;    
+}
+
+// 奖励池表
+message STREET_WAR_AWARD_POOL
+{
+    optional    uint32           id              = 1;  
+    optional    uint32           stage           = 2;  //关卡
+    repeated    Common.GameRes   award_list      = 3;
+    optional    float            probability     = 4;
+}
+
+message STREET_WAR_AWARD_POOL_ARRAY
+{
+    repeated STREET_WAR_AWARD_POOL rows     = 1;    
+}
+
+// 关卡掉落物品概率表
+message STREET_WAR_DROP_OUT_CHANCE
+{
+    optional    uint32          id                = 1;
+    repeated    Common.GameRes  stable_award_list = 2;
+    optional    uint32          chance            = 3;
+}
+message STREET_WAR_DROP_OUT_CHANCE_ARRAY
+{
+    repeated STREET_WAR_DROP_OUT_CHANCE rows     = 1;    
+}
+
+message STREET_WAR_ROBOT
+{
+    optional uint32 fc                      = 1;
+    repeated uint32 hero_id_list            = 2;
+    optional uint32 star                    = 3;
+    optional Common.QualityType  quality    = 4;    
+}
+
+message STREET_WAR_ROBOT_ARRAY
+{
+    repeated STREET_WAR_ROBOT rows       = 1;
+}
+
+message STREET_WAR_ROBOT_NAME
+{
+    optional uint32     id              = 1;
+    optional string     robot_name      = 2;    
+}
+message STREET_WAR_ROBOT_NAME_ARRAY
+{
+    repeated STREET_WAR_ROBOT_NAME rows = 1;    
+}
+
+message STREET_WAR_STAGE_AWARD
+{
+    optional uint32                 id          = 1;
+    repeated Common.GameRes         award_list  = 2;
+    repeated Common.GameResWithProb random_list = 3;
+}
+
+message STREET_WAR_STAGE_AWARD_ARRAY
+{
+    repeated STREET_WAR_STAGE_AWARD rows = 1;
+}

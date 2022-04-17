@@ -1,0 +1,24 @@
+
+import "common_coefficient.proto";
+
+package TABLE;
+
+message COEFFICIENT
+{
+    optional uint32                 id              = 1;
+    optional string                 begin_datetime  = 2;
+    optional string                 end_datetime    = 3;
+    optional Common.CoefficientType type            = 5;
+    optional float                  coefficient     = 6;
+    repeated string                 label_list      = 7;
+    repeated uint32                 sid_list        = 8;
+
+    optional sfixed64               begin_timestamp = 101;
+    optional sfixed64               end_timestamp   = 102;
+}
+
+message COEFFICIENT_ARRAY
+{
+    repeated COEFFICIENT rows = 1;
+}
+

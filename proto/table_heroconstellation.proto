@@ -1,0 +1,21 @@
+import "common_game_res.proto";
+import "common_role.proto";
+
+package TABLE;
+
+message CONSTELLATION_LEV_UP
+{
+    optional sint32         lev          = 1;
+    optional uint32         loc_count    = 2;
+    optional float          probability  = 3;
+    optional sint32         limit_lev    = 4;
+    repeated Common.GameRes cost         = 5;
+    optional sint32         keep_count   = 7;
+    repeated Common.GameRes keep_cost    = 8;
+}
+
+message CONSTELLATION_LEV_UP_ARRAY
+{
+    repeated CONSTELLATION_LEV_UP rows = 1;
+}
+

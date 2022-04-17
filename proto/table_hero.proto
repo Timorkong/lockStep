@@ -1,0 +1,222 @@
+import "common_game_res.proto";
+import "common_quality.proto";
+import "common_effect.proto";
+import "common_role.proto";
+
+package TABLE;
+
+// 转职英雄表
+message HERO
+{
+    optional uint32         id              = 1;
+    optional string         name            = 2;
+    optional sint32         star            = 4;    // 星级
+    optional sint32         vip             = 5;    // VIP等级要求
+    repeated Common.GameRes cost            = 6;    // 解锁消耗
+    optional sint32         lev             = 8;    // 等级
+    optional uint32         transform_card  = 12;   // 变身卡
+    optional uint32         soul_id         = 15;   // 灵魂石
+    
+    optional Common.EffectType special_effect  = 23;   // 专属属性
+    optional Common.HeroElementType element = 24[default = HERO_ELEMENT_INVALID];
+    optional uint32 artifact_id = 25; // 神器id
+    repeated Common.GameRes equip_award     = 31;   // 等价奖励
+    optional float          effect_buff     = 33;   // 专属属性buff 
+}
+
+message HERO_ARRAY
+{
+    repeated HERO rows = 1;
+}
+
+// 英雄进阶表
+message HERO_ADVANCED
+{
+    optional sint32                 star        = 1; 
+    optional Common.QualityType     quality     = 2;
+    optional sint32                 hero_exp    = 6;
+}
+
+message HERO_ADVANCED_ARRAY
+{
+    repeated HERO_ADVANCED rows = 1;
+}
+
+// 英雄升星表
+message HERO_STARUP
+{
+    optional uint32                 id          = 1; 
+    optional sint32                 star        = 2;
+    repeated Common.GameRes         consume_list = 3;
+}
+
+message HERO_STARUP_ARRAY
+{
+    repeated HERO_STARUP rows = 1;
+}
+
+message HERO_COMBINATION
+{
+    optional uint32             id           = 1;
+    optional string             name         = 2;
+    repeated uint32             hero_list    = 3;
+    repeated Common.Effect      effect       = 4;
+    repeated Common.GameRes     active_cost  = 5;
+}
+
+message HERO_COMBINATION_ARRAY
+{
+    repeated HERO_COMBINATION rows = 1;
+}
+
+message HERO_FELLOW
+{
+    optional sint32                 star        = 1; 
+    optional Common.QualityType     quality     = 2;
+    repeated Common.Effect          effect      = 3;
+}
+
+message HERO_FELLOW_ARRAY
+{
+    repeated HERO_FELLOW rows = 1;
+}
+
+message FELLOW_CELL
+{
+    optional uint32             id           = 1;
+    repeated Common.GameRes     unlock_cost  = 2;
+}
+
+message FELLOW_CELL_ARRAY
+{
+    repeated FELLOW_CELL rows = 1;
+}
+
+message HERO_NUMERIC
+{
+    optional sint32                 star        = 1; 
+    optional Common.QualityType     quality     = 2;
+    optional sint64                 max_hp      = 3;
+    optional sint64                 catk        = 4;
+    optional sint64                 satk        = 5;
+    optional sint64                 cdef        = 6;
+    optional sint64                 sdef        = 7;
+    optional sint64                 crit        = 8;
+    optional sint64                 decrit      = 9;
+    optional sint64                 inchurt     = 10;
+    optional sint64                 inhurt      = 11;
+    optional sint64                 dehurt      = 12;
+    optional sint64                 force       = 13;
+    optional sint64                 intel       = 14;
+}
+
+message HERO_NUMERIC_ARRAY
+{
+    repeated HERO_NUMERIC rows = 1;
+}
+
+message FELLOW_BUFF
+{
+    optional sint32 star       = 1;
+    optional float  buff       = 2;
+}
+
+message FELLOW_BUFF_ARRAY
+{
+    repeated FELLOW_BUFF rows = 1;
+}
+
+message COMBINATION_LEV
+{
+    optional uint32         id              = 1;
+    optional sint32         lev             = 2;
+    repeated Common.Effect  effect          = 3;
+    repeated sint64         levup_fc_list   = 4; // 升级需要英雄战力
+}
+
+message COMBINATION_LEV_ARRAY
+{
+    repeated COMBINATION_LEV rows = 1;
+}
+
+message COMBINATION_RECOUP
+{
+    optional sint32  lev             = 1; 
+    optional sint32  star            = 2; 
+    optional sint32  chip_count      = 3; // 碎片 
+    optional uint32  practice_id     = 4; // 洗练药水ID
+    optional sint32  practice_count  = 5; // 洗练药水数量
+    optional sint32  stone_count     = 6; // 进阶石数量
+}
+
+message COMBINATION_RECOUP_ARRAY
+{
+    repeated COMBINATION_RECOUP rows = 1;
+}
+
+message HERO_LEV_UP
+{
+    optional uint32 id          = 1;
+    optional sint32 lev         = 2;
+    repeated Common.Effect init_effect = 3;
+    repeated Common.Effect add_effect  = 4;
+}
+
+message HERO_LEV_UP_ARRAY
+{
+    repeated HERO_LEV_UP rows = 1;
+}
+
+message AWAKE_HERO
+{
+    optional uint32 id                    = 1;
+    optional sint32 count                 = 2;
+    optional float  probability           = 3;
+    optional sint32 reduce_lev            = 4;
+    repeated Common.GameRes cost          = 5;
+    repeated Common.GameRes keep_lev_cost = 6;
+    repeated uint32 buffer_id_list        = 7;
+    optional sint32 keep_count            = 8;
+}
+
+message AWAKE_HERO_ARRAY
+{
+    repeated AWAKE_HERO rows = 1;
+}
+
+message HERO_LEV_UP_EXP
+{
+    optional sint32 lev = 1;
+    optional sint32 exp = 2;
+}
+
+message HERO_LEV_UP_EXP_ARRAY
+{
+    repeated HERO_LEV_UP_EXP rows = 1;
+}
+
+message HERO_LEV_FC
+{
+    optional sint32 lev = 1;
+    optional sint64 fc  = 2;
+}
+
+message HERO_LEV_FC_ARRAY
+{
+    repeated HERO_LEV_FC rows = 1;
+}
+
+message HERO_REBORN
+{
+    optional uint32         id              = 1;
+    optional sint32         lev             = 2;
+    optional sint32         limit_awake_num = 3;
+    repeated Common.GameRes cost            = 4;
+    optional float          probability     = 5;
+    optional sint32         fail_count      = 6; 
+}
+
+message HERO_REBORN_ARRAY
+{
+    repeated HERO_REBORN rows = 1;
+}

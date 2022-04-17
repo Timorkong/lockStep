@@ -1,0 +1,28 @@
+// 每周任务
+
+import "common_role.proto";
+import "common_week_challenges.proto";
+
+package Cmd.User;
+
+message QUERY_WEEK_CHALLENGES_REQ
+{
+}
+
+message QUERY_WEEK_CHALLENGES_RSP
+{
+    optional Common.WeekChallengeTaskList week_challenge = 1;
+}
+
+message AWARD_WEEK_CHALLENGES_REQ
+{
+    optional sint32     task_id = 1;
+}
+
+message AWARD_WEEK_CHALLENGES_RSP
+{
+    optional Common.WeekChallengeTaskList week_challenge = 1;
+    optional Common.RoleInfo        diff_role_info = 15;
+}
+
+

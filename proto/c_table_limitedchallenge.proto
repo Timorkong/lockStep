@@ -1,0 +1,60 @@
+// 限时挑战
+
+import "common_game_res.proto";
+
+package Table;
+
+// 英雄收集
+message LIMITED_CHALLENGE_HERO_COLLECT
+{
+    optional sint32 id = 1;
+    repeated uint32 hero_list  = 3;
+    repeated Common.GameRes award_list = 4;
+}
+
+message LIMITED_CHALLENGE_HERO_COLLECT_ARRAY
+{
+    repeated LIMITED_CHALLENGE_HERO_COLLECT rows = 1;
+}
+
+// 金蛋满屋
+message LIMITED_CHALLENGE_LOTTERY
+{
+    optional sint32 id = 1;
+	optional string des = 2;
+    optional sint32 finish_cond = 3;
+    repeated Common.GameRes award_list  = 4;
+}
+
+message LIMITED_CHALLENGE_LOTTERY_ARRAY
+{
+    repeated LIMITED_CHALLENGE_LOTTERY rows = 1;
+}
+
+// 购物狂人
+message LIMITED_CHALLENGE_SHOPPING
+{
+    optional sint32 id = 1;
+	optional string des = 2;
+    optional sint32 finish_cond = 3;
+    repeated Common.GameRes award_list = 4;
+}
+
+message LIMITED_CHALLENGE_SHOPPING_ARRAY
+{
+    repeated LIMITED_CHALLENGE_SHOPPING rows = 1;
+}
+
+// 极限升星
+message LIMITED_CHALLENGE_HERO_STAR
+{
+    optional sint32 id = 1;
+	optional string des = 2;
+    optional sint32 finish_cond = 3;
+    repeated Common.GameRes award_list = 4;
+}
+
+message LIMITED_CHALLENGE_HERO_STAR_ARRAY
+{
+    repeated LIMITED_CHALLENGE_HERO_STAR rows = 1;
+}

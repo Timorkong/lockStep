@@ -1,0 +1,160 @@
+// PVP协议
+
+import "common_pvp.proto";
+import "common_role.proto";
+import "common_skill.proto";
+import "common_quality.proto";
+import "common_game_res.proto";
+import "common_territory.proto";
+import "common_group.proto";
+
+package Cmd.User;
+
+// -----------------------------------------------------------------------------
+// PVP 开始之前
+// -----------------------------------------------------------------------------
+
+// 检测公会战斗状态
+message QUERY_GROUP_BATTLE_STATE_REQ
+{
+}
+
+message QUERY_GROUP_BATTLE_STATE_RSP
+{
+    optional Common.GVGState state = 1 [default = GVG_STATE_CLOSED];
+}
+
+// 查询自身的可用PVP英雄列表
+message QUERY_PVP_HERO_LIST_REQ
+{
+}
+
+message QUERY_PVP_HERO_LIST_RSP
+{
+    repeated Common.PVPHero hero_list = 1;
+}
+
+// 出战列表: 添加/删除一个英雄
+message EXCHANGE_FIGHT_HERO_REQ
+{
+    optional Common.PVPBattleType type    = 1[default = PVP_BATTLE_TYPE_INVALID];
+    optional uint32               hero_id = 2;
+    optional bool                 action  = 3; // true: 添加 false: 删除
+}
+
+message EXCHANGE_FIGHT_HERO_RSP
+{
+    repeated Common.PVPHero hero_list = 1;
+}
+
+// 复活一个英雄
+message REVIVE_PVP_HERO_REQ
+{
+    optional uint32 hero_id = 1; // id =0 复活全部
+}
+
+message REVIVE_PVP_HERO_RSP
+{
+    repeated Common.PVPHero  hero_list      = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// -----------------------------------------------------------------------------
+// PVP 过程中
+// -----------------------------------------------------------------------------
+message PVP_FIGHT_START_REQ
+{
+    optional Common.PVPBattleContext context = 1;
+}
+
+message PVP_FIGHT_START_RSP
+{
+    optional int32  my_group_score = 1; // 我方社团初始积分
+    optional string my_group_name  = 2; // 我方社团名称
+    optional int32  op_group_score = 3; // 对方社团初始积分
+    optional string op_group_name  = 4; // 对方社团名称
+    
+    repeated Common.GroupMember my_group_member_list = 5; // 我方社团成员列表
+    repeated Common.GroupMember op_group_member_list = 6; // 对方社团成员列表
+}
+
+enum PVPSide
+{
+    PVP_SIDE_LEFT  = 0; // 左侧
+    PVP_SIDE_RIGHT = 1; // 右侧
+}
+
+// PVP 帧通知
+message PVP_FRAME_NOTICE
+{
+    message Pos
+    {
+        optional uint32  rid              = 1; // 角色ID
+        optional uint32  hid              = 2; // 英雄ID
+        optional int32   offset           = 3; // 偏移(1~64)
+        optional int32   hp_percent       = 4; // 血量百分比(0~100)
+        optional Common.HeroAction  action  = 5 [default = HERO_ACTION_INVALID]; // 动作
+        optional Common.QualityType quality = 6 [default = QUALITY_INVALID];     // 英雄品质
+        
+        // 当动作为攻击时有效
+        optional int32   catk             = 10; // 攻击伤害
+        optional bool    crit_flag        = 11; // 暴击标志
+        optional int32   catk_frame_idx   = 12; // 攻击的帧次(0~6)
+    }
+    
+    message Road
+    {
+        repeated Pos left  = 1;
+        repeated Pos right = 2;
+        optional Common.RoadState state = 3 [default = ROAD_STATE_INVALID];
+    }
+
+    message HeroCD
+    {
+        optional uint32 hero_id   = 1;
+        optional int32  revive_cd = 2; // 1. 可用英雄为 0; 2. 单位为秒
+    }
+    
+    optional int32           idx            = 1; // 帧索引
+    repeated Road            roads          = 2;
+    optional Common.PVPState state          = 3 [default = PVP_STATE_INVALID];
+    optional PVPSide         side           = 4 [default = PVP_SIDE_LEFT];
+    repeated HeroCD          hero_cd_list   = 5;
+    optional int32           group_score    = 6; // 我方公会积分
+    optional int32           op_group_score = 7; // 对方公会积分
+    optional sfixed64        cd_timestamp   = 8; // 结束时间
+}
+
+// 英雄上阵
+message PVP_HERO_GOTO_BATTLE_REQ
+{
+    optional uint32 hero_id  = 1;
+    optional uint32 road_idx = 2;
+}
+
+message PVP_HERO_GOTO_BATTLE_RSP
+{
+    optional uint32 hero_id = 1;
+}
+
+// 离开
+message PVP_FIGHT_EXIT_REQ
+{
+    optional Common.PVPBattleType type = 1 [default = PVP_BATTLE_TYPE_INVALID]; // 战斗类型
+}
+
+message PVP_FIGHT_EXIT_RSP
+{
+}
+
+// -----------------------------------------------------------------------------
+// PVP 结束领奖
+// -----------------------------------------------------------------------------
+
+// PVP 结算通知
+message PVP_FIGHT_AWARD_NOTICE
+{
+    optional bool             winflag    = 1;
+    repeated Common.GameRes   award_list = 2;
+    optional Common.RoleInfo  role_info  = 15;
+}

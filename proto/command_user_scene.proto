@@ -1,0 +1,153 @@
+// 场景相关
+
+import "common_scene.proto";
+import "common_game_res.proto";
+import "common_role.proto";
+import "common_award.proto";
+
+package Cmd.User;
+
+// 主场景跳转
+message CHANGE_SCENE_REQ
+{
+    optional uint32 id  = 1;
+}
+
+message CHANGE_SCENE_RSP
+{
+}
+
+// 查询副本列表
+message QUERY_INSTANCE_LIST_REQ
+{
+    optional Common.InstanceType type = 1 [ default = INSTANCE_TYPE_NORMAL];
+}
+
+message QUERY_INSTANCE_LIST_RSP
+{
+    repeated Common.Instance  instance_list     = 1;
+    repeated Common.StarAward star_award_list   = 2;
+}
+
+// 进入副本
+message ENTER_INSTANCE_REQ
+{
+    optional uint32 id  = 1;
+}
+
+message ENTER_INSTANCE_RSP
+{
+}
+
+// 离开副本
+message LEAVE_INSTANCE_REQ
+{
+}
+
+message LEAVE_INSTANCE_RSP
+{
+}
+
+// 副本内复活
+message REVIVE_IN_INSTANCE_REQ
+{
+}
+
+message REVIVE_IN_INSTANCE_RSP
+{
+    optional bool successed                 = 1[default = false];
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 清空当天精英、魔王副本挑战记录
+message REFRESH_TODAY_CHALL_HISTORY_REQ
+{
+    optional uint32 main_scene_id = 1;
+    optional Common.InstanceType type = 2[default = INSTANCE_TYPE_NORMAL];
+    optional uint32 instance_id   = 3; // 清空单个时要填 
+}
+
+message REFRESH_TODAY_CHALL_HISTORY_RSP
+{
+    repeated Common.Instance diff_instance_list    = 1; // 变化的副本信息
+    optional Common.RoleInfo diff_role_info        = 15;
+}
+
+// 副本通关（赢了才发）
+message PASS_INSTANCE_REQ
+{
+    //optional bool   pass_flag   = 1;    // 通过标记
+    optional sint32 max_combo   = 2;    // 最大连击
+    optional sint32 hp_percent  = 3;    // 血量剩余百分比
+    optional sint32 evaluation  = 4;    // 评星
+}
+
+message PASS_INSTANCE_RSP
+{
+    repeated Common.GameRes award_list      = 1;
+    optional sint32         evaluation      = 2;
+    repeated Common.GameRes star_award_list = 3; // 精英关卡评星奖励
+    repeated Common.GameRes rand_award_list = 4; // 随机奖励列表
+    
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 场景(副本)切换通知
+message CHANGE_SCENE_NOTICE
+{
+    optional Common.RoleInfo    role_info   = 1;
+    optional Common.SceneInfo   scene_info  = 2;
+}
+
+// 场景更新通知
+message UPDATE_SCENE_NOTICE
+{
+    message Role
+    {
+        enum FLAG
+        {
+            FLAG_UPDATE = 1;    // 场景角色更新/添加
+            FLAG_REMOVE = 2;    // 场景角色删除
+        }
+        optional FLAG               flag        = 1;
+        optional Common.RoleInfo    role_info   = 10;
+        optional Common.Vector3     role_pos    = 11;
+    }
+    repeated Role role_list = 1;
+}
+
+message SWEEP_INSTANCE_REQ
+{
+    optional uint32 id  = 1;
+}
+
+message SWEEP_INSTANCE_RSP
+{
+    repeated Common.GameRes  award_list      = 1;
+    repeated Common.GameRes  star_award_list = 2; // 精英关卡评星奖励
+    repeated Common.GameRes  rand_award_list = 3; // 随机奖励列表
+    
+    optional Common.RoleInfo diff_role_info  = 15;
+}
+
+// 场景移动通知
+message MoveData
+{
+    optional Common.Vector3 pos = 1;
+}
+
+message MoveReq
+{
+    optional MoveData   data    = 10;
+}
+
+message MoveRsp
+{
+}
+
+message MoveNotice
+{
+    optional uint32     role_id = 1;
+    optional MoveData   data    = 10;
+}
+

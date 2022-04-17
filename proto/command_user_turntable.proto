@@ -1,0 +1,55 @@
+import "common_turntable.proto";
+import "common_role.proto";
+
+package Cmd.User;
+
+message QUERY_TURNTABLE_INFO_REQ
+{
+}
+
+message QUERY_TURNTABLE_INFO_RSP
+{
+    repeated Common.TurntableCell cell_list  = 1;
+    optional sint32               last_count = 2;
+    //optional sint64               score      = 3;
+    repeated Common.TurntableMsg  msg_list   = 4;
+    optional sint32               price      = 5;
+    optional bool                 open       = 6[default = false];
+    optional sfixed64             begin_timestamp = 7;
+    optional sfixed64             end_timestamp   = 8;
+}
+
+message USE_TURNTABLE_REQ
+{
+    optional bool use_score = 1[default = false];
+}
+
+message USE_TURNTABLE_RSP
+{
+    repeated Common.TurntableCell cell_list  = 1;
+    optional sint32               last_count = 2;
+    //optional sint64               score      = 3;
+    repeated Common.TurntableMsg  msg_list   = 4;
+    optional sint32               cell_pos   = 5;
+    optional sint32               price      = 6;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message RESET_TURNTABLE_REQ
+{
+}
+
+message RESET_TURNTABLE_RSP
+{
+    repeated Common.TurntableCell cell_list  = 1;
+    optional sint32               last_count = 2;
+    //optional sint64               score      = 3;
+    repeated Common.TurntableMsg  msg_list   = 4;
+    optional sint32               price      = 5;
+    optional bool                 open       = 6[default = false];
+    optional sfixed64             begin_timestamp = 7;
+    optional sfixed64             end_timestamp   = 8;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}

@@ -1,0 +1,78 @@
+// 任务表
+
+import "common_mission.proto";
+import "common_game_res.proto";
+
+package Table;
+
+enum StoryRoleType
+{
+	StoryRoleType_MainPlayer  	= 1;
+	StoryRoleType_Hero		  	= 2;
+	StoryRoleType_Monster		= 3;
+}
+
+enum StoryRolePos
+{
+	StoryRolePos_Left			= 1;
+	StoryRolePos_Right			= 2;
+}
+
+message StoryContent
+{
+	optional string			name		= 1;
+	optional string			figure_name	= 2;
+	optional string			content	    = 3;
+	optional string         audio       = 4;
+}
+
+message MISSION
+{
+    optional uint32         id      			= 1;
+	
+	optional Common.MissionType     type    	= 2 [default = MISSION_TYPE_INVALID];
+	optional Common.MissionAcceptCond    accept_cond = 3;
+	optional Common.MissionFinishCond   finish_cond = 4;
+	repeated Common.GameRes             award_list  = 5;
+	
+	optional uint32         accept_npc_id			    = 6;
+	optional uint32         award_npc_id			    = 7;
+	
+	repeated StoryContent 	story_accept_mission	= 8;
+	repeated StoryContent 	story_finish_mission	= 9;
+	
+	optional sint32 			CurChapter				= 10;//当前任务id对应的章节(暂时只应用在挑战任务中)
+	
+}
+
+
+message MISSION_ARRAY
+{
+    repeated MISSION rows   = 1;
+}
+
+// 每日任务
+message DAILY_MISSION
+{
+    optional uint32 id          = 1;
+	optional string desc		= 2;
+    optional uint32 award_point = 3;
+}
+
+message DAILY_MISSION_ARRAY
+{
+    repeated DAILY_MISSION rows = 1;
+}
+
+// 每日任务里程碑
+message DAILY_MISSION_AWARD
+{
+    optional uint32 id = 1;
+    repeated uint32 award_list  = 2;
+}
+
+message DAILY_MISSION_AWARD_ARRAY
+{
+    repeated DAILY_MISSION_AWARD rows = 1;
+}
+

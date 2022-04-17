@@ -1,0 +1,32 @@
+
+package TABLE;
+
+message FAMILY_NAME
+{
+    optional string name = 1;
+}
+
+message FAMILY_NAME_ARRAY
+{
+    repeated FAMILY_NAME rows = 1;
+}
+
+message GIVEN_NAME
+{
+    optional string name = 1;
+}
+
+message GIVEN_NAME_ARRAY
+{
+    repeated GIVEN_NAME rows = 1;
+}
+
+message GROUP_NAME
+{
+    optional string name = 1;
+}
+
+message GROUP_NAME_ARRAY
+{
+    repeated GROUP_NAME rows = 1;
+}

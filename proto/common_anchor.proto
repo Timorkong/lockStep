@@ -1,0 +1,28 @@
+
+package Common;
+
+message AnchorInfo
+{
+    optional uint32 id   = 1;
+    optional string name = 2;
+    optional sint64 fame = 3;
+    optional string photo = 4;
+    optional string declaration = 5;
+}
+
+message AnchorRank
+{
+    repeated AnchorInfo anchor_list = 1; 
+}
+
+message FansInfo
+{
+    optional uint32 id    = 1;
+    optional string name  = 2;
+    optional sint64 score = 3;
+}
+
+message FansRank
+{
+    repeated FansInfo fans_list = 1; 
+}

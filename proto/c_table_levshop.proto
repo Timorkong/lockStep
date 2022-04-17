@@ -1,0 +1,31 @@
+// 等级特惠商城
+
+import "common_game_res.proto";
+
+package Table;
+
+//等级商品表
+message LEV_TO_GOODS
+{
+	optional sint32	lev			= 1; //等级
+	repeated sint32	good_list	= 2; //商品列表
+}
+
+message LEV_TO_GOODS_ARRAY
+{
+    repeated LEV_TO_GOODS rows = 1;
+}
+
+//商品表
+message LEV_SHOP_GOODS
+{
+    optional sint32         id 				= 1; //商品ID
+	optional sint32			original_gold	= 2; //原价
+    optional sint32         consume_gold	= 3; //现价
+    optional Common.GameRes output       	= 4; //产出
+}
+
+message LEV_SHOP_GOODS_ARRAY
+{
+    repeated LEV_SHOP_GOODS rows = 1;
+}

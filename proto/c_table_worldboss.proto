@@ -1,0 +1,22 @@
+package Table;
+
+message WORLD_BOSS
+{
+    optional uint32         id  = 1;            // ID
+	optional string         name = 2;           // 名字
+	optional string         mesh_name = 3;      // 模型文件名
+	repeated string         skill_list = 4;     // 技能列表
+    optional sint64         hp  = 5;            // 属性
+	optional uint32			catk = 6;
+	optional uint32			satk = 7;
+	optional uint32			cdef = 8;
+	optional uint32			sdef = 9;
+	optional uint32			crit = 10;
+	optional uint32			decrit = 11;
+	optional uint32			inchurt = 12;
+}
+
+message WORLD_BOSS_ARRAY
+{
+    repeated WORLD_BOSS rows = 1;
+}

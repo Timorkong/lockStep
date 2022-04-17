@@ -1,0 +1,103 @@
+// 奖励
+
+import "common_scene.proto";
+import "common_game_res.proto";
+
+package Common;
+
+message LevAwardState 
+{
+    optional bool   has_lev     = 1 [default = false];
+    optional int32  lev_award   = 2;
+}
+
+message StarAward
+{
+    optional sint32       chapter     = 1;
+    optional InstanceType type        = 2[default = INSTANCE_TYPE_NORMAL];
+    repeated GameRes      award_list  = 3;
+    optional bool         awarded     = 4[default = false];
+    optional sint32       star        = 5;
+    optional sint32       total_star  = 6;
+    optional uint32       instance_id = 7; // 未满星关卡 ID
+}
+
+// 七日奖励
+message WeekAward
+{
+    message EverydayAward
+    {
+        optional sint32 day            = 1;
+        optional bool   login_award    = 2; // 登录奖励 true: 已领取, false: 未领取
+        optional bool   recharge_award = 3; // 累冲奖励 true, 已领取，false: 未领取
+        optional bool   rush_purchase  = 4; // 特惠抢购 true, 已购买, false: 未购买
+    }
+    repeated EverydayAward award_list = 1;
+}
+
+// VIP 每日奖励
+message VipDailyAward
+{
+    message AwardMeta
+    {
+        optional sint32  vip_lev      = 1;
+        optional bool    awarded_flag = 2;
+        optional GameRes game_res     = 3;
+    }
+
+    repeated AwardMeta award_list = 1;
+}
+
+enum BunAwardType
+{
+    FIRST_AWARD  = 1;
+    SECOND_AWARD = 2;
+}
+
+// 美味包子奖励
+message MeatBunAward
+{
+    message MeatBunAwardMeta
+    {
+        optional BunAwardType flag = 1;
+        repeated GameRes awards    = 2;
+    }
+
+    repeated MeatBunAwardMeta award_list = 1;
+}
+
+// VIP周礼包
+message VipWeekAward
+{
+    repeated sint32 has_awarded_vip_lev = 1; // 已经领取奖励的vip等级
+}
+
+enum ShareState
+{
+    SHARE_NOT_START = 1;
+    SHARE_FINISHED  = 2;
+    SHARE_AWARDED   = 3;
+}
+
+message ShareAward
+{
+    repeated ShareEntey entry_list = 1; 
+}
+
+message ShareEntey
+{
+    optional uint32      id       = 1;
+    optional sint32      progress = 2;
+    optional ShareState  state    = 3[default = SHARE_NOT_START];  
+}
+
+enum ShareType
+{
+    SHARE_LEV           = 1;
+    SHARE_INSTANCE      = 2;
+    SHARE_GROUP_BATTLE  = 3;
+    SHARE_JOIN_GROUP    = 4;
+    SHARE_HERO          = 5;
+    SHARE_ARTIFACT      = 6;
+    SHARE_TERR_STALL    = 7;
+}

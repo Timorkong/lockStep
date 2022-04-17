@@ -1,0 +1,10 @@
+lev         等级
+exp         经验
+def         防御属性
+life        生命属性
+hp          生命值
+favour      好感度
+honour      荣誉
+spirit      元气
+fame        声望
+

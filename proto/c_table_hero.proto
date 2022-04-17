@@ -1,0 +1,245 @@
+import "common_game_res.proto";
+import "common_quality.proto";
+import "common_effect.proto";
+
+package Table;
+
+// 转职英雄表
+
+// 英雄元素
+enum HeroElementType
+{
+    ELEMENT_INVALID      	= 0;
+    ELEMENT_GOLD        	= 1; // 元素金
+    ELEMENT_WOOD         	= 2; // 元素木
+    ELEMENT_WATER       	= 3; // 元素水
+    ELEMENT_FIRE       		= 4; // 元素火
+    ELEMENT_SOIL	  		= 5; // 元素土
+}
+
+message HERO
+{
+    optional uint32         	id     					= 1;
+    optional string         	name    				= 2;
+	optional uint32         	type    				= 3;
+	optional sint32				star    				= 4;							// 星级
+    optional sint32          	vip     				= 5;        					// VIP等级要求
+    repeated Common.GameRes		cost_list 				= 6;      						// 解锁消耗
+    optional sint32				lev     				= 8;        					// 人物等级要求
+    optional string        		mesh_name 				= 9;      						// 模型文件名
+    repeated uint32 			active_satk_skill_list	= 10;							// 技能列表
+	optional sint64     		fame        			= 11;							// 声望需求 
+	optional sint32         	hp_fc     				= 13;							// 血量战斗力
+	optional sint32				soul_gem				= 14;							// 灵魂石数量
+	optional uint32				soul_Id					= 15;							// 灵魂石id
+	repeated string				ability_type_list 		= 16;							// 能力类型
+	repeated sint32				ability_count_list		= 17;							// 能力数值
+	repeated string				combo_list				= 18;							// 连击推荐
+    optional sint32         	attack_fc       		= 19;   						// 攻击战斗力
+    optional sint32         	defense_fc      		= 20;   						// 防御战斗力
+    optional sint32         	trans_hp_fc      		= 21;   						// 防御战斗力
+	optional string				hero_desc				= 22;							// 英雄描述
+	repeated sint32				exclusive_attribute 	= 23;							// 英雄专属属性
+	optional HeroElementType	element_type			= 24[default = ELEMENT_INVALID];// 英雄元素
+    optional uint32 			artifact_id 			= 25;							// 神器id
+    optional float          	scale 					= 26;							// 缩放
+    optional float          	rotateY 				= 27;							// 旋转（Y轴顺时针）
+	optional float				tournament_scale_x		= 28;							// 武道会全身像缩放X
+	optional float				tournament_scale_y		= 29;							// 武道会全身像缩放Y
+	optional float				tournament_pos_x		= 30;							// 武道会X平移，用来对脚底坐标
+	optional string				hero_values 			= 32;							// 英雄描述
+	optional float 				hero_buff				= 33;							// 英雄专属buff
+	optional string 			hero_get_SoulGemGet		= 34;							// 英雄灵魂石获得方式
+	optional sint32				hero_upstar_lim			= 35;							// 英雄升星上限
+	repeated uint32				god_skill_id			= 36;							// 神技ID
+}
+
+message HERO_ARRAY
+{
+    repeated HERO rows = 1;
+}
+
+// 英雄成长表
+message HERO_ADVANCED
+{
+    optional sint32                 star          	= 1; 
+    optional Common.QualityType     quality     	= 2[default = QUALITY_INVALID];
+    repeated Common.GameRes         consume_list 	= 3;// 品质进阶消耗
+	optional string					Des_fc_count	= 4;// 战斗指数描述
+	optional string 				Des_quality		= 5;// 品质描述
+	optional sint32 				exp				= 6;//累计经验（灵魂石）
+}
+
+message HERO_ADVANCED_ARRAY
+{
+    repeated HERO_ADVANCED rows = 1;
+}
+
+// 英雄升星表
+message HERO_STARUP
+{
+    optional uint32                 id          = 1; 
+    optional sint32                 star        = 2;
+    repeated Common.GameRes         consume_list = 3;
+}
+
+message HERO_STARUP_ARRAY
+{
+    repeated HERO_STARUP rows = 1;
+}
+
+message HERO_TEAM_FETTER
+{
+	optional uint32 				id			= 1; 
+	optional string 				name		= 2; //组合名字
+	repeated uint32					hero_list   = 3; //英雄列表
+	repeated Common.Effect          base_effect_list  = 4; // 加成效果
+	repeated Common.GameRes         unlock_cost      = 5; // 解锁消耗
+}
+
+message HERO_TEAM_FETTER_ARRAY
+{
+    repeated HERO_TEAM_FETTER rows = 1;
+}
+
+message HERO_FETTER
+{
+	optional sint32					start		= 1;
+	optional sint32					quality		= 2;
+	repeated Common.Effect          base_effect_list  = 3; // 加成效果
+}
+
+message HERO_FETTER_ARRAY
+{
+    repeated HERO_FETTER rows = 1;
+}
+
+message HERO_NUMERIC
+{
+	optional sint32                 star        = 1; 
+    optional Common.QualityType     quality     = 2[default = QUALITY_INVALID];
+    optional sint64                 max_hp      = 3;
+    optional sint64                 catk        = 4;
+    optional sint64                 satk        = 5;
+    optional sint64                 cdef        = 6;
+    optional sint64                 sdef        = 7;
+    optional sint64                 crit        = 8;
+    optional sint64                 decrit      = 9;
+    optional sint64                 inchurt     = 10;
+    optional sint64                 inhurt      = 11;
+    optional sint64                 dehurt      = 12;
+    optional sint64                 force       = 13;
+    optional sint64                 intel       = 14;
+}
+
+message HERO_NUMERIC_ARRAY
+{
+    repeated HERO_NUMERIC rows = 1;
+}
+
+message HERO_SKILL
+{
+	optional sint32                 id        = 1; 
+	optional float					skill_1	  = 2;//雷神护体持续时间
+	optional sint32					skill_2   = 3;//五行之力加成百分比
+	optional string					Skill_1_Lev_desc	= 4;//雷神护体等级描述
+	optional string					Skill_1_active_desc	= 5;//雷神护体激活效果
+	optional string					Skill_1_upgrade_desc	= 6;//雷神护体升级条件
+	
+}
+
+message HERO_SKILL_ARRAY
+{
+    repeated HERO_SKILL rows = 1;
+}
+
+message HERO_FETTER_UPGRADE
+{
+	optional uint32				id 		= 1;
+	optional sint32 			quality = 2;
+	repeated Common.Effect      base_effect_list  = 3; // 加成效果
+	repeated sint32				upgrade_fc_list = 4;//升到下一级所需英雄战力
+}
+
+message HERO_FETTER_UPGRADE_ARRAY
+{
+    repeated HERO_FETTER_UPGRADE rows = 1;
+}
+
+message HERO_SKILL_GOD
+{
+	optional uint32				hero_start = 1;//英雄星级
+	optional float				add_pers   = 2;//增加属性百分比，默认百分之20
+	optional string				Skill_2_Lev_desc	= 3;//天神下凡等级描述
+	optional string				Skill_2_active_desc	= 4;//天神下凡激活效果
+	optional string				Skill_2_upgrade_desc	= 5;//天神下凡升级条件
+}
+
+message HERO_SKILL_GOD_ARRAY
+{
+    repeated HERO_SKILL_GOD rows = 1;
+}
+
+message HERO_UPGRADE
+{
+	optional uint32					id 					= 1;
+	optional sint32					lev 				= 2;
+	repeated Common.Effect          base_effect_list  	= 3; // 基础特效
+    repeated Common.Effect          add_effect_list   	= 4; // 升级特效加成
+}
+
+message HERO_UPGRADE_ARRAY
+{
+    repeated HERO_UPGRADE rows = 1;
+}
+
+message HERO_AWAKEN
+{
+	optional uint32					id 					= 1;
+	optional sint32					awaken_count		= 2;//觉醒次数
+	optional float					succeed_pers   		= 3;//成功概率
+	optional sint32					go_back_lev			= 4;//失败后降级
+	repeated Common.GameRes			cost_list 			= 5;//觉醒消耗
+	repeated Common.GameRes			protect_cost_list 	= 6;//觉醒保底消耗
+	repeated uint32					skill_id_list		= 7;//觉醒技能id
+}
+
+message HERO_AWAKEN_ARRAY
+{
+    repeated HERO_AWAKEN rows = 1;
+}
+
+message HERO_UPGRADE_EXP
+{
+	optional uint32					id 					= 1;
+	optional sint64					sum_exp				= 2;
+}
+
+message HERO_UPGRADE_EXP_ARRAY
+{
+    repeated HERO_UPGRADE_EXP rows = 1;
+}
+message AWAKEN_FC_UPGRADE
+{
+	optional uint32					lev 					= 1;
+	optional sint64					fc						= 2;
+}
+
+message AWAKEN_FC_UPGRADE_ARRAY
+{
+    repeated AWAKEN_FC_UPGRADE rows = 1;
+}
+
+message HERO_REBORN
+{
+    optional uint32         id          	= 1;
+    optional sint32         lev         	= 2;
+	optional sint32			reborn_limit 	= 3;
+    repeated Common.GameRes cost        	= 4;
+    optional float          probability 	= 5;
+}
+
+message HERO_REBORN_ARRAY
+{
+    repeated HERO_REBORN rows = 1;
+}

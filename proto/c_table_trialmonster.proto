@@ -1,0 +1,54 @@
+import "common_effect.proto";
+import "common_skill.proto";
+import "common_trialmonster.proto";
+
+package Table;
+
+message TRIAL_MONSTER
+{
+    optional uint32         	id 						= 1;  	// ID
+	optional string         	name 					= 2;  	// 名字
+	optional string         	mesh_name 				= 3;  	// 模型文件名
+	repeated Common.SkillCD     skill_list 				= 4;  	// 技能列表
+    optional sint64         	hp 						= 5;  	// 属性
+	optional uint32				catk 					= 6;
+	optional uint32				cdef 					= 7;
+	optional uint32				satk 					= 8;
+	optional uint32				sdef 					= 9;
+	optional uint32				crit 					= 10;
+	optional uint32				decrit 					= 11;
+	optional uint32				inchurt 				= 12;
+	optional uint32 			inhurt 					= 13;
+	optional uint32				dehurt 					= 14;
+	optional uint32 			force 					= 15;
+	optional uint32 			intel 					= 16;
+	optional float				moveSpeed				= 17;	// AI
+	optional float				useSkillWaitingTime 	= 18;
+	optional float				randomUseSkillInterval 	= 19;
+	optional float				comboSkillProbability 	= 20;
+	optional uint32				weightUsingSkill		= 21;
+	optional uint32				weightFastMoveUseSkill	= 22;
+	optional uint32				weightWaiting			= 23;
+	optional uint32				weightRandomMove		= 24;
+	optional float				scale 					= 25;	// 缩放比例
+	repeated uint32				buff_list 				= 26;	// buff
+	repeated Common.SkillBuff 	buff_self_list 			= 27;
+	repeated Common.SkillBuff 	buff_enemy_list 		= 28;
+}
+
+message TRIAL_MONSTER_ARRAY
+{
+    repeated TRIAL_MONSTER rows = 1;
+}
+
+message TRIAL_SCENE
+{
+	optional uint32 					scene_id 		= 1;
+	optional uint32						boss_id			= 2;
+	repeated Common.TrialMonsterPostion	monster_list	= 3;
+}
+
+message TRIAL_SCENE_ARRAY
+{
+    repeated TRIAL_SCENE rows = 1;
+}

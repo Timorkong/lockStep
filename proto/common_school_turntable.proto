@@ -1,0 +1,40 @@
+// 学霸转盘活动
+import "common_game_res.proto";
+
+package Common;
+
+enum SchoolTurntableStoreType
+{
+    SCHOOL_TURNTABLE_STORE_ONE      = 1;
+    SCHOOL_TURNTABLE_STORE_TWO      = 2;
+    SCHOOL_TURNTABLE_STORE_THREE    = 3;
+}
+
+message SchoolTurntableShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+        optional sint32 discount    = 3; // 当前折扣
+        optional sint32 count       = 4; // 未旋转到折扣次数
+        optional sint32 last_discount = 5[default = 100];
+    }
+
+    repeated Goods    goods_list        = 1;
+    optional sfixed64 refresh_timestamp = 2;
+    optional sint32   refresh_count     = 3;
+}
+
+message SchoolTurntableGoods
+{
+    optional uint32 id          = 1;
+    optional bool   purchased   = 2; // 购买标记
+    optional sint32 discount    = 3; // 当前折扣
+    optional sint32 count       = 4; // 未旋转到折扣次数
+    optional Common.SchoolTurntableStoreType store_type = 5;
+    repeated Common.GameRes old_cost                    = 6;
+    repeated Common.GameRes real_cost                   = 7;
+    repeated Common.GameRes output                      = 8;
+    repeated Common.GameRes buy_cost                    = 9;
+}

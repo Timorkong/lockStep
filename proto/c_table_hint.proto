@@ -1,0 +1,26 @@
+import "common_game_res.proto";
+
+package Table;
+
+
+message HINT
+{
+    optional uint32 id                  = 1;
+    optional string hit_file_name       = 2;
+
+    optional string hit_values 		    = 3;
+    optional HINT_TYPE type				= 4;
+}
+
+message HINT_ARRAY
+{
+    repeated HINT rows = 1;
+
+}
+
+enum HINT_TYPE
+{
+	HINT_TYPE_COPYFALSE                 = 1;
+	HINT_TYPE_TIPS 						= 2;
+	HINT_TYPE_TEXT						= 3;
+}

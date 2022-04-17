@@ -1,0 +1,1143 @@
+import "common_group.proto";
+import "common_game_res.proto";
+import "common_role.proto";
+import "common_pack_item.proto";
+import "common_system.proto";
+import "common_rank_table.proto";
+import "common_shop.proto";
+import "common_super_equipment.proto";
+
+// 社团相关指令
+
+package Cmd.User;
+
+// 查询社团
+message QUERY_GROUP_INFO_REQ
+{
+    optional sint32 page = 1;
+}
+
+message QUERY_GROUP_INFO_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+    repeated Common.GroupBrief  list       = 8;
+    optional sint32             page_count = 9;
+    repeated uint32             apply_group_list = 10;
+}
+
+// 查找社团(目前只能精确查找)
+message SEARCH_GROUP_BY_NAME_REQ
+{
+    optional string name = 1;
+}
+
+message SEARCH_GROUP_BY_NAME_RSP
+{
+    repeated Common.GroupBrief  list             = 1;
+    repeated uint32             apply_group_list = 2;
+}
+
+// 创建社团
+message CREATE_GROUP_REQ
+{
+    optional string name    = 1;
+}
+
+message CREATE_GROUP_RSP
+{
+    optional Common.GroupInfo info = 1;
+    optional Common.RoleInfo  diff_role_info = 15; 
+}
+
+// 申请加入社团
+message JOIN_GROUP_REQ
+{
+    optional uint32 id  = 1;
+}
+
+message JOIN_GROUP_RSP
+{
+    optional Common.GroupInfo   info           = 1;
+    optional bool               joined         = 2[default = false]; // 直接进入
+    optional Common.RoleInfo    diff_role_info = 15;
+}
+
+// 查询申请加入列表
+message QUERY_JOIN_APPLY_LIST_REQ
+{
+}
+
+message QUERY_JOIN_APPLY_LIST_RSP
+{
+    repeated Common.RoleBrief role_list = 1; 
+}
+
+// 申请列表变化
+message GROUP_JOIN_APPLY_NOTICE
+{
+    optional sint32 count  = 1;
+}
+
+// 审核
+message CHECK_JOIN_APPLY_REQ
+{
+    optional uint32 role_id = 1; // 不填表示全部
+    optional bool   agree   = 2[default = false]; 
+}
+
+message CHECK_JOIN_APPLY_RSP
+{
+    repeated Common.RoleBrief role_list       = 1; 
+    optional Common.GroupInfo diff_group_info = 2;
+}
+
+// 查询社团日志
+message QUERY_GROUP_LOG_REQ
+{
+}
+
+message QUERY_GROUP_LOG_RSP
+{
+    repeated Common.GroupLog log_list = 1;
+}
+
+// 发社团邮件
+message SEND_GROUP_MAIL_REQ
+{
+    optional string content = 1;
+}
+
+message SEND_GROUP_MAIL_RSP
+{
+    optional Common.GroupInfo diff_group_info = 1;
+}
+
+// 离开社团
+message LEAVE_GROUP_REQ
+{
+}
+
+message LEAVE_GROUP_RSP
+{
+    optional Common.RoleInfo  diff_role_info = 15; 
+}
+
+// 开除成员
+message FIRE_GROUP_MEMBER_REQ
+{
+    optional uint32 member  = 1;
+}
+
+message FIRE_GROUP_MEMBER_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+}
+
+// 转让社团
+message TRANSFER_GROUP_REQ
+{
+    optional uint32 transfer_to = 1;
+}
+
+message TRANSFER_GROUP_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+}
+
+// 弹劾会长
+message FIRE_GROUP_CAPTAIN_REQ
+{
+}
+
+message FIRE_GROUP_CAPTAIN_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+    optional Common.RoleInfo    diff_role_info = 15;
+}
+
+// 设置管理干部
+message SET_GROUP_ADMIN_REQ
+{
+    optional uint32 role_id = 1;
+}
+
+message SET_GROUP_ADMIN_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+}
+
+message CANCEL_GROUP_ADMIN_REQ
+{
+    optional uint32 role_id = 1;
+}
+
+message CANCEL_GROUP_ADMIN_RSP
+{
+    optional Common.GroupInfo   info       = 1;
+}
+
+// 设置公告
+message SET_GROUP_BULLETIN_REQ
+{
+    optional string content = 1;
+}
+
+message SET_GROUP_BULLETIN_RSP
+{
+}
+
+// 设置招工启事
+message SET_GROUP_NOTICE_REQ
+{
+    optional string content = 1;
+}
+
+message SET_GROUP_NOTICE_RSP
+{
+}
+
+// 查询社团可用图标
+message QUERY_GROUP_ICON_LIST_REQ
+{
+}
+
+message QUERY_GROUP_ICON_LIST_RSP
+{
+    optional Common.GroupIcon icon_info = 1;
+}
+
+// 设置社团选项(图标、加入条件)
+message SET_GROUP_OPTION_REQ
+{
+    optional Common.GroupJoinOption join_option = 1[default = GROUP_JOIN_ABLE];
+    optional sint64                 join_fc     = 2;
+    optional uint32                 icon        = 3; // 不修改的不填
+    optional uint32                 icon_box    = 4;
+}
+
+message SET_GROUP_OPTION_RSP
+{
+    optional Common.GroupInfo diff_group_info = 1;
+}
+
+// 查询健身房信息
+message QUERY_GROUP_GYM_INFO_REQ
+{
+}
+
+message QUERY_GROUP_GYM_INFO_RSP
+{
+    repeated Common.GymHero hero_pool = 1;
+    repeated uint64         guid_list = 2;
+    optional sint32         fame      = 3;
+    optional sint32         coin      = 4;
+    optional sfixed64       lease_period     = 5;
+    optional sfixed64       push_hero_period = 6;
+}
+
+// 放入英雄训练
+message PUSH_GROUP_GYM_HERO_REQ
+{
+    optional uint32 hero_id = 1;
+}
+
+message PUSH_GROUP_GYM_HERO_RSP
+{
+}
+
+// 租借英雄
+message LEASE_GROUP_GYM_HERO_REQ
+{
+    optional uint64 guid = 1;
+}
+
+message LEASE_GROUP_GYM_HERO_RSP
+{
+    optional Common.RoleInfo    diff_role_info = 15;
+}
+
+// 查询建筑
+message QUERY_GROUP_BUILDING_REQ
+{
+    optional Common.GroupBuildingType type = 1[default = BUILDING_GROUP_BASE];
+}
+
+message QUERY_GROUP_BUILDING_RSP
+{
+    optional sint32                  lev          = 1;
+    optional Common.BuildUpgradeInfo upgrade_info = 2;
+    optional sint32                  past_time    = 3; // 已经升级中多久(秒)
+    optional bool                    has_builded  = 4; // 参与过建设
+}
+
+// 升级建筑
+message LEVUP_GROUP_BUILDING_REQ
+{
+    optional Common.GroupBuildingType type = 1[default = BUILDING_GROUP_BASE];
+}
+
+message LEVUP_GROUP_BUILDING_RSP
+{
+    optional Common.GroupInfo        info  = 1;
+    optional Common.BuildUpgradeInfo upgrade_info = 2;
+    optional sint32                  past_time    = 3;
+}
+
+// 参与建设
+message DO_GROUP_BUILD_REQ
+{
+    optional Common.GroupBuildingType type = 1[default = BUILDING_GROUP_BASE];
+}
+
+message DO_GROUP_BUILD_RSP
+{
+    optional sint32                  lev          = 1;
+    optional Common.BuildUpgradeInfo upgrade_info = 2;
+    optional sint32                  past_time    = 3; // 已经升级中多久(秒)
+    optional Common.RoleInfo         diff_role_info = 15; 
+}
+
+// 查询建筑产出
+message QUERY_BUILDING_OUTPUT_REQ
+{
+}
+message QUERY_BUILDING_OUTPUT_RSP
+{
+    optional uint32 coin         = 1; // 金币
+    optional uint32 sp           = 2; // 体力
+    optional bool   coin_awarded = 3[default = false]; // 已领取
+    optional bool   sp_awarded   = 4[default = false];
+    repeated Common.GameRes chess_item_output = 5;
+    repeated Common.GameRes bun_item_output   = 6;
+}
+
+// 收取建筑产出
+message GET_BUILDING_OUTPUT_REQ
+{
+    optional Common.GroupBuildingType type = 1[default = BUILDING_GROUP_BASE];
+    optional bool                     all  = 2[default =false]; // 是否全收
+}
+
+message GET_BUILDING_OUTPUT_RSP
+{
+   optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_ANTIQUE_SHOP_REQ
+{
+}
+
+message QUERY_ANTIQUE_SHOP_RSP
+{
+    optional Common.CollectionShop shop = 1;
+}
+
+message BUY_ANTIQUE_SHOP_REQ
+{
+    optional Common.GroupShopType    type = 1[default = GROUP_SHOP_TYPE_ANTIQUE];
+    optional sint32                  idx  = 2;  
+}
+
+message BUY_ANTIQUE_SHOP_RSP
+{
+    optional Common.CollectionShop shop     = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message REFRESH_ANTIQUE_SHOP_REQ
+{
+    optional Common.GroupShopType    type = 1[default = GROUP_SHOP_TYPE_ANTIQUE];
+}
+
+message REFRESH_ANTIQUE_SHOP_RSP
+{
+    optional Common.CollectionShop shop           = 1;
+    optional Common.RoleInfo       diff_role_info = 15;
+}
+
+message QUERY_GROUP_WELFARE_REQ
+{
+}
+
+message QUERY_GROUP_WELFARE_RSP
+{
+    optional sint32 sp_count           = 1; // 体力池
+    optional sint32 last_welfare_count = 2; // 剩余福利次数
+    optional sint32 awarded_sp_count   = 3; // 已领取体力
+}
+
+// 购买体力分红
+message BUY_GROUP_SP_WELFARE_REQ
+{
+    optional uint32 id  = 1;
+}
+
+message BUY_GROUP_SP_WELFARE_RSP
+{
+    optional sint32          last_welfare_count = 1;
+    optional Common.RoleInfo diff_role_info     = 15;
+}
+
+message AWARD_GROUP_SP_WELFARE_REQ
+{
+}
+
+message AWARD_GROUP_SP_WELFARE_RSP
+{
+    optional sint32          sp_count           = 1;
+    optional sint32          awarded_sp_count   = 2;
+    optional Common.RoleInfo diff_role_info     = 15;
+}
+
+message QUERY_GROUP_EQUIP_REQ
+{
+}
+
+message QUERY_GROUP_EQUIP_RSP
+{
+    optional sint64             fund        = 1;
+    repeated Common.GroupEquip  equip_list  = 2;
+}
+
+// 开启新的装备
+message OPEN_GROUP_EQUIP_REQ
+{
+    optional uint32  equip_id = 1;
+}
+
+message OPEN_GROUP_EQUIP_RSP
+{
+    optional sint64             fund        = 1;
+    repeated Common.GroupEquip  equip_list  = 2;
+    optional Common.RoleInfo    diff_role_info = 15;
+}
+
+message LEVUP_GROUP_EQUIP_REQ
+{
+    optional uint32  equip_id = 1;
+}
+
+message LEVUP_GROUP_EQUIP_RSP
+{
+    optional sint64             fund        = 1;
+    repeated Common.GroupEquip  equip_list  = 2;
+}
+
+message QUERY_GROUP_MISSION_REQ
+{
+}
+
+message QUERY_GROUP_MISSION_RSP
+{
+    optional sint32               last_mission_count  = 1; // 剩余任务次数
+    optional sint32               free_reset_count    = 2;
+    repeated Common.GroupMission  mission_list        = 3;
+    repeated Common.LeaseHeroInfo lease_hero_list     = 4; // 租借英雄列表
+    optional sint32               buy_mission_count   = 5;
+}
+
+// 完成社团任务
+message FINISH_GROUP_MISSION_REQ
+{
+    optional uint32 mission_id  = 1;
+    optional uint32 hero_id     = 2;
+    optional uint64 hero_guid   = 3; // 使用租借英雄时填
+}
+
+message FINISH_GROUP_MISSION_RSP
+{
+    optional bool               success   = 1[default = false];
+    optional Common.GroupInfo   info      = 2;
+}
+
+// 刷新社团任务
+message RESET_GROUP_MISSION_REQ
+{
+    optional uint32 mission_id  = 1;
+}
+
+message RESET_GROUP_MISSION_RSP
+{
+    repeated Common.GroupMission  mission_list      = 1;
+    optional sint32               free_reset_count  = 2;
+    optional Common.RoleInfo      diff_role_info    = 15;
+}
+
+message BUY_GROUP_MISSION_REQ
+{
+}
+
+message BUY_GROUP_MISSION_RSP
+{
+    optional sint32               last_mission_count  = 1;
+    optional sint32               buy_mission_count   = 2;
+    optional Common.RoleInfo      diff_role_info      = 15;
+}
+
+message QUERY_GROUP_INSTANCE_LIST_REQ
+{
+}
+
+message QUERY_GROUP_INSTANCE_LIST_RSP
+{
+    repeated Common.GroupInstance instance_list = 1; // 不填boss_list
+    repeated uint32               unlock_list   = 2;
+}
+
+message QUERY_GROUP_INSTANCE_REQ
+{
+    optional uint32  id = 1;
+}
+
+message QUERY_GROUP_INSTANCE_RSP
+{
+    optional Common.GroupInstance instance    = 1;
+    optional sint32               last_count  = 2;
+}
+
+message OPEN_GROUP_INSTANCE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message OPEN_GROUP_INSTANCE_RSP
+{
+    repeated Common.GroupInstance instance_list = 1;
+    optional sint64               active        = 2;
+}
+
+message RESET_GROUP_INSTANCE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message RESET_GROUP_INSTANCE_RSP
+{
+    repeated Common.GroupInstance instance_list = 1;
+    optional sint64               active        = 2;
+}
+
+message ENTER_GROUP_INSTANCE_REQ
+{
+    optional uint32 instance_id = 1;
+    optional uint32 boss_id     = 2;
+}
+
+message ENTER_GROUP_INSTANCE_RSP
+{
+    optional Common.GroupBoss boss      = 1;
+}
+
+message KICK_GROUP_BOSS_ASS_REQ
+{
+    optional sint64 hurt    = 1;
+    optional bool   over    = 2[default = false];
+}
+
+message KICK_GROUP_BOSS_ASS_RSP
+{
+    optional Common.GroupBoss boss      = 1;
+    optional bool             last_hit  = 2[default = false];
+    optional float            progress  = 3; // 进度共献
+    repeated uint32           award_list = 4; // 社团奖励
+    optional sint64           coin_count = 5; // 个人金币奖励
+    optional Common.RoleInfo  diff_role_info = 15;
+}
+
+message LEAVE_GROUP_INSTANCE_REQ
+{
+}
+
+message LEAVE_GROUP_INSTANCE_RSP
+{
+}
+
+message QUERY_GROUP_AWARD_POOL_REQ
+{
+}
+
+message QUERY_GROUP_AWARD_POOL_RSP
+{
+    repeated Common.GroupInstanceAward award_list = 1;
+}
+
+message APPLY_GROUP_AWARD_REQ
+{
+    optional uint32 id  = 1; // 奖励id
+}
+
+message APPLY_GROUP_AWARD_RSP
+{
+    repeated Common.GroupInstanceAward award_list = 1;
+}
+
+message QUERY_GROUP_AWARD_ASSIGN_RECORD_REQ
+{
+}
+
+message QUERY_GROUP_AWARD_ASSIGN_RECORD_RSP
+{
+    repeated Common.GroupAwardAssignRecord record_list = 1;
+}
+
+// 下面REQ中10以后字段客户端基本不需要填
+// 报名社团战
+message SIGN_UP_GROUP_BATTLE_REQ
+{
+    optional Common.GroupBrief       group_brief  = 10;
+    repeated uint32                  role_list    = 11;
+    repeated Common.GroupRoleFighter top_fighter_list = 12;
+    repeated Common.GroupRoleFighter mid_fighter_list = 13;
+    repeated Common.GroupRoleFighter down_fighter_list = 14;
+}
+
+message SIGN_UP_GROUP_BATTLE_RSP
+{
+    optional sint32     round  = 10;
+}
+
+//由于社团战报名包太大，将fighter_list信息提取出来重新发(服务器之间的通信)
+message SIGN_UP_GROUP_BATTLE_FIGHTER_LIST_REQ
+{
+    optional Common.GroupBrief       group_brief  = 10;
+    optional Common.GroupBattleRoadType road_type = 11;
+    repeated Common.GroupRoleFighter fighter_list = 12;
+}
+
+
+
+// 查询报名信息
+message QUERY_SIGN_UP_INFO_REQ
+{
+    optional uint32 group_id = 10;
+    optional uint32 role_id  = 11;
+}
+
+message QUERY_SIGN_UP_INFO_RSP
+{
+    optional bool     sign_up      = 1[default = false]; // 是否已报名
+    optional sfixed64 sign_up_time = 2;
+    optional sfixed64 battle_time  = 3; // 战斗开始时间戳
+    optional bool     participate  = 4[default = false]; 
+    optional sfixed64 lock_time    = 5; // 名单锁定时间
+    optional Common.GroupBrief other_group_brief = 6;
+    optional bool     has_history  = 7[default = false];
+    optional bool     battle_finished   = 8[default = false];
+    optional bool     in_role_list      = 9[default = false]; // 是否在名单中
+    optional sfixed64 next_sign_up_time = 10;
+}
+
+// 设置社团战选项(是否参与)
+message SET_GROUP_BATTLE_OPTION_REQ
+{
+    optional bool participate = 1[default = false];
+}
+
+message SET_GROUP_BATTLE_OPTION_RSP
+{
+}
+
+message QUERY_GROUP_BATTLE_HISTORY_REQ
+{
+}
+
+message QUERY_GROUP_BATTLE_HISTORY_RSP
+{
+    repeated Common.BattleInfo battle_list = 1; // 只填充部分信息
+}
+
+// 查询单场记录
+message QUERY_ONCE_GROUP_BATTLE_HISTORY_REQ
+{
+    optional uint64 battle_id = 1;
+}
+
+message QUERY_ONCE_GROUP_BATTLE_HISTORY_RSP
+{
+    optional Common.BattleInfo battle_info = 1; 
+}
+
+// 查询社团战信息
+message QUERY_GROUP_BATTLE_REQ
+{
+    optional uint32 group_id = 10;
+    optional uint32 role_id  = 11;
+}
+
+// ready阶段不填BattleInfo
+message QUERY_GROUP_BATTLE_RSP
+{
+    optional bool                       ready               = 1[default = false];
+    optional Common.GroupBrief          right_group_brief   = 2;
+    repeated Common.RoleBrief           top_role_list       = 3; 
+    repeated Common.RoleBrief           mid_role_list       = 4; 
+    repeated Common.RoleBrief           down_role_list      = 5; 
+    optional Common.BattleInfo          group_battle        = 6;
+    optional Common.GroupBattleRoadType my_road             = 7[default = BATTLE_ROAD_INVAILD];
+}
+
+// 查询社团战Brief
+message QUERY_GROUP_BATTLE_BRIEF_REQ
+{
+    optional uint32 group_id = 10;
+    optional uint32 role_id  = 11;
+}
+
+message QUERY_GROUP_BATTLE_BRIEF_RSP
+{
+    optional Common.BattleInfo          group_battle  = 1; // 不填充每一路的battle_list 
+    optional Common.GroupBattleRoadType my_road       = 2[default = BATTLE_ROAD_INVAILD];
+}
+
+// 查询社团战英雄阵容
+message QUERY_HERO_BATTLE_ARRAY_REQ
+{
+    optional uint32 role_id = 1; // 不填查自己
+}
+
+message QUERY_HERO_BATTLE_ARRAY_RSP
+{
+    repeated Common.HeroBattleArray battle_array_list = 1;
+    repeated Common.HeroInfo        hero_list         = 2; // 查询别人时填充
+    optional Common.RoleBrief       brief             = 3;
+}
+
+// 设置社团战英雄阵容
+message SET_HERO_BATTLE_ARRAY_REQ
+{
+    repeated Common.HeroBattleArray battle_array_list = 1;
+}
+
+message SET_HERO_BATTLE_ARRAY_RSP
+{
+}
+
+// 选择社团战路线
+message CHOOSE_GROUP_BATTLE_ROAD_REQ
+{
+    optional Common.GroupBattleRoadType  road = 1[default = BATTLE_ROAD_TOP];
+    
+    optional uint32                   group_id      = 10;
+    optional Common.GroupRoleFighter  role_fighter  = 11;
+}
+
+message CHOOSE_GROUP_BATTLE_ROAD_RSP
+{
+}
+
+message QUERY_CURRENT_BATTLE_INFO_REQ
+{
+    optional uint32 group_id  = 10;
+    optional uint32 role_id   = 11;
+}
+    
+message QUERY_CURRENT_BATTLE_INFO_RSP
+{
+    optional Common.SingleBattle battle = 1; // 战斗信息(包含双方信息)
+}
+
+// 社团战开始前通知
+message START_GROUP_BATTLE_NOTICE
+{
+    optional uint32 group_id  = 10;
+    repeated uint32 role_list = 11;
+}
+
+// 准备战斗通知
+message READY_GROUP_BATTLE_NOTICE
+{
+}
+
+// 战斗准备 
+message READY_GROUP_BATTLE_REQ
+{
+    optional uint32 group_id  = 10;
+    optional uint32 role_id   = 11;
+}
+
+message READY_GROUP_BATTLE_RSP
+{
+}
+
+// 开始一场战斗
+message START_SINGLE_BATTLE_NOTICE
+{
+    optional string ip          = 1;
+    optional sint32 port        = 2;
+    optional string sign        = 3;
+    optional uint64 scene_guid  = 4;
+    optional bool   enemy_leave = 5[default = false];
+    optional Common.BattleHeroInfo my_hero     = 6;
+    optional Common.BattleHeroInfo enemy_hero  = 7;
+    optional Common.RoleBrief      enemy_brief = 8;
+    repeated Common.HeroBattleArray battle_array_list    = 9;
+    optional sint32                   constellation_lev  = 10;
+    repeated Common.ConstellationInfo constellation_list = 11; // 对手星盘信息
+    optional Common.SuperEquipment    super_equipment    = 12;
+}
+
+message REPORT_SINGLE_BATTLE_INFO_REQ
+{
+    optional float  last_hp      = 1;
+    optional bool   ai           = 2[default = false];
+    optional float  enemy_hp     = 3;
+    optional uint64 scene_guid   = 4;
+
+    optional uint32 group_id     = 10;
+    optional uint32 role_id      = 11;
+}
+
+message REPORT_SINGLE_BATTLE_INFO_RSP
+{
+}
+
+// 战斗结束
+message COMPLETE_SINGLE_BATTLE_REQ
+{
+    optional bool   win        = 1[default = false];
+    //optional bool   ai         = 2[default = false];
+    optional float  last_hp    = 3; // 胜利者剩余血量
+    optional uint64 scene_guid = 4; 
+    optional bool   kill       = 5[default = false]; // 是否击杀
+    optional uint32 group_id   = 10;
+    optional uint32 role_id    = 11;
+    optional Common.PlayerBattleInfo player_battle_info = 12;
+}
+
+message COMPLETE_SINGLE_BATTLE_RSP
+{
+}
+
+// 战斗结束通知
+message FINISH_SINGLE_BATTLE_NOTICE
+{
+    optional bool   win        = 1[default = false];
+}
+
+// 战术安排
+message QUERY_GROUP_BATTLE_TACTIC_REQ
+{
+}
+
+message QUERY_GROUP_BATTLE_TACTIC_RSP
+{
+    optional string content = 1;
+}
+
+message SET_GROUP_BATTLE_TACTIC_REQ
+{
+    optional string content = 1;
+}
+
+message SET_GROUP_BATTLE_TACTIC_RSP
+{
+}
+
+// 同步参与社团信息(服务器间协议)
+message SYNC_GROUP_FIGHTER_INFO_REQ
+{
+    optional Common.GroupBrief          group_brief  = 1;
+    optional Common.GroupRoleFighter    role_fighter = 2; 
+    repeated uint32                     role_list    = 3;
+    optional bool                       update_role_list = 4[default = false];
+}
+
+message SYNC_GROUP_FIGHTER_INFO_RSP
+{
+}
+
+message SEND_GROUP_BATTLE_AWARD_REQ
+{
+    optional Common.BattleInfo  group_battle    = 1;
+    optional uint32             group_id        = 2;
+}
+
+message SEND_GROUP_BATTLE_AWARD_RSP
+{
+    optional uint32             group_id        = 1;
+}
+
+message GM_CONTROL_PK_SERVER_REQ
+{
+    optional string cmd = 10;
+}
+
+message SEND_GROUP_BATTLE_ROLL_MSG_REQ
+{
+    optional uint32     role_id    = 1;
+    optional uint32     group_id   = 2;
+    optional sint32     win_streak = 3;
+    optional sint32     road       = 4;
+}
+
+// 查询社团争霸信息
+message QUERY_GROUP_HEGEMONY_INFO_REQ
+{
+    optional uint32 group_id = 10;
+    optional uint32 role_id  = 11;
+}
+
+message QUERY_GROUP_HEGEMONY_INFO_RSP
+{
+    optional Common.GroupHegemonyStage  stage  = 1[default = GROUP_HEGEMONY_QUALIFIERS];    
+    optional Common.GroupHegemonyStatus status = 2[default = GROUP_HEGEMONY_NOT_START];
+    optional sfixed64                   timestamp  = 3;    
+    optional Common.RankTable           rank_table = 4;
+    optional bool                       participate = 5[default = false];
+    optional bool                       sign_up_end = 6[default = false];
+    optional sint32                     group_count = 7;
+    optional uint32                     site_id     = 8;// 半决赛分组
+    optional sint32                     role_rank   = 9;
+    optional sint64                     role_score  = 10;
+    optional sint32                     last_count  = 11;
+    optional bool                       matched     = 12[default = false];
+    optional bool                       close_set_member = 13[default = false]; 
+    optional sint32                     group_rank  = 14;
+    optional sint64                     group_score = 15;
+    optional bool                       role_out    = 16[default = false]; // 淘汰
+    repeated uint32                     buff_list   = 17;
+    optional bool                       in_match    = 18[default = false];
+    optional sint32                     member_limit = 19; // 半决赛名单限制
+    optional sfixed64                   next_match_time = 20; // 下一轮匹配时间(0则不显示)
+    optional sfixed64                   finish_timestamp = 21; // 结果处理结束时间
+}
+
+// 社团争霸报名
+message SIGN_UP_GROUP_HEGEMONY_REQ
+{
+    optional uint32 group_id   = 10;
+    optional string group_name = 11;
+}
+
+message SIGN_UP_GROUP_HEGEMONY_RSP
+{
+}
+
+// 匹配(预赛)
+message MATCH_GROUP_HEGEMONY_REQ
+{
+    optional uint32 role_id   = 10;
+    optional string role_name = 11;
+    optional uint32 group_id  = 12;
+}
+
+message MATCH_GROUP_HEGEMONY_RSP
+{
+}
+
+message CANCEL_GROUP_HEGEMONY_MATCH_REQ
+{
+    optional uint32 role_id   = 10;
+}
+
+message CANCEL_GROUP_HEGEMONY_MATCH_RSP
+{
+}
+
+// 开始战斗通知
+message START_GROUP_HEGEMONY_NOTICE
+{
+    optional string ip         = 1;
+    optional sint32 port       = 2;
+    optional string sign       = 3;
+    optional uint64 scene_guid = 4;
+    optional float  last_hp          = 5[default = 100.0];
+    optional float  opponent_last_hp = 6[default = 100.0];
+    repeated uint32 buff_list        = 7;
+    repeated uint32 opponent_buff_list = 8;
+}
+
+// 结算
+message COMPLETE_GROUP_HEGEMONY_REQ
+{
+    optional bool   win        = 1[default = false];
+    optional float  last_hp    = 2;
+    optional uint64 scene_guid = 3; 
+    optional Common.PlayerBattleInfo player_battle_info = 4;
+    optional uint32 role_id    = 10;
+}
+
+message COMPLETE_GROUP_HEGEMONY_RSP
+{
+    optional uint32     buff  = 1;
+    optional bool       win   = 2[default = false];
+    optional sint32     score = 3;
+}
+
+message FINISH_GROUP_HEGEMONY_NOTICE
+{
+    optional bool   win                    = 1[default = false];
+    optional bool   opponent_not_ready     = 2[default = false];
+    optional uint32 buff                   = 3;
+    optional sint32 score                  = 4;
+}
+
+// 查看本社团角色的积分情况
+message QUERY_GROUP_ROLE_HEGEMONY_SCORE_REQ
+{
+    repeated uint32 role_id_list = 10;
+}
+
+message QUERY_GROUP_ROLE_HEGEMONY_SCORE_RSP
+{
+    repeated Common.RoleBrief role_list = 1;
+}
+
+// 查询指派名单
+message QUERY_GROUP_HEGEMONY_MEMBER_REQ
+{
+    optional uint32 group_id            = 10;
+}
+
+message QUERY_GROUP_HEGEMONY_MEMBER_RSP
+{
+    repeated Common.RoleBrief member_list = 1;
+    repeated Common.RoleBrief other_role_list = 2;
+    repeated uint32           admin_list  = 3;
+    optional uint32           captain     = 4;
+}
+
+// 指派名单
+message SET_GROUP_HEGEMONY_MEMBER_REQ
+{
+    repeated uint32 role_id_list        = 1;
+    
+    optional uint32 group_id            = 10;
+    repeated Common.RoleBrief role_list = 11;
+}
+
+message SET_GROUP_HEGEMONY_MEMBER_RSP
+{
+    
+}
+
+// 自己参与(在关闭指派之后)
+message PARTICIPATE_GROUP_HEGEMONY_REQ
+{
+    optional uint32           group_id       = 10;
+    optional Common.RoleBrief role_brief     = 11;
+}
+
+message PARTICIPATE_GROUP_HEGEMONY_RSP
+{
+}
+
+// 自动匹配完通知
+message READY_GROUP_HEGEMONY_NOTICE
+{
+    optional bool bye = 1[default = false];
+}
+
+// 应战
+message READY_GROUP_HEGEMONY_REQ
+{
+    optional uint32     role_id = 1;
+}
+
+message READY_GROUP_HEGEMONY_RSP
+{
+}
+
+// 排行榜
+message QUERY_GROUP_HEGEMONY_RANK_REQ
+{
+    optional Common.GroupHegemonyStage stage = 1[default = GROUP_HEGEMONY_QUALIFIERS];
+    
+    optional uint32 group_id = 10;
+    optional uint32 role_id  = 11;
+}
+
+message QUERY_GROUP_HEGEMONY_RANK_RSP
+{
+    optional Common.RankTable   group_rank_table = 1;
+    optional Common.RankTable   role_rank_table  = 2;
+    optional sint32             group_rank       = 3;
+    optional sint32             role_rank        = 4;
+    optional uint64             group_score      = 5;
+    optional uint64             role_score       = 6;
+    optional Common.GroupHegemonyStage stage     = 7[default = GROUP_HEGEMONY_QUALIFIERS];
+}
+
+message QUERY_GROUP_HEGEMONY_HISTORY_RANK_REQ
+{
+}
+
+message QUERY_GROUP_HEGEMONY_HISTORY_RANK_RSP
+{
+    optional Common.GroupHegemonyHistoryRank history_rank = 1;
+}
+
+// 社团争霸奖励
+message QUERY_GROUP_HEGEMONY_AWARD_REQ
+{
+    
+}
+
+message QUERY_GROUP_HEGEMONY_AWARD_RSP
+{
+    repeated Common.GroupHegemonyAward award_list = 1;
+}
+
+// 领奖
+message AWARD_GROUP_HEGEMONY_REQ
+{
+    optional uint32 id = 1;
+}
+
+message AWARD_GROUP_HEGEMONY_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15; 
+}
+
+// 商店
+message QUERY_GROUP_HEGEMONY_SHOP_REQ
+{
+}
+
+message QUERY_GROUP_HEGEMONY_SHOP_RSP
+{
+    optional Common.GroupHegemonyShop shop           = 1;
+    optional sint32                   item_count     = 2;
+}
+
+message REFRESH_GROUP_HEGEMONY_SHOP_REQ
+{
+    
+}
+
+message REFRESH_GROUP_HEGEMONY_SHOP_RSP
+{
+    optional Common.GroupHegemonyShop shop           = 1;
+    optional Common.RoleInfo          diff_role_info = 15;
+}
+
+message BUY_GROUP_HEGEMONY_SHOP_REQ
+{
+    optional sint32 idx  = 1;  
+}
+
+message BUY_GROUP_HEGEMONY_SHOP_RSP
+{
+    optional Common.GroupHegemonyShop shop           = 1;
+    optional sint32                   item_count     = 2;
+    optional Common.RoleInfo          diff_role_info = 15;
+}
+
+// 服务器协议
+message GROUP_HEGEMONY_RANK_NOTICE
+{
+    optional Common.GroupHegemonyStage stage    = 1[default = GROUP_HEGEMONY_QUALIFIERS];
+    optional sint32                    rank     = 2;
+    optional uint32                    group_id = 3;
+}
+
+message GROUP_HEGEMONY_TOP_GROUP_NOTICE
+{
+    repeated string group_list = 1;
+}
+
+message GROUP_HEGEMONY_ROLE_RANK_NOTICE
+{
+    optional uint32 role_id = 1;
+    optional sint32 rank    = 2;
+}

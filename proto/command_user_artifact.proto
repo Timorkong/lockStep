@@ -1,0 +1,128 @@
+// 神器协议
+
+import "common_pack_item.proto";
+import "common_role.proto";
+
+package Cmd.User;
+
+// 神器合成
+message EXCHANGE_ARTIFACT_REQ
+{
+    optional sint32 id = 1; // 碎片ID
+}
+
+message EXCHANGE_ARTIFACT_RSP
+{
+    optional Common.Pack pack = 1;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 神器分解
+message DECOMPOSE_ARTIFACT_REQ
+{
+    optional uint64 guid = 1; // 神器 gui id
+}
+
+message DECOMPOSE_ARTIFACT_RSP
+{
+    optional Common.Pack pack = 1;
+}
+
+// 穿神器
+message PUT_ON_ARTIFACT_REQ
+{
+    optional uint64 guid    = 1; // 神器guid
+    optional uint32 hero_id = 2;
+}
+
+message PUT_ON_ARTIFACT_RSP
+{
+    optional Common.HeroInfo hero_info = 1;
+    optional Common.Pack     pack      = 2;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 升级
+message UPGRADE_ARTIFACT_REQ
+{
+    optional uint32 hero_id     = 1;
+    optional sint32 add_prob    = 2;
+}
+
+message UPGRADE_ARTIFACT_RSP
+{
+    optional Common.HeroInfo hero_info = 1;
+    optional Common.Pack     pack      = 2;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 进阶
+message ADVANCE_ARTIFACT_REQ
+{
+    optional uint32 hero_id = 1;
+}
+
+message ADVANCE_ARTIFACT_RSP
+{
+    optional Common.HeroInfo hero_info = 1;
+    optional Common.Pack     pack      = 2;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 镶嵌
+message INLAY_ARTIFACT_REQ
+{
+    optional uint32 hero_id = 1;
+    optional uint64 guid    = 2; // 宝石的 GUID
+}
+
+message INLAY_ARTIFACT_RSP
+{
+    optional Common.HeroInfo hero_info = 1;
+    optional Common.Pack     pack      = 2;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 升级宝石
+message UPGRADE_GEM_ARTIFACT_REQ
+{
+    optional uint32 hero_id = 1;
+    optional uint64 guid    = 2; // 要升级的宝石的 GUID
+}
+
+message UPGRADE_GEM_ARTIFACT_RSP
+{
+    optional Common.HeroInfo hero_info = 1;
+    optional Common.Pack     pack      = 2;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 神器碎片分解
+message DECOMPOSE_ARTIFACT_DEBRIS_REQ
+{
+    optional uint32 item_id = 1;
+    optional sint32 count   = 2;
+}
+
+message DECOMPOSE_ARTIFACT_DEBRIS_RSP
+{
+    optional Common.Pack pack = 1;
+}
+
+// 神器效果设置
+message SET_ARTIFACT_BUFF_REQ
+{
+    repeated uint32 open_hero_list  = 1;
+    repeated uint32 close_hero_list = 2;
+}
+
+message SET_ARTIFACT_BUFF_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}

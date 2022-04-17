@@ -1,0 +1,17 @@
+// 本地化库表格
+
+package Table;
+
+// 本地化文本
+message LOCALIZE_WORD
+{
+    optional string	key				= 1; // 键
+	optional string detail			= 2; // 字段名
+	optional string src				= 3; // 来源
+	optional string target			= 4; // 目标语言
+}
+
+message LOCALIZE_WORD_ARRAY
+{
+    repeated LOCALIZE_WORD rows = 1;
+}

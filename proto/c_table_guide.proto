@@ -1,0 +1,40 @@
+// 签到奖励
+
+import "common_game_res.proto";
+
+package Table;
+
+enum GuideEvent
+{
+	HasAcceptableMission	= 1;
+    AcceptMission     		= 2;
+	GetMissionAward    		= 3;
+	
+	WidgetClick				= 10;
+}
+
+enum GuideArrowPos
+{
+	Up		= 1;
+	Down	= 2;
+	Left	= 3;
+	Right	= 4;
+}
+
+message GUIDE
+{
+    optional uint32         id         	= 1;	
+	optional GuideEvent 	show_event 	= 2;
+	optional uint32			show_event_params	= 3;
+	optional uint32			sel_widget_id		= 4;
+	optional uint32			sel_widget_index	= 5;
+	optional GuideArrowPos	arrow_pos			= 6;
+	optional string 		sel_content			= 7;
+	
+}
+
+message GUIDE_ARRAY
+{
+    repeated GUIDE rows    = 1;
+}
+

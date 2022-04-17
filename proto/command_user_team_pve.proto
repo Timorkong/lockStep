@@ -1,0 +1,151 @@
+// 组队PVE
+
+import "common_role.proto";
+import "common_game_res.proto";
+
+package Cmd.User;
+
+// 查询周安排
+message QUERY_TEAM_PVE_SCHEDULE_REQ
+{
+}
+
+message QUERY_TEAM_PVE_SCHEDULE_RSP
+{
+    repeated uint32 easy_schedule   = 1;
+    repeated uint32 hard_schedule   = 2;
+
+    // 当天周几(直接作为上面排期的序号)
+    optional sint32 wday            = 3;
+
+    // 当日可玩次数
+    optional sint32 easy_count      = 4;
+    optional sint32 hard_count      = 5;
+
+    // 难度系数
+    optional double factor          = 6;
+    // 开服星期数
+    optional sint32 weeks           = 7;
+}
+
+// 查询组队房间
+message QUERY_TEAM_PVE_ROOM_LIST_REQ
+{
+    optional int32 lev = 1; // 1-简单 2-困难
+}
+
+message TeamPVERoomInfo
+{
+    optional uint32             id          = 1;
+    repeated Common.RoleInfo    member_list = 2;
+    optional sint32             lev         = 3;
+    repeated uint32             robot_list  = 4;
+}
+
+message QUERY_TEAM_PVE_ROOM_LIST_RSP
+{
+    repeated TeamPVERoomInfo room_list = 1;
+}
+
+// 进入组队房间
+message JOIN_TEAM_PVE_ROOM_REQ
+{
+    optional uint32 room_id = 1;
+}
+
+message JOIN_TEAM_PVE_ROOM_RSP
+{
+    optional TeamPVERoomInfo room_info  = 1;
+}
+
+// 离开组队房间
+message LEAVE_TEAM_PVE_ROOM_REQ
+{
+}
+
+message LEAVE_TEAM_PVE_ROOM_RSP
+{
+}
+
+// 创建组队房间
+message CREATE_TEAM_PVE_ROOM_REQ
+{
+    optional int32 lev = 1; // 1-简单 2-困难
+}
+
+message CREATE_TEAM_PVE_ROOM_RSP
+{
+    optional TeamPVERoomInfo room_info  = 1;
+}
+
+// 房间状态通知
+message TEAM_PVE_ROOM_INFO_NOTICE
+{
+    optional TeamPVERoomInfo room_info  = 1;
+}
+
+// 房主T人
+message KICK_TEAM_PVE_ROOM_MEMBER_REQ
+{
+    optional uint32 member_id   = 1;
+}
+
+message KICK_TEAM_PVE_ROOM_MEMBER_RSP
+{
+}
+
+// 邀请
+message INVITE_TEAM_PVE_ROOM_MEMBER_REQ
+{
+}
+
+message INVITE_TEAM_PVE_ROOM_MEMBER_RSP
+{
+}
+
+// 快速加入
+message QUICK_JOIN_TEAM_PVE_ROOM_REQ
+{
+    optional int32 lev = 1; // 1-简单 2-困难
+}
+
+message QUICK_JOIN_TEAM_PVE_ROOM_RSP
+{
+    optional TeamPVERoomInfo room_info  = 1;
+}
+
+// 开战！
+message START_TEAM_PVE_REQ
+{
+}
+
+message START_TEAM_PVE_RSP
+{
+}
+
+// 结算
+message PASS_TEAM_PVE_REQ
+{
+    optional sint32 evaluation  = 1;    // 副本评星
+    optional int32 rank         = 2;    // 排名
+}
+
+message PASS_TEAM_PVE_RSP
+{
+    repeated Common.GameRes award_list      = 1;
+    //optional sint32         evaluation      = 2;
+    repeated Common.GameRes star_award_list = 3;    // 评星奖励
+    repeated Common.GameRes rank_award_list = 4;    // 排名奖励
+
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 退出
+message QUIT_TEAM_PVE_REQ
+{
+}
+
+message QUIT_TEAM_PVE_RSP
+{
+}
+

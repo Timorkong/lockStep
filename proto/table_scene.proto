@@ -1,0 +1,52 @@
+// 场景表
+
+import "common_scene.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+// 副本怪物配置
+message InstanceMonster
+{
+    optional uint32 id      = 1;
+    optional uint32 lev     = 2;
+    optional uint32 count   = 3;
+}
+
+message SCENE
+{
+    optional uint32             id      = 1;
+    optional string             name    = 2;
+    optional Common.SceneType   type    = 3;
+
+    // 主场景配置
+    optional uint32     scene_prev          = 7;
+    optional uint32     scene_next          = 8;
+    optional uint32     scene_next_cond     = 9;
+    repeated uint32     instance_list       = 10;
+
+    // 副本场景配置
+    optional Common.InstanceType    instance_type   = 11;
+    repeated Common.GameRes         instance_award  = 13;
+    repeated Common.GameRes         instance_1_star_award = 14;
+    repeated Common.GameRes         instance_2_star_award = 15;
+    repeated Common.GameRes         instance_3_star_award = 16;
+
+    // 随机奖励
+    optional sint32         probability     = 23; // 概率
+    repeated Common.GameRes rand_award_list = 24; // 奖励列表
+    
+    // 组队PVE排名奖励
+    repeated Common.GameRes team_pve_top_rank_award_list = 26;
+    repeated sint32         team_probability             = 27;
+
+    // 副本开启前置任务条件，由任务表完成条件反推过来，
+    // 在读取表格时候填充到本字段，不再由副本表维护。
+    optional uint32                 instance_cond   = 112;
+}
+
+message SCENE_ARRAY
+{
+    repeated SCENE rows = 1;
+}
+

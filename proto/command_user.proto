@@ -1,0 +1,2165 @@
+// 用户指令
+
+package Cmd.User;
+
+enum CMD
+{
+    // 不允许枚举值重复
+    //option allow_alias                  = false;
+
+	// 无效的CMD
+	CMD_INVALID                           = 0xFFFF;
+	
+    ////////// 系统相关协议 //////////
+
+    // 心跳
+    CMD_HEART_BEAT_REQ                    = 0x1000;
+    CMD_HEART_BEAT_RSP                    = 0x1001;
+
+    // GM指令
+    CMD_GM_COMMAND_REQ                    = 0x1002;
+    CMD_GM_COMMAND_RSP                    = 0x1003;
+
+    // 转发协议
+    CMD_TRANSMIT_REQ                      = 0x1004;
+    CMD_TRANSMIT_NOTICE                   = 0x1005;
+
+    // MessageBox消息通知
+    //CMD_MESSAGE_BOX_NOTICE              = 0x1006;
+    CMD_MESSAGE_BOX_NOTICE                = 0x1007;
+
+    // 事件通知
+    //CMD_EVENT_NOTICE                    = 0x100A;
+    CMD_EVENT_NOTICE                      = 0x100B;
+
+    // 保持在线
+    CMD_KEEP_ALIVE_REQ                    = 0x100C;
+    CMD_KEEP_ALIVE_RSP                    = 0x100D;
+
+    CMD_SEND_FRMAE_DATA_REQ               = 0x1010;
+
+    CMD_SYNC_FRAME_NOTICE                 = 0x1011;
+
+    ////////// 登陆相关协议 //////////
+
+    // 选择角色登录
+    CMD_LOGIN_REQ                         = 0x1100;
+    CMD_LOGIN_RSP                         = 0x1101;
+
+    // 踢下线通知
+    //CMD_KICK_NOTICE                     = 0x1102;
+    CMD_KICK_NOTICE                       = 0x1103;
+
+    // 角色鉴权失败通知
+    //CMD_AUTH_FAIL_NOTICE                = 0x1104;
+    CMD_AUTH_FAIL_NOTICE                  = 0x1105;
+
+    ////////// 场景和副本相关协议 //////////
+    // 主场景跳转
+    CMD_CHANGE_SCENE_REQ                  = 0x1210;
+    CMD_CHANGE_SCENE_RSP                  = 0x1211;
+
+    // 查询副本列表
+    CMD_QUERY_INSTANCE_LIST_REQ           = 0x1220;
+    CMD_QUERY_INSTANCE_LIST_RSP           = 0x1221;
+
+    // 进入副本
+    CMD_ENTER_INSTANCE_REQ                = 0x1222;
+    CMD_ENTER_INSTANCE_RSP                = 0x1223;
+
+    // 离开副本
+    CMD_LEAVE_INSTANCE_REQ                = 0x1224;
+    CMD_LEAVE_INSTANCE_RSP                = 0x1225;
+
+    // 通关副本
+    CMD_PASS_INSTANCE_REQ                 = 0x1226;
+    CMD_PASS_INSTANCE_RSP                 = 0x1227;
+
+    // 清空当天精英副本挑战记录
+    CMD_REFRESH_TODAY_CHALL_HISTORY_REQ   = 0x1228;
+    CMD_REFRESH_TODAY_CHALL_HISTORY_RSP   = 0x1229;
+    
+    // 扫荡副本
+    CMD_SWEEP_INSTANCE_REQ                = 0x122A;
+    CMD_SWEEP_INSTANCE_RSP                = 0x122B;
+    
+    // 切换场景通知
+    //CMD_CHANGE_SCENE_NOTICE             = 0x12A0; // 保留
+    CMD_CHANGE_SCENE_NOTICE               = 0x12A1;
+
+    // 更新场景通知
+    //CMD_UPDATE_SCENE_NOTICE             = 0x12A2; // 保留
+    CMD_UPDATE_SCENE_NOTICE               = 0x12A3;
+    
+    // 移动
+    CMD_MOVE_REQ                          = 0x12B0;
+    CMD_MOVE_NOTICE                       = 0x12B1;
+    
+    ////////// 道具相关协议 //////////
+
+    // 查询包裹
+    CMD_QUERY_PACK_REQ                    = 0x1300;
+    CMD_QUERY_PACK_RSP                    = 0x1301;
+
+    // 穿装备
+    //CMD_EQUIP_REQ                       = 0x1302;
+    //CMD_EQUIP_RSP                       = 0x1303;
+
+    // 脱装备
+    //CMD_UNEQUIP_REQ                     = 0x1304;
+    //CMD_UNEQUIP_RSP                     = 0x1305;
+
+    // 装备升级
+    //CMD_EQUIP_UPGRADE_REQ               = 0x1306;
+    //CMD_EQUIP_UPGRADE_RSP               = 0x1307;
+
+    // 宝石升级
+    //CMD_GEM_SYNTHESISE_REQ              = 0x1308;
+    //CMD_GEM_SYNTHESISE_RSP              = 0x1309;
+
+    // 宝石镶嵌
+    //CMD_GEM_INLAY_REQ                   = 0x130A;
+    //CMD_GEM_INLAY_RSP                   = 0x130B;
+
+    // 宝石摘除
+    //CMD_GEM_REMOVE_REQ                  = 0x130C;
+    //CMD_GEM_REMOVE_RSP                  = 0x130D;
+
+    // 整理背包
+    CMD_TIDY_PACK_REQ                     = 0x130E;
+    CMD_TIDY_PACK_RSP                     = 0x130F;
+
+    // 装备合成
+    //CMD_EQUIP_SYNTHESISE_REQ            = 0x1310;
+    //CMD_EQUIP_SYNTHESISE_RSP            = 0x1311;
+
+    // 卖出道具
+    //CMD_SELL_ITEM_REQ                   = 0x1320;
+    //CMD_SELL_ITEM_RSP                   = 0x1321;
+
+    // 使用道具
+    CMD_USE_ITEM_REQ                      = 0x1322;
+    CMD_USE_ITEM_RSP                      = 0x1323;
+
+    // 卖出道具
+    CMD_SELL_ITEM_REQ                     = 0x1324;
+    CMD_SELL_ITEM_RSP                     = 0x1325;
+   
+    // 购买道具
+    CMD_BUY_ITEM_REQ                      = 0x1326;
+    CMD_BUY_ITEM_RSP                      = 0x1327;
+    
+    // 道具一键合成
+    CMD_COMPOSITE_ALL_ITEM_REQ            = 0x1328;
+    CMD_COMPOSITE_ALL_ITEM_RSP            = 0x1329;
+
+    // 道具获得通知
+    //CMD_GET_EQUIP_NOTICE                = 0x1324;
+    //CMD_GET_ITEM_NOTICE                 = 0x1325;
+
+    // 使用加倍产出道具
+    CMD_USE_MULTIPLE_ITEM_REQ             = 0x1330;
+    CMD_USE_MULTIPLE_ITEM_RSP             = 0x1331;
+
+    CMD_QUERY_MULTIPLE_ITEM_STATE_REQ     = 0x1332;
+    CMD_QUERY_MULTIPLE_ITEM_STATE_RSP     = 0x1333;
+
+    // 查询收集
+    CMD_QUERY_COLLECTION_LIST_REQ         = 0x1340;
+    CMD_QUERY_COLLECTION_LIST_RSP         = 0x1341;
+
+    // 兑换收集
+    CMD_EXCHANGE_TREASURE_REQ             = 0x1342;
+    CMD_EXCHANGE_TREASURE_RSP             = 0x1343;
+
+    // 查询地下商店
+    CMD_QUERY_COLLECTION_SHOP_REQ         = 0x1350;
+    CMD_QUERY_COLLECTION_SHOP_RSP         = 0x1351;
+
+    // 购买地下商店物品
+    CMD_BUY_COLLECTION_SHOP_GOODS_REQ     = 0x1352;
+    CMD_BUY_COLLECTION_SHOP_GOODS_RSP     = 0x1353;
+
+    // 刷新商店商品
+    CMD_REFRESH_COLLECTION_SHOP_REQ       = 0x1354;
+    CMD_REFRESH_COLLECTION_SHOP_RSP       = 0x1355;
+   
+    // 采集
+    CMD_COLLECTION_DATA_REQ               = 0x1360;
+    CMD_COLLECTION_DATA_RSP               = 0x1361;
+
+    // 装备升级
+    CMD_UPGRADE_EQUIP_REQ                 = 0x13A0;
+    CMD_UPGRADE_EQUIP_RSP                 = 0x13A1;
+
+    // 镶嵌宝石
+    CMD_INLAY_GEM_REQ                     = 0x13A2;
+    CMD_INLAY_GEM_RSP                     = 0x13A3;
+    
+    // 装备升星
+    CMD_ADD_EQUIP_STAR_REQ                = 0x13A4;
+    CMD_ADD_EQUIP_STAR_RSP                = 0x13A5;
+
+    // 穿装备
+    CMD_PUT_ON_EQUIP_REQ                  = 0x13B0;
+    CMD_PUT_ON_EQUIP_RSP                  = 0x13B1;
+    
+    // 脱装备
+    CMD_TAKE_OFF_EQUIP_REQ                = 0x13B2;
+    CMD_TAKE_OFF_EQUIP_RSP                = 0x13B3;
+
+    // 装备进阶
+    CMD_ADVANCED_EQUIP_REQ                = 0x13B4;
+    CMD_ADVANCED_EQUIP_RSP                = 0x13B5;
+
+    // 宝石升级
+    CMD_UPGRADE_GEM_REQ                   = 0x13B6;
+    CMD_UPGRADE_GEM_RSP                   = 0x13B7;
+
+    // 道具兑换
+    CMD_EXCHANGE_ITEM_REQ                 = 0x13B8;
+    CMD_EXCHANGE_ITEM_RSP                 = 0x13B9;
+
+    // 检查背包是否已满
+    CMD_CHECK_PACK_FULL_REQ               = 0x13BA;
+    CMD_CHECK_PACK_FULL_RSP               = 0x13BB;
+
+    // 分解道具
+    CMD_DECOMPOSITION_ITEM_REQ            = 0x13BC;
+    CMD_DECOMPOSITION_ITEM_RSP            = 0x13BD;
+    
+    ////////// 角色状态 //////////
+
+    // 查询武将信息
+    //CMD_QUERY_HERO_LIST_REQ             = 0x1400;
+    //CMD_QUERY_HERO_LIST_RSP             = 0x1401;
+
+    // 设置出战武将
+    //CMD_ACTIVATE_SLAVE_HERO_REQ         = 0x1402;
+    //CMD_ACTIVATE_SLAVE_HERO_RSP         = 0x1403;
+
+    // 取消出战
+    //CMD_DEACTIVATE_SLAVE_HERO_REQ       = 0x1404;
+    //CMD_DEACTIVATE_SLAVE_HERO_RSP       = 0x1405;
+
+    // 查询招募
+    //CMD_QUERY_RECRUIT_LIST_REQ          = 0x14A0;
+    //CMD_QUERY_RECRUIT_LIST_RSP          = 0x14A1;
+
+    // 招募博弈
+    //CMD_RECRUIT_GAME_REQ                = 0x14A2;
+    //CMD_RECRUIT_GAME_RSP                = 0x14A3;
+
+    // 招募
+    //CMD_RECRUIT_REQ                     = 0x14A4;
+    //CMD_RECRUIT_RSP                     = 0x14A5;
+
+    // 武将对话
+    //CMD_HERO_TALK_REQ                   = 0x14B0;
+    //CMD_HERO_TALK_RSP                   = 0x14B1;
+
+    // 武将送礼
+    //CMD_HERO_GIFT_REQ                   = 0x14B2;
+    //CMD_HERO_GIFT_RSP                   = 0x14B3;
+
+    // 角色死亡通知
+    CMD_ROLE_DIE_NOTICE_REQ               = 0x1400;
+    CMD_ROLE_DIE_NOTICE_RSP               = 0x1401;
+
+    // 查询英雄信息
+    CMD_QUERY_HERO_INFO_REQ               = 0x1402;
+    CMD_QUERY_HERO_INFO_RSP               = 0x1403;
+    
+    ////////// 技能相关协议 //////////
+
+    // 技能学习
+    //CMD_LEARN_SKILL_REQ                 = 0x1500;
+    //CMD_LEARN_SKILL_RSP                 = 0x1501;
+
+    // 技能升级
+    CMD_UPGRADE_SKILL_REQ                 = 0x1502;
+    CMD_UPGRADE_SKILL_RSP                 = 0x1503;
+
+    // 技能进阶
+    CMD_ADVANCED_SKILL_REQ                = 0x1504;
+    CMD_ADVANCED_SKILL_RSP                = 0x1505;
+
+    // 技能点查询
+    CMD_QUERY_SKILL_POINT_REQ             = 0x1506;
+    CMD_QUERY_SKILL_POINT_RSP             = 0x1507;
+
+    // 技能点购买
+    CMD_BUY_SKILL_POINT_REQ               = 0x1508;
+    CMD_BUY_SKILL_POINT_RSP               = 0x1509;
+    
+    // 经络查询
+    //CMD_QUERY_MERIDIAN_REQ              = 0x15A0;
+    //CMD_QUERY_MERIDIAN_RSP              = 0x15A1;
+    
+    // 开启经络节点
+    //CMD_ENABLE_MERIDIAN_NODE_REQ        = 0x15A2;
+    //CMD_ENABLE_MERIDIAN_NODE_RSP        = 0x15A3;
+
+    // 传功查询元气
+    //CMD_INHERIT_SPIRIT_QUERY_REQ        = 0x15B0;
+    //CMD_INHERIT_SPIRIT_QUERY_RSP        = 0x15B1;
+
+    // 传功
+    //CMD_INHERIT_SPIRIT_REQ              = 0x15B2;
+    //CMD_INHERIT_SPIRIT_RSP              = 0x15B3;
+
+    ////////// 活动相关协议 //////////
+
+    // 淘宝查询
+    //CMD_QUERY_TAOBAO_REQ                = 0x1600;
+    //CMD_QUERY_TAOBAO_RSP                = 0x1601;
+
+    // 淘宝
+    //CMD_TAOBAO_REQ                      = 0x1602;
+    //CMD_TAOBAO_RSP                      = 0x1603;
+
+    // 淘宝收货
+    //CMD_FINISH_TAOBAO_REQ               = 0x1604;
+    //CMD_FINISH_TAOBAO_RSP               = 0x1605;
+
+    // 转盘
+    //CMD_QUERY_LOTTERY_REQ               = 0x1610;
+    //CMD_QUERY_LOTTERY_RSP               = 0x1611;
+
+    // 奖励翻倍
+    //CMD_DOUBLE_LOTTERY_AWARD_REQ        = 0x1612;
+    //CMD_DOUBLE_LOTTERY_AWARD_RSP        = 0x1613;
+
+    // 抽奖
+    //CMD_LOTTERY_REQ                     = 0x1614;
+    //CMD_LOTTERY_RSP                     = 0x1615;
+
+    // 武馆查询
+    //CMD_QUERY_DOJO_REQ                  = 0x1620;
+    //CMD_QUERY_DOJO_RSP                  = 0x1621;
+
+    // 武馆训练
+    //CMD_DOJO_TRAIN_REQ                  = 0x1622;
+    //CMD_DOJO_TRAIN_RSP                  = 0x1623;
+
+    // 开启训练位
+    //CMD_UNLOCK_DOJO_PLACE_REQ           = 0x1624;
+    //CMD_UNLOCK_DOJO_PLACE_RSP           = 0x1625;
+
+    // 清训练位CD
+    //CMD_CLEAR_DOJO_PLACE_CD_REQ         = 0x1626;
+    //CMD_CLEAR_DOJO_PLACE_CD_RSP         = 0x1627;
+
+    // 征收保护费
+    //CMD_QUERY_PROTECT_MONEY_REQ         = 0x1630;
+    //CMD_QUERY_PROTECT_MONEY_RSP         = 0x1631;
+
+    //CMD_FETCH_PROTECT_MONEY_REQ         = 0x1632;
+    //CMD_FETCH_PROTECT_MONEY_RSP         = 0x1633;
+
+    //CMD_CLEAR_PROTECT_MONEY_CD_REQ      = 0x1634;
+    //CMD_CLEAR_PROTECT_MONEY_CD_RSP      = 0x1635;
+
+    // 每日签到
+    //CMD_QUERY_DAILY_AWARD_REQ           = 0x1640;
+    //CMD_QUERY_DAILY_AWARD_RSP           = 0x1641;
+
+    //CMD_FETCH_DAILY_AWARD_REQ           = 0x1642;
+    //CMD_FETCH_DAILY_AWARD_RSP           = 0x1643;
+
+    // 商城购买
+    //CMD_BUY_MALL_GOODS_REQ              = 0x1644;
+    //CMD_BUY_MALL_GOODS_RSP              = 0x1645;
+
+    ////////// 竞技场相关协议 //////////
+    CMD_QUERY_ARENA_INFO_REQ              = 0x1700;
+    CMD_QUERY_ARENA_INFO_RSP              = 0x1701;
+
+    CMD_ARENA_FIGHT_REQ                   = 0x1702;
+    CMD_ARENA_FIGHT_RSP                   = 0x1703;
+
+    CMD_CLEAR_ARENA_CD_REQ                = 0x1704;
+    CMD_CLEAR_ARENA_CD_RSP                = 0x1705;
+
+    CMD_RESET_ARENA_CHANLLENGE_REQ        = 0x1706;
+    CMD_RESET_ARENA_CHANLLENGE_RSP        = 0x1707;
+
+    ////////// 武道会相关协议 //////////
+    CMD_QUERY_TOURNAMENT_INFO_REQ       = 0x1710;
+    CMD_QUERY_TOURNAMENT_INFO_RSP       = 0x1711;
+
+    CMD_OCCUPY_TOURNAMENT_RANK_REQ      = 0x1712;
+    CMD_OCCUPY_TOURNAMENT_RANK_RSP      = 0x1713;
+
+    ////////// 打劫 //////////
+    CMD_QUERY_HEROS_FORMATIONS_REQ        = 0x1720;
+    CMD_QUERY_HEROS_FORMATIONS_RSP        = 0x1721;
+
+    CMD_ROB_AWARD_REQ                     = 0x1722;
+    CMD_ROB_AWARD_RSP                     = 0x1723;
+
+    CMD_QUERY_NEARBY_PLAYERS_REQ          = 0x1724;
+    CMD_QUERY_NEARBY_PLAYERS_RSP          = 0x1725;
+    
+    CMD_REFRESH_NEARBY_PLAYERS_REQ        = 0x1726;
+    CMD_REFRESH_NEARBY_PLAYERS_RSP        = 0x1727;
+    
+    ////////// 社会关系相关协议 //////////
+    CMD_QUERY_FRIEND_LIST_REQ             = 0x1800;
+    CMD_QUERY_FRIEND_LIST_RSP             = 0x1801;
+
+    CMD_ADD_FRIEND_REQ                    = 0x1802;
+    CMD_ADD_FRIEND_RSP                    = 0x1803;
+
+    CMD_REMOVE_FRIEND_REQ                 = 0x1804;
+    CMD_REMOVE_FRIEND_RSP                 = 0x1805;
+    
+    CMD_CHECK_FRIEND_ADDED_REQ            = 0x1806;
+    CMD_CHECK_FRIEND_ADDED_RSP            = 0x1807;
+
+    CMD_QUERY_MOMO_COUNT_REQ              = 0x1810;
+    CMD_QUERY_MOMO_COUNT_RSP              = 0x1811;
+    
+    CMD_MOMO_FRIEND_REQ                   = 0x1812;
+    CMD_MOMO_FRIEND_RSP                   = 0x1813;
+    
+    CMD_MOMO_AWARD_REQ                    = 0x1814;
+    CMD_MOMO_AWARD_RSP                    = 0x1815;
+    
+    CMD_MOMO_AWARD_NOTICE                 = 0x1816;
+
+    CMD_REMOVE_FRIEND_LIST_REQ            = 0x1817;
+    CMD_REMOVE_FRIEND_LIST_RSP            = 0x1818;
+
+    ////////// 任务相关协议 //////////
+    CMD_MISSION_ACCEPT_REQ                = 0x1900;
+    CMD_MISSION_ACCEPT_RSP                = 0x1901;
+
+    CMD_MISSION_AWARD_REQ                 = 0x1902;
+    CMD_MISSION_AWARD_RSP                 = 0x1903;
+
+    CMD_QUERY_CHALL_MISSION_REQ           = 0x1904;
+    CMD_QUERY_CHALL_MISSION_RSP           = 0x1905;
+
+    ////////// 日常任务相关协议 //////////
+    CMD_ACCEPT_DAILY_MISSION_REQ          = 0x1940;
+    CMD_ACCEPT_DAILY_MISSION_RSP          = 0x1941;
+
+    CMD_QUERY_DAILY_MISSION_REQ           = 0x1944;
+    CMD_QUERY_DAILY_MISSION_RSP           = 0x1945;
+
+    CMD_AWARD_DAILY_MISSION_REQ           = 0x1946;
+    CMD_AWARD_DAILY_MISSION_RSP           = 0x1947;
+
+    CMD_RESET_DAILY_MISSION_REQ           = 0x1948;
+    CMD_RESET_DAILY_MISSION_RSP           = 0x1949;
+
+    ////////// 活跃度 //////////
+    CMD_QUERY_ACTIVITY_REQ                = 0x1960;
+    CMD_QUERY_ACTIVITY_RSP                = 0x1961;
+
+    CMD_AWARD_ACTIVITY_REQ                = 0x1962;
+    CMD_AWARD_ACTIVITY_RSP                = 0x1963;
+    
+    ////////// 地盘相关协议 //////////
+    CMD_QUERY_TERRITORY_REQ               = 0x1A00;
+    CMD_QUERY_TERRITORY_RSP               = 0x1A01;
+
+    CMD_UNLOCK_TERRITORY_CELL_REQ         = 0x1A02;
+    CMD_UNLOCK_TERRITORY_CELL_RSP         = 0x1A03;
+
+    CMD_COLLECT_TERRITORY_REQ             = 0x1A04;
+    CMD_COLLECT_TERRITORY_RSP             = 0x1A05;
+
+    CMD_COLLECT_CELL_REQ                  = 0x1A06;
+    CMD_COLLECT_CELL_RSP                  = 0x1A07;
+
+    CMD_JUMP_FORWARD_REQ                  = 0x1A08;
+    CMD_JUMP_FORWARD_RSP                  = 0x1A09;
+
+    CMD_UPGRADE_TERRITORY_CELL_REQ        = 0x1A10;
+    CMD_UPGRADE_TERRITORY_CELL_RSP        = 0x1A11;
+
+    CMD_OCCUPY_TERRITORY_HERO_CELL_REQ    = 0x1A12;
+    CMD_OCCUPY_TERRITORY_HERO_CELL_RSP    = 0x1A13;
+    
+    CMD_COLLECT_SUPPER_CELL_REQ           = 0x1A16;
+    CMD_COLLECT_SUPPER_CELL_RSP           = 0x1A17;
+
+    CMD_SUPPER_TERR_FIGHT_REQ             = 0x1A18;
+    CMD_SUPPER_TERR_FIGHT_RSP             = 0x1A19;
+
+    CMD_QUERY_SUPPER_TERR_REQ             = 0x1A1A;
+    CMD_QUERY_SUPPER_TERR_RSP             = 0x1A1B;
+
+    CMD_UNOCCUPY_TERRITORY_HERO_CELL_REQ  = 0x1A1C;
+    CMD_UNOCCUPY_TERRITORY_HERO_CELL_RSP  = 0x1A1D;
+    
+    CMD_CHANGE_TERR_HERO_OCCUPANT_REQ     = 0x1A1E;
+    CMD_CHANGE_TERR_HERO_OCCUPANT_RSP     = 0x1A1F;
+
+    CMD_TERR_ROB_AWARD_REQ                = 0x1A20;
+    CMD_TERR_ROB_AWARD_RSP                = 0x1A21;
+
+    ////////// 地盘摆摊协议 //////////
+
+    CMD_LOCK_TERR_STALL_REQ               = 0x1A22;
+    CMD_LOCK_TERR_STALL_RSP               = 0x1A23;
+
+    CMD_FRESH_TERR_STALL_QUALITY_REQ      = 0x1A24;
+    CMD_FRESH_TERR_STALL_QUALITY_RSP      = 0x1A25;
+
+    CMD_OCCUPY_TERR_STALL_REQ             = 0x1A26;
+    CMD_OCCUPY_TERR_STALL_RSP             = 0x1A27;
+
+    CMD_QUERY_GROUP_STALL_REQ             = 0x1A28;
+    CMD_QUERY_GROUP_STALL_RSP             = 0x1A29;
+
+    CMD_INVITE_TERR_STALL_DEFENDER_REQ    = 0x1A2A;
+    CMD_INVITE_TERR_STALL_DEFENDER_RSP    = 0x1A2B;
+
+    CMD_QUERY_TERR_STALL_INFO_REQ         = 0x1A2C;
+    CMD_QUERY_TERR_STALL_INFO_RSP         = 0x1A2D;
+
+    CMD_QUERY_TERR_STALL_INVITE_INFO_REQ  = 0x1A2E;
+    CMD_QUERY_TERR_STALL_INVITE_INFO_RSP  = 0x1A2F;
+   
+    CMD_RESPONSE_TERR_STALL_DEFENDER_REQ  = 0x1A30;
+    CMD_RESPONSE_TERR_STALL_DEFENDER_RSP  = 0x1A31;
+
+    CMD_ROB_TERR_STALL_REQ                = 0x1A32;
+    CMD_ROB_TERR_STALL_RSP                = 0x1A33;
+
+    CMD_QUERY_ROBBED_TERR_STALL_LOG_REQ   = 0x1A34;
+    CMD_QUERY_ROBBED_TERR_STALL_LOG_RSP   = 0x1A35;
+
+    CMD_RESPONSE_TERR_STALL_HELP_REQ      = 0x1A36;
+    CMD_RESPONSE_TERR_STALL_HELP_RSP      = 0x1A37;
+
+    CMD_BUY_TERR_STALL_COUNT_REQ          = 0x1A38;
+    CMD_BUY_TERR_STALL_COUNT_RSP          = 0x1A39;
+
+    // CMD_INVITE_INFO_NOTICE                = 0x1A3A;
+    CMD_INVITE_INFO_NOTICE                = 0x1A3B;
+
+    CMD_QUERY_ALL_TERR_STALL_STATE_REQ    = 0x1A3C;
+    CMD_QUERY_ALL_TERR_STALL_STATE_RSP    = 0x1A3D;
+    
+    CMD_CANCEL_TERR_STALL_HELP_REQ        = 0x1A3E;
+    CMD_CANCEL_TERR_STALL_HELP_RSP        = 0x1A3F;
+
+    CMD_QUERY_TERR_STALL_LEFT_BUY_COUNT_REQ = 0x1A40;
+    CMD_QUERY_TERR_STALL_LEFT_BUY_COUNT_RSP = 0x1A41;
+
+    // CMD_RESPONSE_DEFEND_INFO_NOTICE      = 0x1A42;
+    CMD_RESPONSE_DEFEND_INFO_NOTICE         = 0x1A43;
+
+    // CMD_RESPONSE_HELP_INFO_NOTICE           = 0x1A44;
+    CMD_RESPONSE_HELP_INFO_NOTICE           = 0x1A45;
+
+    CMD_QUERY_ALL_TERR_COUNT_REQ            = 0x1A46;
+    CMD_QUERY_ALL_TERR_COUNT_RSP            = 0x1A47;
+
+    CMD_CHECK_TERR_STALL_INVITE_INFO_REQ    = 0x1A48;
+    CMD_CHECK_TERR_STALL_INVITE_INFO_RSP    = 0x1A49;
+
+    // CMD_ROB_NOTICE                          = 0x1A50;
+    CMD_ROB_NOTICE                          = 0x1A51;
+
+    // CMD_STALL_FINISH_BY_ROBBED_NOTICE       = 0x1A52;
+    CMD_STALL_FINISH_BY_ROBBED_NOTICE       = 0x1A53;
+
+    ////////// 数值属性协议 //////////
+    //CMD_BUY_SP_REQ                      = 0x1A00;
+    //CMD_BUY_SP_RSP                      = 0x1A01;
+    
+    //CMD_RECHARGE_NOTICE                 = 0x1A02;
+    //CMD_RECHARGE_NOTICE                 = 0x1A03;
+
+    ////////// 聊天 //////////
+    //CMD_CHAT_REQ                          = 0x1B00;
+    //CMD_CHAT_RSP                          = 0x1B01;
+
+    //CMD_CHAT_NOTICE                     = 0x1B02;
+    CMD_CHAT_NOTICE                       = 0x1B03;
+
+    ////////// 排行榜 //////////
+    CMD_QUERY_RANK_TABLE_REQ              = 0x1D01;
+    CMD_QUERY_RANK_TABLE_RSP              = 0x1D02;
+
+    CMD_QUERY_EGG_RANK_CONFIG_REQ        = 0x1D03;
+    CMD_QUERY_EGG_RANK_CONFIG_RSP        = 0x1D04;
+
+    CMD_QUERY_EGG_ROBOT_RANK_REQ         = 0x1D05;
+    CMD_QUERY_EGG_ROBOT_RANK_RSP         = 0x1D06;
+
+
+    ////////// 英雄转职 //////////
+    CMD_QUERY_HERO_REQ                    = 0x1E00;
+    CMD_QUERY_HERO_RSP                    = 0x1E01;
+                                  
+    CMD_UNLOCK_HERO_REQ                   = 0x1E02;
+    CMD_UNLOCK_HERO_RSP                   = 0x1E03;
+                                  
+    CMD_TRANSFORM_HERO_REQ                = 0x1E04;
+    CMD_TRANSFORM_HERO_RSP                = 0x1E05;
+
+    CMD_CLEAR_TRANSFORM_CD_REQ            = 0x1E06;
+    CMD_CLEAR_TRANSFORM_CD_RSP            = 0x1E07;
+    
+    CMD_TRANSFORM_HERO_BY_CARD_REQ        = 0x1E08; 
+    CMD_TRANSFORM_HERO_BY_CARD_RSP        = 0x1E09;
+
+    CMD_ADVANCED_HERO_REQ                 = 0x1E10;
+    CMD_ADVANCED_HERO_RSP                 = 0x1E11;
+    
+    CMD_ADD_HERO_STAR_REQ                 = 0x1E12;
+    CMD_ADD_HERO_STAR_RSP                 = 0x1E13;
+
+    CMD_QUERY_HERO_COMBINATION_REQ        = 0x1E14;
+    CMD_QUERY_HERO_COMBINATION_RSP        = 0x1E15;
+
+    CMD_ACTIVE_HERO_COMBINATION_REQ       = 0x1E16;
+    CMD_ACTIVE_HERO_COMBINATION_RSP       = 0x1E17;
+    
+    CMD_LEVUP_HERO_COMBINATION_REQ        = 0x1E18;
+    CMD_LEVUP_HERO_COMBINATION_RSP        = 0x1E19;
+
+    CMD_QUERY_FELLOW_REQ                  = 0x1E20;
+    CMD_QUERY_FELLOW_RSP                  = 0x1E21;
+
+    CMD_SET_FELLOW_REQ                    = 0x1E22;
+    CMD_SET_FELLOW_RSP                    = 0x1E23;
+
+    CMD_UNLOCK_FELLOW_CELL_REQ            = 0x1E24;
+    CMD_UNLOCK_FELLOW_CELL_RSP            = 0x1E25;
+    
+    CMD_TAKE_OFF_FELLOW_REQ               = 0x1E26;
+    CMD_TAKE_OFF_FELLOW_RSP               = 0x1E27;
+   
+    CMD_TRANSFER_HERO_EXP_REQ             = 0x1E30;
+    CMD_TRANSFER_HERO_EXP_RSP             = 0x1E31;
+
+    CMD_QUERY_HERO_NUMERIC_REQ            = 0x1E40;
+    CMD_QUERY_HERO_NUMERIC_RSP            = 0x1E41;
+
+    CMD_REVERT_HERO_ADVANCED_REQ          = 0x1E42;
+    CMD_REVERT_HERO_ADVANCED_RSP          = 0x1E43;
+
+    CMD_AWAKE_LEV_UP_REQ                  = 0x1E44;
+    CMD_AWAKE_LEV_UP_RSP                  = 0x1E45;
+
+    CMD_AWAKE_HERO_REQ                    = 0x1E46;
+    CMD_AWAKE_HERO_RSP                    = 0x1E47;
+
+    CMD_CONSTELLATION_LEV_UP_REQ          = 0x1E48;
+    CMD_CONSTELLATION_LEV_UP_RSP          = 0x1E49;
+
+    CMD_QUERY_CONSTELLATION_INFO_REQ      = 0x1E4A;
+    CMD_QUERY_CONSTELLATION_INFO_RSP      = 0x1E4B;
+
+    CMD_INSTALL_CONSTELLATION_HERO_REQ    = 0x1E4C;
+    CMD_INSTALL_CONSTELLATION_HERO_RSP    = 0x1E4D;
+
+    CMD_SET_HERO_BUFFER_ID_REQ            = 0x1E4E;
+    CMD_SET_HERO_BUFFER_ID_RSP            = 0x1E4F;
+
+    CMD_UNINSTALL_CONSTELLATION_HERO_REQ  = 0x1E50;
+    CMD_UNINSTALL_CONSTELLATION_HERO_RSP  = 0x1E51;  
+
+    CMD_REBORN_HERO_REQ                   = 0x1E52;
+    CMD_REBORN_HERO_RSP                   = 0x1E53;
+
+    CMD_QUERY_DIVINE_SOUL_SHOP_REQ        = 0x1E54;
+    CMD_QUERY_DIVINE_SOUL_SHOP_RSP        = 0x1E55;
+
+    CMD_BUY_DIVINE_SOUL_SHOP_REQ          = 0x1E56;
+    CMD_BUY_DIVINE_SOUL_SHOP_RSP          = 0x1E57;
+
+    CMD_FRESH_DIVINE_SOUL_SHOP_REQ        = 0x1E58;
+    CMD_FRESH_DIVINE_SOUL_SHOP_RSP        = 0x1E59;
+
+    ////////// 体力相关协议 //////////
+    CMD_BUY_SP_REQ                        = 0x1F00;
+    CMD_BUY_SP_RSP                        = 0x1F01;
+
+    CMD_QUERY_SP_UPDATE_CD_REQ            = 0x1F02;
+    CMD_QUERY_SP_UPDATE_CD_RSP            = 0x1F03;
+    
+    ////////// 留存活动相关协议 /////////
+    CMD_AWARD_DAILY_LOGIN_REQ             = 0x2000;
+    CMD_AWARD_DAILY_LOGIN_RSP             = 0x2001;
+    
+    CMD_QUERY_DAILY_AWARD_INFO_REQ        = 0x2002;
+    CMD_QUERY_DAILY_AWARD_INFO_RSP        = 0x2003;
+
+    CMD_AWARD_ONLINE_REQ                  = 0x2004;
+    CMD_AWARD_ONLINE_RSP                  = 0x2005;
+
+    CMD_QUERY_ONLINE_REQ                  = 0x2006;
+    CMD_QUERY_ONLINE_RSP                  = 0x2007;
+    CMD_UNLOCK_ONLINE_NOTICE              = 0x2008;
+
+    // 月签到
+    CMD_QUERY_SIGN_AWARD_INFO_REQ         = 0x2010;
+    CMD_QUERY_SIGN_AWARD_INFO_RSP         = 0x2011;
+    
+    CMD_AWARD_SIGN_REQ                    = 0x2012;
+    CMD_AWARD_SIGN_RSP                    = 0x2013;
+
+    CMD_SUPPLEMENT_SIGN_AWARD_REQ         = 0x2014;
+    CMD_SUPPLEMENT_SIGN_AWARD_RSP         = 0x2015;
+
+    CMD_CUMULATIVE_SIGN_AWARD_REQ         = 0x2016;
+    CMD_CUMULATIVE_SIGN_AWARD_RSP         = 0x2017;
+
+    ////////// 模拟考试 ///////////////
+    CMD_OPEN_MOCK_EXAM_REQ                = 0x2100;
+    CMD_OPEN_MOCK_EXAM_RSP                = 0x2101;
+
+    CMD_OPEN_CURRENT_PROBLEM_REQ          = 0x2102;
+    CMD_OPEN_CURRENT_PROBLEM_RSP          = 0x2103;
+
+    CMD_SUBMIT_PROBLEM_ANWSER_REQ         = 0x2104;
+    CMD_SUBMIT_PROBLEM_ANWSER_RSP         = 0x2105;
+
+    CMD_AWARD_MOCK_EXAM_REQ               = 0x2108;
+    CMD_AWARD_MOCK_EXAM_RSP               = 0x2109;
+
+    ///////// 充值奖励 //////////////
+    CMD_AWARD_RECHARGE_REQ                = 0x2200;
+    CMD_AWARD_RECHARGE_RSP                = 0x2201;
+    
+    CMD_QUERY_RECHARGE_AWARDED_LIST_REQ   = 0x2202;
+    CMD_QUERY_RECHARGE_AWARDED_LIST_RSP   = 0x2203;
+    
+    CMD_QUERY_RECHARGE_AWARD_INFO_REQ     = 0x2204;
+    CMD_QUERY_RECHARGE_AWARD_INFO_RSP     = 0x2205;
+
+    CMD_QUERY_RECHARGE_INFO_REQ           = 0x2206;
+    CMD_QUERY_RECHARGE_INFO_RSP           = 0x2207;
+
+    //CMD_RECHARGE_NOTICE                 = 0x2208;
+    CMD_RECHARGE_NOTICE                   = 0x2209;
+    
+    ///////// 沙包大战 //////////////
+    CMD_OPEN_SANDBAGS_WAR_REQ             = 0x2210;
+    CMD_OPEN_SANDBAGS_WAR_RSP             = 0x2211;
+
+    //CMD_QUERY_SANDBAGS_WAR_REQ          = 0x2212;
+    //CMD_QUERY_SANDBAGS_WAR_RSP          = 0x2213;
+
+    CMD_FINISH_SANDBAGS_WAR_REQ           = 0x2214;
+    CMD_FINISH_SANDBAGS_WAR_RSP           = 0x2215;
+
+    ////////// 所有每日活动状态 ///////
+    CMD_QUERY_EVERY_ACTIVITY_STATE_REQ    = 0x2220;
+    CMD_QUERY_EVERY_ACTIVITY_STATE_RSP    = 0x2221;
+
+    ////////// 印钞机 /////////////////
+    CMD_USE_PRINTING_PRESS_REQ            = 0x2230;
+    CMD_USE_PRINTING_PRESS_RSP            = 0x2231;
+
+    CMD_QUERY_PRINTING_PRESS_REQ          = 0x2232;
+    CMD_QUERY_PRINTING_PRESS_RSP          = 0x2233;
+
+    ////////// 弹幕 //////////////////
+    CMD_QUERY_DM_COUNT_REQ                = 0x2240;
+    CMD_QUERY_DM_COUNT_RSP                = 0x2241;
+
+    CMD_SEND_DM_MESSAGE_REQ               = 0x2242;
+    CMD_SEND_DM_MESSAGE_RSP               = 0x2243;
+    
+    ////////// 爬塔 //////////////////
+    CMD_QUERY_CLIMB_TOWER_INFO_REQ        = 0x2260;
+    CMD_QUERY_CLIMB_TOWER_INFO_RSP        = 0x2261;
+
+    CMD_CHANGE_CLIMB_TOWER_HERO_ORDER_REQ = 0x2262;
+    CMD_CHANGE_CLIMB_TOWER_HERO_ORDER_RSP = 0x2263;
+
+    CMD_INTO_CLIMB_TOWER_INSTANCE_REQ     = 0x2264;
+    CMD_INTO_CLIMB_TOWER_INSTANCE_RSP     = 0x2265;
+
+    CMD_LEAVE_CLIMB_TOWER_INSTANCE_REQ    = 0x2266;
+    CMD_LEAVE_CLIMB_TOWER_INSTANCE_RSP    = 0x2267;
+
+    CMD_BUY_CLIMB_TOWER_COUNT_REQ         = 0x2270;
+    CMD_BUY_CLIMB_TOWER_COUNT_RSP         = 0x2271;
+    
+    CMD_RECORD_HERO_DEATH_REQ             = 0x2272;
+    CMD_RECORD_HERO_DEATH_RSP             = 0x2273;
+
+    CMD_AWARD_CLIMB_TOWER_ITEM_DROP_REQ   = 0x2274;
+    CMD_AWARD_CLIMB_TOWER_ITEM_DROP_RSP   = 0x2275;
+
+    CMD_QUERY_LAYER_MONSTER_REQ           = 0x2276;
+    CMD_QUERY_LAYER_MONSTER_RSP           = 0x2277;
+
+    /////////////// 消息中心 ///////////////
+    CMD_QUERY_AWARD_MSG_REQ               = 0x2290;
+    CMD_QUERY_AWARD_MSG_RSP               = 0x2291;
+    CMD_DO_MSG_AWARD_REQ                  = 0x2292;
+    CMD_DO_MSG_AWARD_RSP                  = 0x2293;
+    CMD_AWARD_MSG_NOTICE                  = 0x2294;
+
+    CMD_QUERY_INTER_MSG_REQ               = 0x22A0;
+    CMD_QUERY_INTER_MSG_RSP               = 0x22A1;
+    CMD_DEL_TOP_INTER_MSG_REQ             = 0x22A2;
+    CMD_DEL_TOP_INTER_MSG_RSP             = 0x22A3;
+    CMD_INTER_MSG_NOTICE                  = 0x22A4;
+    
+    CMD_ROLL_MSG_NOTICE                   = 0x22B0;
+    //CMD_QUERY_BULLETIN_REQ                = 0x22C0;
+    //CMD_QUERY_BULLETIN_RSP                = 0x22C1;
+
+    CMD_QUERY_ROLE_ACTION_REMAIN_CD_REQ   = 0x22C2;
+    CMD_QUERY_ROLE_ACTION_REMAIN_CD_RSP   = 0x22C3;
+   
+    CMD_QUERY_ACTIVITY_BULLETIN_MSG_REQ   = 0x22C4;
+    CMD_QUERY_ACTIVITY_BULLETIN_MSG_RSP   = 0x22C5;
+
+    /////////////// 副本内复活 ///////////////
+    CMD_REVIVE_IN_INSTANCE_REQ            = 0x22D0;
+    CMD_REVIVE_IN_INSTANCE_RSP            = 0x22D1;
+
+    ////////////// 查看角色信息 /////////////
+    CMD_QUERY_ROLE_INFO_REQ               = 0x22E0;
+    CMD_QUERY_ROLE_INFO_RSP               = 0x22E1;
+    
+    CMD_UPDATE_ROLE_INFO_NOTICE           = 0x22E2;
+
+    ////////////// PVP /////////////
+    CMD_QUERY_PVP_HERO_LIST_REQ           = 0x22F0;
+    CMD_QUERY_PVP_HERO_LIST_RSP           = 0x22F1;
+    
+    CMD_EXCHANGE_FIGHT_HERO_REQ           = 0x22F4;
+    CMD_EXCHANGE_FIGHT_HERO_RSP           = 0x22F5;
+
+    CMD_PVP_FIGHT_START_REQ               = 0x22F6;
+    CMD_PVP_FIGHT_START_RSP               = 0x22F7;
+
+    CMD_REVIVE_PVP_HERO_REQ               = 0x22F8;
+    CMD_REVIVE_PVP_HERO_RSP               = 0x22F9;
+    
+    ////////////// 抽奖 /////////////
+    
+    CMD_BUY_LOTTERY_SPECIAL_GOODS_REQ     = 0x2300;
+    CMD_BUY_LOTTERY_SPECIAL_GOODS_RSP     = 0x2301;
+    
+    CMD_QUERY_LOTTERY_SPECIAL_GOODS_REQ   = 0x2302;
+    CMD_QUERY_LOTTERY_SPECIAL_GOODS_RSP   = 0x2303;
+
+    CMD_BUY_LOTTERY_REQ                   = 0x2310; 
+    CMD_BUY_LOTTERY_RSP                   = 0x2311; 
+
+    CMD_QUERY_LOTTERY_SHOP_REQ            = 0x2312;
+    CMD_QUERY_LOTTERY_SHOP_RSP            = 0x2313;
+    
+    CMD_EXCHANGE_LOTTERY_SHOP_GOODS_REQ   = 0x2314;
+    CMD_EXCHANGE_LOTTERY_SHOP_GOODS_RSP   = 0x2315;
+
+  
+    //////////// 神龙抽奖 /////////
+    CMD_QUERY_LOTTERY_INFO_REQ            = 0x2316;
+    CMD_QUERY_LOTTERY_INFO_RSP            = 0x2317;
+
+    CMD_LOTTERY_LUCKY_DRAGON_REQ          = 0x2318;
+    CMD_LOTTERY_LUCKY_DRAGON_RSP          = 0x2319;
+
+    CMD_QUERY_LUCKY_DRAGON_REQ            = 0x2320;
+    CMD_QUERY_LUCKY_DRAGON_RSP            = 0x2321;
+
+    CMD_LOTTERY_DRAGON_BALL_REQ           = 0x2322;
+    CMD_LOTTERY_DRAGON_BALL_RSP           = 0x2323;
+
+    //////// 校园庆典抽奖/////////
+    CMD_QUERY_SCHOOL_LOTTERY_REQ          = 0x2324;
+    CMD_QUERY_SCHOOL_LOTTERY_RSP          = 0x2325;
+
+    CMD_LOTTERY_SCHOOL_REQ                = 0x2326;
+    CMD_LOTTERY_SCHOOL_RSP                = 0x2327;
+    
+    CMD_OPEN_WHICH_LOTTERY_REQ            = 0x2328;
+    CMD_OPEN_WHICH_LOTTERY_RSP            = 0x2329;
+
+    CMD_QUERY_LOTTERY_TABLE_REQ           = 0x232A;
+    CMD_QUERY_LOTTERY_TABLE_RSP           = 0x232B;
+
+    ////////////// 学霸 //////////////
+    CMD_QUERY_DEGREE_PACK_REQ             = 0x2340;
+    CMD_QUERY_DEGREE_PACK_RSP             = 0x2341;
+
+    CMD_PUT_ON_DEGREE_REQ                 = 0x2342;
+    CMD_PUT_ON_DEGREE_RSP                 = 0x2343;
+
+    CMD_TAKE_OFF_DEGREE_REQ               = 0x2344;
+    CMD_TAKE_OFF_DEGREE_RSP               = 0x2345;
+    
+    CMD_DEVOUR_DEGREE_EXP_REQ             = 0x2346;
+    CMD_DEVOUR_DEGREE_EXP_RSP             = 0x2347;
+
+    CMD_DEVOUR_ALL_DEGREE_REQ             = 0x2348;
+    CMD_DEVOUR_ALL_DEGREE_RSP             = 0x2349;
+
+    CMD_DECOMPOSITION_DEGREE_REQ          = 0x2350;
+    CMD_DECOMPOSITION_DEGREE_RSP          = 0x2351;
+    
+    CMD_ADVANCED_DEGREE_REQ               = 0x2352;
+    CMD_ADVANCED_DEGREE_RSP               = 0x2353; 
+
+    ////////////// 世界BOSS //////////////
+    CMD_ENTER_WORLD_BOSS_INSTANCE_REQ     = 0x2400;
+    CMD_ENTER_WORLD_BOSS_INSTANCE_RSP     = 0x2401;
+
+    CMD_LEAVE_WORLD_BOSS_INSTANCE_REQ     = 0x2402;
+    CMD_LEAVE_WORLD_BOSS_INSTANCE_RSP     = 0x2403;
+
+    CMD_KICK_WORLD_BOSS_ASS_REQ           = 0x2404;
+    CMD_KICK_WORLD_BOSS_ASS_RSP           = 0x2405;
+
+    ///////////// 等级奖励 /////////////
+    CMD_QUERY_LEV_AWARD_REQ               = 0x2500;
+    CMD_QUERY_LEV_AWARD_RSP               = 0x2501;
+    CMD_LEV_AWARD_REQ                     = 0x2502;
+    CMD_LEV_AWARD_RSP                     = 0x2503;
+
+    ///////////// 社团基本 /////////////
+    CMD_QUERY_JOIN_APPLY_LIST_REQ         = 0x25A0; 
+    CMD_QUERY_JOIN_APPLY_LIST_RSP         = 0x25A1;
+
+    CMD_CHECK_JOIN_APPLY_REQ              = 0x25A2;
+    CMD_CHECK_JOIN_APPLY_RSP              = 0x25A3;
+    
+    CMD_QUERY_GROUP_LOG_REQ               = 0x25A4;
+    CMD_QUERY_GROUP_LOG_RSP               = 0x25A5;
+    
+    CMD_SEND_GROUP_MAIL_REQ               = 0x25A6;
+    CMD_SEND_GROUP_MAIL_RSP               = 0x25A7;
+    
+    CMD_GROUP_JOIN_APPLY_NOTICE           = 0x25A8;
+
+    CMD_QUERY_GROUP_INFO_REQ              = 0x2600;
+    CMD_QUERY_GROUP_INFO_RSP              = 0x2601;
+
+    CMD_CREATE_GROUP_REQ                  = 0x2602;
+    CMD_CREATE_GROUP_RSP                  = 0x2603;
+
+    CMD_JOIN_GROUP_REQ                    = 0x2606;
+    CMD_JOIN_GROUP_RSP                    = 0x2607;
+
+    CMD_LEAVE_GROUP_REQ                   = 0x2608;
+    CMD_LEAVE_GROUP_RSP                   = 0x2609;
+
+    CMD_FIRE_GROUP_MEMBER_REQ             = 0x260A;
+    CMD_FIRE_GROUP_MEMBER_RSP             = 0x260B;
+
+    CMD_TRANSFER_GROUP_REQ                = 0x260C;
+    CMD_TRANSFER_GROUP_RSP                = 0x260D;
+
+    CMD_FIRE_GROUP_CAPTAIN_REQ            = 0x260E;
+    CMD_FIRE_GROUP_CAPTAIN_RSP            = 0x260F;
+
+    CMD_SEARCH_GROUP_BY_NAME_REQ          = 0x2610;
+    CMD_SEARCH_GROUP_BY_NAME_RSP          = 0x2611;
+    
+    CMD_SET_GROUP_BULLETIN_REQ            = 0x2612;
+    CMD_SET_GROUP_BULLETIN_RSP            = 0x2613;
+    
+    CMD_SET_GROUP_NOTICE_REQ              = 0x2614;
+    CMD_SET_GROUP_NOTICE_RSP              = 0x2615;
+    
+    CMD_SET_GROUP_ADMIN_REQ               = 0x2616;
+    CMD_SET_GROUP_ADMIN_RSP               = 0x2617;
+    
+    CMD_CANCEL_GROUP_ADMIN_REQ            = 0x2618;
+    CMD_CANCEL_GROUP_ADMIN_RSP            = 0x2619;
+    
+    CMD_QUERY_GROUP_ICON_LIST_REQ         = 0x261A;
+    CMD_QUERY_GROUP_ICON_LIST_RSP         = 0x261B;
+
+    CMD_SET_GROUP_OPTION_REQ              = 0x261C;
+    CMD_SET_GROUP_OPTION_RSP              = 0x261D;
+
+    ///////////// 健身房 /////////////
+    CMD_QUERY_GROUP_GYM_INFO_REQ          = 0x2620;
+    CMD_QUERY_GROUP_GYM_INFO_RSP          = 0x2621;
+
+    CMD_PUSH_GROUP_GYM_HERO_REQ           = 0x2622;
+    CMD_PUSH_GROUP_GYM_HERO_RSP           = 0x2623;
+
+    CMD_LEASE_GROUP_GYM_HERO_REQ          = 0x2624;
+    CMD_LEASE_GROUP_GYM_HERO_RSP          = 0x2625;
+
+    ///////////// 社团建筑 /////////////
+    CMD_QUERY_GROUP_BUILDING_REQ          = 0x2630;
+    CMD_QUERY_GROUP_BUILDING_RSP          = 0x2631;
+
+    CMD_LEVUP_GROUP_BUILDING_REQ          = 0x2632;
+    CMD_LEVUP_GROUP_BUILDING_RSP          = 0x2633;
+
+    CMD_DO_GROUP_BUILD_REQ                = 0x2634;
+    CMD_DO_GROUP_BUILD_RSP                = 0x2635;
+
+    CMD_QUERY_BUILDING_OUTPUT_REQ         = 0x2636;
+    CMD_QUERY_BUILDING_OUTPUT_RSP         = 0x2637;
+
+    CMD_GET_BUILDING_OUTPUT_REQ           = 0x2638;
+    CMD_GET_BUILDING_OUTPUT_RSP           = 0x2639;
+
+    CMD_QUERY_ANTIQUE_SHOP_REQ            = 0x263A;
+    CMD_QUERY_ANTIQUE_SHOP_RSP            = 0x263B;
+
+    CMD_BUY_ANTIQUE_SHOP_REQ              = 0x263C;
+    CMD_BUY_ANTIQUE_SHOP_RSP              = 0x263D;
+   
+    CMD_REFRESH_ANTIQUE_SHOP_REQ          = 0x263E;
+    CMD_REFRESH_ANTIQUE_SHOP_RSP          = 0x263F;
+
+    ///////////// 社团相关功能 /////////////
+    CMD_QUERY_GROUP_WELFARE_REQ           = 0x2640;
+    CMD_QUERY_GROUP_WELFARE_RSP           = 0x2641;
+
+    CMD_BUY_GROUP_SP_WELFARE_REQ          = 0x2642;
+    CMD_BUY_GROUP_SP_WELFARE_RSP          = 0x2643;
+    
+    CMD_AWARD_GROUP_SP_WELFARE_REQ        = 0x2644;
+    CMD_AWARD_GROUP_SP_WELFARE_RSP        = 0x2645;
+    
+    CMD_QUERY_GROUP_EQUIP_REQ             = 0x2646;
+    CMD_QUERY_GROUP_EQUIP_RSP             = 0x2647;
+    
+    CMD_OPEN_GROUP_EQUIP_REQ              = 0x2648;
+    CMD_OPEN_GROUP_EQUIP_RSP              = 0x2649;
+    
+    CMD_LEVUP_GROUP_EQUIP_REQ             = 0x264A;
+    CMD_LEVUP_GROUP_EQUIP_RSP             = 0x264B;
+    
+    CMD_QUERY_GROUP_MISSION_REQ           = 0x264C;
+    CMD_QUERY_GROUP_MISSION_RSP           = 0x264D;
+    
+    CMD_FINISH_GROUP_MISSION_REQ          = 0x264E;
+    CMD_FINISH_GROUP_MISSION_RSP          = 0x264F;
+    
+    CMD_RESET_GROUP_MISSION_REQ           = 0x2650;
+    CMD_RESET_GROUP_MISSION_RSP           = 0x2651;
+    
+    CMD_BUY_GROUP_MISSION_REQ             = 0x2652;
+    CMD_BUY_GROUP_MISSION_RSP             = 0x2653;
+   
+    CMD_QUERY_GROUP_INSTANCE_REQ          = 0x2660;
+    CMD_QUERY_GROUP_INSTANCE_RSP          = 0x2661;
+    
+    CMD_OPEN_GROUP_INSTANCE_REQ           = 0x2662;
+    CMD_OPEN_GROUP_INSTANCE_RSP           = 0x2663;
+
+    CMD_RESET_GROUP_INSTANCE_REQ          = 0x2664;
+    CMD_RESET_GROUP_INSTANCE_RSP          = 0x2665;
+
+    CMD_ENTER_GROUP_INSTANCE_REQ          = 0x2666;
+    CMD_ENTER_GROUP_INSTANCE_RSP          = 0x2667;
+    
+    CMD_KICK_GROUP_BOSS_ASS_REQ           = 0x2668;
+    CMD_KICK_GROUP_BOSS_ASS_RSP           = 0x2669;
+    
+    CMD_LEAVE_GROUP_INSTANCE_REQ          = 0x266A;
+    CMD_LEAVE_GROUP_INSTANCE_RSP          = 0x266B;
+    
+    CMD_QUERY_GROUP_AWARD_POOL_REQ        = 0x266C;
+    CMD_QUERY_GROUP_AWARD_POOL_RSP        = 0x266D;
+
+    CMD_APPLY_GROUP_AWARD_REQ             = 0x266E;
+    CMD_APPLY_GROUP_AWARD_RSP             = 0x266F;
+
+    CMD_QUERY_GROUP_INSTANCE_LIST_REQ     = 0x2670;
+    CMD_QUERY_GROUP_INSTANCE_LIST_RSP     = 0x2671;
+    
+    CMD_QUERY_GROUP_AWARD_ASSIGN_RECORD_REQ = 0x2672;
+    CMD_QUERY_GROUP_AWARD_ASSIGN_RECORD_RSP = 0x2673;
+
+    ////////////// 属性相关协议 //////////////
+    CMD_NUMERIC_CHANGE_NOTICE             = 0x2690;
+
+    ////////////// PVP 协议补充 //////////////
+    CMD_PVP_FRAME_NOTICE                  = 0x2700;
+    
+    CMD_PVP_HERO_GOTO_BATTLE_REQ          = 0x2701;
+    CMD_PVP_HERO_GOTO_BATTLE_RSP          = 0x2702;
+    
+    CMD_PVP_FIGHT_EXIT_REQ                = 0x2703;
+    CMD_PVP_FIGHT_EXIT_RSP                = 0x2704;
+
+    CMD_PVP_FIGHT_AWARD_NOTICE            = 0x2705;
+
+    CMD_QUERY_GROUP_BATTLE_STATE_REQ      = 0x2706;
+    CMD_QUERY_GROUP_BATTLE_STATE_RSP      = 0x2707;
+    
+    ////////////// 街头争霸 //////////////
+    CMD_QUERY_STREET_WAR_STATE_REQ        = 0x2800;
+    CMD_QUERY_STREET_WAR_STATE_RSP        = 0x2801;
+
+    CMD_READY_STREET_WAR_REQ              = 0x2802;
+    CMD_READY_STREET_WAR_RSP              = 0x2803;
+
+    CMD_PASS_STREET_WAR_REQ               = 0x2804;
+    CMD_PASS_STREET_WAR_RSP               = 0x2805;
+
+    CMD_BUY_STREET_WAR_CHALLENGE_COUNT_REQ = 0x2806;
+    CMD_BUY_STREET_WAR_CHALLENGE_COUNT_RSP = 0x2807;
+
+    CMD_REFRESH_STREET_WAR_REQ            = 0x2808;
+    CMD_REFRESH_STREET_WAR_RSP            = 0x2089;
+
+    
+    ////////////// 每日礼包 //////////////
+    CMD_QUERY_DAILY_NORMAL_GIFTBAG_REQ    = 0x2900;
+    CMD_QUERY_DAILY_NORMAL_GIFTBAG_RSP    = 0x2901;
+    
+    CMD_BUY_DAILY_NORMAL_GIFTBAG_REQ      = 0x2902;
+    CMD_BUY_DAILY_NORMAL_GIFTBAG_RSP      = 0x2903;
+    
+    CMD_QUERY_DAILY_VIP_GIFTBAG_REQ       = 0x2904;
+    CMD_QUERY_DAILY_VIP_GIFTBAG_RSP       = 0x2905;
+    
+    CMD_BUY_DAILY_VIP_GIFTBAG_REQ         = 0x2906;
+    CMD_BUY_DAILY_VIP_GIFTBAG_RSP         = 0x2907;
+
+    ////////////// 星级奖励 //////////////
+    CMD_AWARD_FULL_STAR_REQ               = 0x2920;
+    CMD_AWARD_FULL_STAR_RSP               = 0x2921;
+
+    ////////////// 时装 //////////////
+    CMD_QUERY_CLOTHES_REQ      = 0x2960;
+    CMD_QUERY_CLOTHES_RSP      = 0x2961;
+    CMD_COLLECT_CLOTHES_REQ    = 0x2962;
+    CMD_COLLECT_CLOTHES_RSP    = 0x2963;
+    CMD_ADVANCED_CLOTHES_REQ   = 0x2964;
+    CMD_ADVANCED_CLOTHES_RSP   = 0x2965;
+    CMD_PUT_ON_CLOTHES_REQ     = 0x2966;
+    CMD_PUT_ON_CLOTHES_RSP     = 0x2967;
+    CMD_QUERY_CLOTHES_ATTR_REQ = 0x2968;
+    CMD_QUERY_CLOTHES_ATTR_RSP = 0x2969;
+
+    ////////////// 竞技商店 //////////////
+    CMD_QUERY_ARENA_SHOP_REQ     = 0x2980;
+    CMD_QUERY_ARENA_SHOP_RSP     = 0x2981;
+    CMD_BUY_ARENA_SHOP_GOODS_REQ = 0x2982;
+    CMD_BUY_ARENA_SHOP_GOODS_RSP = 0x2983;
+
+    ////////////// 武道会商店 //////////////
+    CMD_QUERY_TOURNAMENT_SHOP_REQ     = 0x2985;
+    CMD_QUERY_TOURNAMENT_SHOP_RSP     = 0x2986;
+    CMD_BUY_TOURNAMENT_SHOP_GOODS_REQ = 0x2987;
+    CMD_BUY_TOURNAMENT_SHOP_GOODS_RSP = 0x2988;
+
+    ////////////// 地盘商店 //////////////
+    CMD_QUERY_TERRITORY_SHOP_REQ            = 0x2989;
+    CMD_QUERY_TERRITORY_SHOP_RSP            = 0x298A;
+    CMD_BUY_TERRITORY_SHOP_GOODS_REQ        = 0x298B;
+    CMD_BUY_TERRITORY_SHOP_GOODS_RSP        = 0x298C;
+    CMD_REFRESH_TERRITORY_SHOP_GOODS_REQ    = 0x298D;
+    CMD_REFRESH_TERRITORY_SHOP_GOODS_RSP    = 0x298E;
+    
+    ////////////// 首充奖励 //////////////
+    CMD_QUERY_FIRST_RECHARGE_AWARD_REQ = 0x29A0;
+    CMD_QUERY_FIRST_RECHARGE_AWARD_RSP = 0x29A1;
+    CMD_AWARD_FIRST_RECHARGE_REQ       = 0x29A2;
+    CMD_AWARD_FIRST_RECHARGE_RSP       = 0x29A3;
+    
+    ////////////// 街霸商店 //////////////
+    CMD_QUERY_STREET_SHOP_REQ     = 0x29C0;
+    CMD_QUERY_STREET_SHOP_RSP     = 0x29C1;
+    CMD_BUY_STREET_SHOP_GOODS_REQ = 0x29C2;
+    CMD_BUY_STREET_SHOP_GOODS_RSP = 0x29C3;
+
+    ////////////// 学霸商店 //////////////
+    CMD_QUERY_DEGREE_SHOP_REQ     = 0x29D0;
+    CMD_QUERY_DEGREE_SHOP_RSP     = 0x29D1;
+    CMD_BUY_DEGREE_SHOP_GOODS_REQ = 0x29D2;
+    CMD_BUY_DEGREE_SHOP_GOODS_RSP = 0x29D3;
+    
+    ////////////// 运营活动 //////////////
+    CMD_QUERY_OPERATION_LIST_REQ    = 0x29E0;
+    CMD_QUERY_OPERATION_LIST_RSP    = 0x29E1;
+
+    CMD_FETCH_OPERATION_AWARD_REQ   = 0x29E2;
+    CMD_FETCH_OPERATION_AWARD_RSP   = 0x29E3;
+
+    CMD_QUERY_COEFFICIENT_REQ       = 0x29EA;
+    CMD_QUERY_COEFFICIENT_RSP       = 0x29EB;
+
+    ////////////// 钻石理财 //////////////
+    CMD_QUERY_GOLD_INVEST_REQ = 0x29F0;
+    CMD_QUERY_GOLD_INVEST_RSP = 0x29F1;
+    CMD_BUY_GOLD_INVEST_REQ   = 0x29F2;
+    CMD_BUY_GOLD_INVEST_RSP   = 0x29F3;
+    CMD_AWARD_GOLD_INVEST_REQ = 0x29F4;
+    CMD_AWARD_GOLD_INVEST_RSP = 0x29F5;
+
+    ////////////// 七日奖励 //////////////
+    CMD_QUERY_WEEK_AWARD_REQ         = 0x2A10;
+    CMD_QUERY_WEEK_AWARD_RSP         = 0x2A11;
+    CMD_AWARD_WEEK_LOGIN_REQ         = 0x2A12;
+    CMD_AWARD_WEEK_LOGIN_RSP         = 0x2A13;
+    CMD_AWARD_WEEK_RECHAGE_REQ       = 0x2A14;
+    CMD_AWARD_WEEK_RECHAGE_RSP       = 0x2A15;
+    CMD_AWARD_WEEK_RUSH_PURCHASE_REQ = 0x2A16;
+    CMD_AWARD_WEEK_RUSH_PURCHASE_RSP = 0x2A17;
+
+    ////////////// 组队PVE(2B系列) //////////////
+    CMD_QUERY_TEAM_PVE_SCHEDULE_REQ     = 0x2B00;
+    CMD_QUERY_TEAM_PVE_SCHEDULE_RSP     = 0x2B01;
+
+    CMD_QUERY_TEAM_PVE_ROOM_LIST_REQ    = 0x2B02;
+    CMD_QUERY_TEAM_PVE_ROOM_LIST_RSP    = 0x2B03;
+    
+    CMD_JOIN_TEAM_PVE_ROOM_REQ          = 0x2B04;
+    CMD_JOIN_TEAM_PVE_ROOM_RSP          = 0x2B05;
+    
+    CMD_LEAVE_TEAM_PVE_ROOM_REQ         = 0x2B06;
+    CMD_LEAVE_TEAM_PVE_ROOM_RSP         = 0x2B07;
+    
+    CMD_CREATE_TEAM_PVE_ROOM_REQ        = 0x2B08;
+    CMD_CREATE_TEAM_PVE_ROOM_RSP        = 0x2B09;
+
+    CMD_KICK_TEAM_PVE_ROOM_MEMBER_REQ   = 0x2B0A;
+    CMD_KICK_TEAM_PVE_ROOM_MEMBER_RSP   = 0x2B0B;
+
+    CMD_INVITE_TEAM_PVE_ROOM_MEMBER_REQ = 0x2B0C;
+    CMD_INVITE_TEAM_PVE_ROOM_MEMBER_RSP = 0x2B0D;
+
+    CMD_QUICK_JOIN_TEAM_PVE_ROOM_REQ    = 0x2B0E;
+    CMD_QUICK_JOIN_TEAM_PVE_ROOM_RSP    = 0x2B0F;
+
+    CMD_START_TEAM_PVE_REQ              = 0x2B10;
+    CMD_START_TEAM_PVE_RSP              = 0x2B11;
+
+    CMD_PASS_TEAM_PVE_REQ               = 0x2B12;
+    CMD_PASS_TEAM_PVE_RSP               = 0x2B13;
+
+    //CMD_TEAM_PVE_ROOM_INFO_NOTICE       = 0x2B14;
+    CMD_TEAM_PVE_ROOM_INFO_NOTICE       = 0x2B15;
+
+    CMD_QUIT_TEAM_PVE_REQ               = 0x2B16;
+    CMD_QUIT_TEAM_PVE_RSP               = 0x2B17;
+
+    ////////////// 开服活动 //////////////
+    // (1) 战力竞速赛
+    CMD_QUERY_FC_RACE_REQ         = 0x2B80;
+    CMD_QUERY_FC_RACE_RSP         = 0x2B81;
+    CMD_AWARD_FC_RACE_REQ         = 0x2B82;
+    CMD_AWARD_FC_RACE_RSP         = 0x2B83;
+    // (2) 闯关竞赛
+    CMD_QUERY_PASS_RACE_REQ       = 0x2B84;
+    CMD_QUERY_PASS_RACE_RSP       = 0x2B85;
+    CMD_AWARD_PASS_RACE_REQ       = 0x2B86;
+    CMD_AWARD_PASS_RACE_RSP       = 0x2B87;
+    // (3) 招募炮姐
+    CMD_QUERY_RECRUIT_PAOJIE_REQ  = 0x2B88;
+    CMD_QUERY_RECRUIT_PAOJIE_RSP  = 0x2B89;
+    CMD_AWARD_RECRUIT_PAOJIE_REQ  = 0x2B90;
+    CMD_AWARD_RECRUIT_PAOJIE_RSP  = 0x2B91;
+    // (4) 五贤相助
+    CMD_QUERY_COLLECT_HERO_REQ    = 0x2B92;
+    CMD_QUERY_COLLECT_HERO_RSP    = 0x2B93;
+    CMD_AWARD_COLLECT_HERO_REQ    = 0x2B94;
+    CMD_AWARD_COLLECT_HERO_RSP    = 0x2B95;
+    // (5) 进阶春丽
+    CMD_QUERY_ADVANCED_CHUNLI_REQ = 0x2B96;
+    CMD_QUERY_ADVANCED_CHUNLI_RSP = 0x2B97;
+    CMD_AWARD_ADVANCED_CHUNLI_REQ = 0x2B98;
+    CMD_AWARD_ADVANCED_CHUNLI_RSP = 0x2B99;
+    // (6) 宝石全套
+    CMD_QUERY_COLLECT_GEM_REQ     = 0x2B9A;
+    CMD_QUERY_COLLECT_GEM_RSP     = 0x2B9B;
+    CMD_AWARD_COLLECT_GEM_REQ     = 0x2B9C;
+    CMD_AWARD_COLLECT_GEM_RSP     = 0x2B9D;
+    // (7) 初中毕业
+    CMD_QUERY_COLLECT_DEGREE_REQ  = 0x2B9E;
+    CMD_QUERY_COLLECT_DEGREE_RSP  = 0x2B9F;
+    CMD_AWARD_COLLECT_DEGREE_REQ  = 0x2BA0;
+    CMD_AWARD_COLLECT_DEGREE_RSP  = 0x2BA1;
+    // (8) 全身紫装
+    CMD_QUERY_EQUIP_PURPLE_REQ    = 0x2BA2;
+    CMD_QUERY_EQUIP_PURPLE_RSP    = 0x2BA3;
+    CMD_AWARD_EQUIP_PURPLE_REQ    = 0x2BA4;
+    CMD_AWARD_EQUIP_PURPLE_RSP    = 0x2BA5;
+    // (9) 排行榜奖励: 天下第一、新人王、街头霸王
+    CMD_QUERY_RANK_AWARD_REQ      = 0x2BA6;
+    CMD_QUERY_RANK_AWARD_RSP      = 0x2BA7;
+    CMD_AWARD_RANK_AWARD_REQ      = 0x2BA8;
+    CMD_AWARD_RANK_AWARD_RSP      = 0x2BA9;
+
+    ///////////// 附魔修炼 /////////////
+    CMD_QUERY_MAGIC_REFINE_REQ = 0x2BC0;
+    CMD_QUERY_MAGIC_REFINE_RSP = 0x2BC1;
+
+    CMD_REFINE_MAGIC_GOODS_REQ = 0x2BC2;
+    CMD_REFINE_MAGIC_GOODS_RSP = 0x2BC3;
+
+    CMD_FINISH_MAGIC_GOODS_REQ = 0x2BC4;
+    CMD_FINISH_MAGIC_GOODS_RSP = 0x2BC5;
+
+    ////////////// 神器 //////////////
+    CMD_EXCHANGE_ARTIFACT_REQ    = 0x2BD0;
+    CMD_EXCHANGE_ARTIFACT_RSP    = 0x2BD1;
+
+    CMD_PUT_ON_ARTIFACT_REQ      = 0x2BD2;
+    CMD_PUT_ON_ARTIFACT_RSP      = 0x2BD3;
+
+    CMD_UPGRADE_ARTIFACT_REQ     = 0x2BD4;
+    CMD_UPGRADE_ARTIFACT_RSP     = 0x2BD5;
+    
+    CMD_ADVANCE_ARTIFACT_REQ     = 0x2BD6;
+    CMD_ADVANCE_ARTIFACT_RSP     = 0x2BD7;
+
+    CMD_INLAY_ARTIFACT_REQ       = 0x2BD8;
+    CMD_INLAY_ARTIFACT_RSP       = 0x2BD9;
+
+    CMD_UPGRADE_GEM_ARTIFACT_REQ = 0x2BDA;
+    CMD_UPGRADE_GEM_ARTIFACT_RSP = 0x2BDB;
+
+    CMD_DECOMPOSE_ARTIFACT_REQ   = 0x2BDC;
+    CMD_DECOMPOSE_ARTIFACT_RSP   = 0x2BDD;
+    
+    CMD_SET_ARTIFACT_BUFF_REQ    = 0x2BDE;
+    CMD_SET_ARTIFACT_BUFF_RSP    = 0x2BDF;
+
+    //////////// 宝石兑换商店 ////////////
+    CMD_GEM_EXCHANGE_REQ = 0x2BE0;
+    CMD_GEM_EXCHANGE_RSP = 0x2BE1;
+    
+    //////////// 称号系统 ///////////////
+    CMD_QUERY_TITLE_LIST_REQ     = 0x2C00;
+    CMD_QUERY_TITLE_LIST_RSP     = 0x2C01;
+
+    CMD_ACTIVE_TITLE_REQ         = 0x2C02;
+    CMD_ACTIVE_TITLE_RSP         = 0x2C03;
+
+    CMD_PUT_ON_TITLE_REQ         = 0x2C04;
+    CMD_PUT_ON_TITLE_RSP         = 0x2C05;
+    
+    CMD_PUT_OFF_TITLE_REQ        = 0x2C06;
+    CMD_PUT_OFF_TITLE_RSP        = 0x2C07;
+    
+    CMD_TITIE_EXPIRE_NOTICE      = 0x2C08;
+
+    // 内置活动
+    CMD_QUERY_INNER_ACTIVITY_REQ = 0x2D00;
+    CMD_QUERY_INNER_ACTIVITY_RSP = 0x2D01;
+    
+    CMD_AWARD_INNER_ACTIVITY_REQ = 0x2D02;
+    CMD_AWARD_INNER_ACTIVITY_RSP = 0x2D03;
+
+    // 等级商店
+    CMD_QUERY_LEV_SHOP_BUY_LIST_REQ = 0x2E01;
+    CMD_QUERY_LEV_SHOP_BUY_LIST_RSP = 0x2E02;
+    
+    CMD_BUY_LEV_SHOP_GOODS_REQ      = 0x2E03;
+    CMD_BUY_LEV_SHOP_GOODS_RSP      = 0x2E04;
+
+    // PK (TRANSMIT-SERVER)
+    CMD_LOGIN_TRANSMIT_SERVER_REQ   = 0x2F00;
+    CMD_LOGIN_TRANSMIT_SERVER_RSP   = 0x2F01;
+    
+    CMD_UPDATE_PK_SCENE_NOTICE      = 0x2F02;
+    
+    CMD_READY_PK_REQ                = 0x2F03;
+    CMD_FINISH_READY_PK_NOTICE      = 0x2F04;
+    
+    // PK (PK-SERVER)
+    CMD_QUERY_PK_INFO_REQ       = 0x3000;
+    CMD_QUERY_PK_INFO_RSP       = 0x3001;
+    
+    CMD_SEARCH_PK_REQ           = 0x3002;
+    CMD_SEARCH_PK_RSP           = 0x3003;
+
+    CMD_CANCEL_SEARCH_PK_REQ    = 0x3004;
+    CMD_CANCEL_SEARCH_PK_RSP    = 0x3005;
+
+    CMD_START_PK_NOTICE         = 0x3006;
+
+    CMD_COMPLETE_PK_REQ         = 0x3007;
+    CMD_COMPLETE_PK_RSP         = 0x3008;
+
+    CMD_FINISH_PK_NOTICE        = 0x3009;
+
+    CMD_SEASON_AWARD_NOTICE     = 0x3010;
+
+    CMD_KICK_OUT_PK_ROLE_NOTICE = 0x3011;
+    
+    CMD_QUERY_SEASON_AWARD_REQ  = 0x3012;
+    CMD_QUERY_SEASON_AWARD_RSP  = 0x3013;
+    
+    CMD_AWARD_SEASON_AWARD_REQ  = 0x3014;
+    CMD_AWARD_SEASON_AWARD_RSP  = 0x3015;
+
+    CMD_GM_ADD_PK_SCORE_NOTICE  = 0x3016;
+
+    CMD_GM_REFRESH_SEASON       = 0x3017;
+
+    CMD_CANCEL_PK_REQ           = 0x3018;
+    CMD_CANCEL_PK_RSP           = 0x3019;
+
+    CMD_CHECK_PK_EXIST_REQ      = 0x301A;
+    CMD_CHECK_PK_EXIST_RSP      = 0x301B;
+
+    CMD_CHECK_PK_STARTED_REQ    = 0x301C;
+    CMD_CHECK_PK_STARTED_RSP    = 0x301D;
+
+    // 成长之路
+    CMD_QUERY_GROWUP_INFO_REQ       = 0x3020;
+    CMD_QUERY_GROWUP_INFO_RSP       = 0x3021;
+
+    CMD_FETCH_GROWUP_AWARD_REQ      = 0x3022;
+    CMD_FETCH_GROWUP_AWARD_RSP      = 0x3023;
+
+    // 宠物
+    CMD_QUERY_PET_LIST_REQ          = 0x3030;
+    CMD_QUERY_PET_LIST_RSP          = 0x3031;
+
+    CMD_HATCH_PET_REQ               = 0x3032;
+    CMD_HATCH_PET_RSP               = 0x3033;
+    
+    CMD_PUT_ON_MAIN_PET_REQ         = 0x3034;
+    CMD_PUT_ON_MAIN_PET_RSP         = 0x3035;
+
+    CMD_PUT_ON_ASSIST_PET_REQ       = 0x3036;
+    CMD_PUT_ON_ASSIST_PET_RSP       = 0x3037;
+
+    CMD_PUT_OFF_ASSIST_PET_REQ      = 0x3038;
+    CMD_PUT_OFF_ASSIST_PET_RSP      = 0x3039;
+    
+    CMD_LEVUP_PET_REQ               = 0x303A;
+    CMD_LEVUP_PET_RSP               = 0x303B;
+
+    CMD_ADVANCE_PET_REQ             = 0x303C;
+    CMD_ADVANCE_PET_RSP             = 0x303D;
+    
+    CMD_FEEDING_PET_REQ             = 0x303E;
+    CMD_FEEDING_PET_RSP             = 0x303F;
+    
+    CMD_QUERY_HATCH_CENTER_REQ      = 0x3040;
+    CMD_QUERY_HATCH_CENTER_RSP      = 0x3041;
+    
+    CMD_QUERY_PET_MISSION_REQ       = 0x3042;
+    CMD_QUERY_PET_MISSION_RSP       = 0x3043;
+    
+    CMD_START_PET_MISSION_REQ       = 0x3044;
+    CMD_START_PET_MISSION_RSP       = 0x3045;
+    
+    CMD_AWARD_PET_MISSION_REQ       = 0x3046;
+    CMD_AWARD_PET_MISSION_RSP       = 0x3047;
+    
+    CMD_FINISH_HATCH_REQ            = 0x3048;
+    CMD_FINISH_HATCH_RSP            = 0x3049;
+    
+    CMD_GIVEUP_PET_MISSION_REQ      = 0x304A;
+    CMD_GIVEUP_PET_MISSION_RSP      = 0x304B;
+
+    // 转盘 
+    CMD_QUERY_TURNTABLE_INFO_REQ    = 0x3050;
+    CMD_QUERY_TURNTABLE_INFO_RSP    = 0x3051;
+
+    CMD_USE_TURNTABLE_REQ           = 0x3052;
+    CMD_USE_TURNTABLE_RSP           = 0x3053;
+
+    CMD_RESET_TURNTABLE_REQ         = 0x3054;
+    CMD_RESET_TURNTABLE_RSP         = 0x3055;
+
+    // VIP 每日奖励
+    CMD_QUERY_VIP_DAILY_AWARD_REQ   = 0x3070;
+    CMD_QUERY_VIP_DAILY_AWARD_RSP   = 0x3071;
+
+    CMD_AWARD_VIP_DAILY_AWARD_REQ   = 0x3072;
+    CMD_AWARD_VIP_DAILY_AWARD_RSP   = 0x3073;
+
+    // 美味包子奖励
+    CMD_AWARD_MEAT_BUN_REQ          = 0x3080;
+    CMD_AWARD_MEAT_BUN_RSP          = 0x3081;
+
+    CMD_QUERY_MEAT_BUN_AWARD_REQ    = 0x3082;
+    CMD_QUERY_MEAT_BUN_AWARD_RSP    = 0x3083;
+    
+    // 钻石理财 
+    CMD_QUERY_FULL_AWARD_REQ = 0x3090;
+    CMD_QUERY_FULL_AWARD_RSP = 0x3091;
+
+    CMD_AWARD_FULL_AWARD_REQ = 0x3092;
+    CMD_AWARD_FULL_AWARD_RSP = 0x3093;
+
+    // 限时挑战
+    CMD_QUERY_LIMITED_CHANLLENGE_REQ = 0x30B0;
+    CMD_QUERY_LIMITED_CHANLLENGE_RSP = 0x30B1;
+
+    CMD_AWARD_LIMITED_CHANLLENGE_REQ = 0x30B2;
+    CMD_AWARD_LIMITED_CHANLLENGE_RSP = 0x30B3;
+
+    // Vip 每周礼包
+    CMD_QUERY_VIP_WEEK_AWARD_REQ     = 0x30C0;
+    CMD_QUERY_VIP_WEEK_AWARD_RSP     = 0x30C1;
+
+    CMD_AWARD_VIP_WEEK_AWARD_REQ     = 0x30C2;
+    CMD_AWARD_VIP_WEEK_AWARD_RSP     = 0x30C3;
+
+    // 神器碎片分解
+    CMD_DECOMPOSE_ARTIFACT_DEBRIS_REQ = 0x30D0;
+    CMD_DECOMPOSE_ARTIFACT_DEBRIS_RSP = 0x30D1;
+
+    CMD_QUERY_LIMITED_MISSION_REQ = 0x30E0;
+    CMD_QUERY_LIMITED_MISSION_RSP = 0x30E1;
+    CMD_AWARD_LIMITED_MISSION_REQ = 0x30E2;
+    CMD_AWARD_LIMITED_MISSION_RSP = 0x30E3;
+
+    // 人气赛跑
+    CMD_OPEN_RUNNING_RACE_REQ = 0x30F0;
+    CMD_OPEN_RUNNING_RACE_RSP = 0x30F1;
+    CMD_BUY_RUNNING_RACE_COUNT_REQ = 0x30F2;
+    CMD_BUY_RUNNING_RACE_COUNT_RSP = 0x30F3;
+    CMD_FINISH_RUNNING_RACE_REQ = 0x30F4;
+    CMD_FINISH_RUNNING_RACE_RSP = 0x30F5;
+    CMD_QUIT_RUNNING_RACE_REQ   = 0x30F6;
+    CMD_QUIT_RUNNING_RACE_RSP   = 0x30F7;
+
+    // 英雄洗练
+    CMD_PRACTICE_STONE_EXCHANGE_REQ     = 0x3100;
+    CMD_PRACTICE_STONE_EXCHANGE_RSP     = 0x3101;
+    CMD_PRACTICE_PROPERTY_REQ           = 0x3102;
+    CMD_PRACTICE_PROPERTY_RSP           = 0x3103;
+    CMD_REVERT_PRACTICE_PROPERTY_REQ    = 0x3104;
+    CMD_REVERT_PRACTICE_PROPERTY_RSP    = 0x3105;
+
+    // 王者争霸奖励
+    CMD_FETCH_PK_SECTION_AWARD_REQ      = 0x3140;
+    CMD_FETCH_PK_SECTION_AWARD_RSP      = 0x3141;
+
+    CMD_QUERY_PK_DAILY_AWARD_REQ        = 0x3142;
+    CMD_QUERY_PK_DAILY_AWARD_RSP        = 0x3143;
+
+    CMD_FETCH_PK_DAILY_AWARD_REQ        = 0x3144;
+    CMD_FETCH_PK_DAILY_AWARD_RSP        = 0x3145;
+
+    // PK挑战
+    CMD_START_PK_CHALLENGE_REQ          = 0x3200;
+    CMD_START_PK_CHALLENGE_RSP          = 0x3201;
+
+    CMD_CANCEL_PK_CHALLENGE_REQ         = 0x3202;
+    CMD_CANCEL_PK_CHALLENGE_RSP         = 0x3203;
+
+    CMD_CONFIRM_PK_CHALLENGE_REQ        = 0x3204;
+    CMD_CONFIRM_PK_CHALLENGE_RSP        = 0x3205;
+
+    CMD_FINISH_PK_CHALLENGE_REQ         = 0x3206;
+    CMD_FINISH_PK_CHALLENGE_RSP         = 0x3207;
+
+    //CMD_CANCEL_PK_CHALLENGE_NOTICE      = 0x3220;
+    CMD_CANCEL_PK_CHALLENGE_NOTICE      = 0x3221;
+
+    //CMD_CONFIRM_PK_CHALLENGE_NOTICE_REQ = 0x3222;
+    CMD_CONFIRM_PK_CHALLENGE_NOTICE     = 0x3223;
+
+    //CMD_START_PK_CHALLENGE_NOTICE       = 0x3224;
+    CMD_START_PK_CHALLENGE_NOTICE       = 0x3225;
+
+    //CMD_FINISH_PK_CHALLENGE_NOTICE      = 0x3226;
+    CMD_FINISH_PK_CHALLENGE_NOTICE      = 0x3227;
+
+    CMD_SETTING_PK_CHALLENGE_REQ        = 0x3240;
+    CMD_SETTING_PK_CHALLENGE_RSP        = 0x3241;
+    
+    CMD_GM_CONTROL_PK_REQ               = 0x3242;
+    CMD_GM_CONTROL_PK_RSP               = 0x3243;
+
+    // 邮件
+    CMD_QUERY_MAIL_REQ                  = 0x3300;
+    CMD_QUERY_MAIL_RSP                  = 0x3301;
+
+    CMD_SET_MAIL_READ_REQ               = 0x3302;
+    CMD_SET_MAIL_READ_RSP               = 0x3303;
+
+    CMD_FETCH_MAIL_AWARD_REQ            = 0x3304;
+    CMD_FETCH_MAIL_AWARD_RSP            = 0x3305;
+
+    CMD_DELETE_MAIL_REQ                 = 0x3306;
+    CMD_DELETE_MAIL_RSP                 = 0x3307;
+
+    //CMD_NEW_MAIL_NOTICE                 = 0x3308;
+    CMD_NEW_MAIL_NOTICE                 = 0x3309;
+
+    // 节日活动
+    CMD_QUERY_FESTIVAL_REQ              = 0x3310;
+    CMD_QUERY_FESTIVAL_RSP              = 0x3311;
+
+    CMD_QUERY_FESTIVAL_SIGN_REQ         = 0x3312;
+    CMD_QUERY_FESTIVAL_SIGN_RSP         = 0x3313;
+
+    CMD_FESTIVAL_SIGN_REQ               = 0x3314;
+    CMD_FESTIVAL_SIGN_RSP               = 0x3315;
+
+    CMD_FESTIVAL_EXCHANGE_REQ           = 0x3316;
+    CMD_FESTIVAL_EXCHANGE_RSP           = 0x3317;
+
+    CMD_FESTIVAL_LOTTERY_REQ            = 0x3318;
+    CMD_FESTIVAL_LOTTERY_RSP            = 0x3319;
+    
+    // 社团战
+    CMD_SIGN_UP_GROUP_BATTLE_REQ        = 0x3400;
+    CMD_SIGN_UP_GROUP_BATTLE_RSP        = 0x3401;
+
+    CMD_QUERY_SIGN_UP_INFO_REQ          = 0x3402;
+    CMD_QUERY_SIGN_UP_INFO_RSP          = 0x3403;
+
+    CMD_SET_GROUP_BATTLE_OPTION_REQ     = 0x3404;
+    CMD_SET_GROUP_BATTLE_OPTION_RSP     = 0x3405;
+
+    CMD_QUERY_GROUP_BATTLE_REQ          = 0x3406;
+    CMD_QUERY_GROUP_BATTLE_RSP          = 0x3407;
+
+    CMD_QUERY_HERO_BATTLE_ARRAY_REQ     = 0x3408;
+    CMD_QUERY_HERO_BATTLE_ARRAY_RSP     = 0x3409;
+
+    CMD_SET_HERO_BATTLE_ARRAY_REQ       = 0x340A;
+    CMD_SET_HERO_BATTLE_ARRAY_RSP       = 0x340B;
+
+    CMD_CHOOSE_GROUP_BATTLE_ROAD_REQ    = 0x340C;
+    CMD_CHOOSE_GROUP_BATTLE_ROAD_RSP    = 0x340D;
+
+    CMD_QUERY_CURRENT_BATTLE_INFO_REQ   = 0x340E;
+    CMD_QUERY_CURRENT_BATTLE_INFO_RSP   = 0x340F;
+
+    CMD_READY_GROUP_BATTLE_REQ          = 0x3410;
+    CMD_READY_GROUP_BATTLE_RSP          = 0x3411;
+
+    CMD_START_SINGLE_BATTLE_NOTICE      = 0x3412;
+
+    CMD_COMPLETE_SINGLE_BATTLE_REQ      = 0x3413;
+    CMD_COMPLETE_SINGLE_BATTLE_RSP      = 0x3414;
+
+    CMD_FINISH_SINGLE_BATTLE_NOTICE     = 0x3415;
+    
+    CMD_QUERY_GROUP_BATTLE_HISTORY_REQ  = 0x3416;
+    CMD_QUERY_GROUP_BATTLE_HISTORY_RSP  = 0x3417;
+
+    CMD_QUERY_ONCE_GROUP_BATTLE_HISTORY_REQ = 0x3418;
+    CMD_QUERY_ONCE_GROUP_BATTLE_HISTORY_RSP = 0x3419;
+
+    CMD_SEND_GROUP_BATTLE_AWARD_REQ     = 0x341A;
+    CMD_SEND_GROUP_BATTLE_AWARD_RSP     = 0x341B;
+    
+    CMD_QUERY_GROUP_BATTLE_TACTIC_REQ   = 0x341C;
+    CMD_QUERY_GROUP_BATTLE_TACTIC_RSP   = 0x341D;
+
+    CMD_SET_GROUP_BATTLE_TACTIC_REQ     = 0x341E;
+    CMD_SET_GROUP_BATTLE_TACTIC_RSP     = 0x341F;
+
+    CMD_SYNC_GROUP_FIGHTER_INFO_REQ     = 0x3420;
+    CMD_SYNC_GROUP_FIGHTER_INFO_RSP     = 0x3421;
+    
+    CMD_READY_GROUP_BATTLE_NOTICE       = 0x3422;
+    
+    //CMD_GM_CONTROL_PK_SERVER_REQ        = 0x3423;
+    
+    CMD_REPORT_SINGLE_BATTLE_INFO_REQ   = 0x3424;
+    CMD_REPORT_SINGLE_BATTLE_INFO_RSP   = 0x3425;
+    
+    CMD_START_GROUP_BATTLE_NOTICE       = 0x3426;
+    
+    CMD_SEND_GROUP_BATTLE_ROLL_MSG_REQ  = 0x3427;
+    
+    CMD_QUERY_GROUP_BATTLE_BRIEF_REQ    = 0x3428;
+    CMD_QUERY_GROUP_BATTLE_BRIEF_RSP    = 0x3429;
+
+    // 分享奖励
+    CMD_QUERY_SHARE_AWARD_REQ           = 0x3460;
+    CMD_QUERY_SHARE_AWARD_RSP           = 0x3461;
+    
+    CMD_FINISH_SHARE_REQ                = 0x3462;
+    CMD_FINISH_SHARE_RSP                = 0x3463;
+    
+    CMD_AWARD_SHARE_AWARD_REQ           = 0x3464;
+    CMD_AWARD_SHARE_AWARD_RSP           = 0x3465;
+    
+    // 组队试炼
+    CMD_QUERY_TRIAL_ROOM_LIST_REQ       = 0x3470;
+    CMD_QUERY_TRIAL_ROOM_LIST_RSP       = 0x3471;
+
+    CMD_CREATE_TRIAL_ROOM_REQ           = 0x3472;
+    CMD_CREATE_TRIAL_ROOM_RSP           = 0x3473;
+
+    CMD_JOIN_TRIAL_ROOM_REQ             = 0x3474;
+    CMD_JOIN_TRIAL_ROOM_RSP             = 0x3475;
+
+    CMD_RECOURSE_FRIEND_TRIAL_REQ       = 0x3476;
+    CMD_RECOURSE_FRIEND_TRIAL_RSP       = 0x3477;
+
+    CMD_KICK_TRIAL_ROOM_MEMBER_REQ      = 0x3478;
+    CMD_KICK_TRIAL_ROOM_MEMBER_RSP      = 0x3479;
+
+    CMD_INVITE_TRIAL_REQ                = 0x348A;
+    CMD_INVITE_TRIAL_RSP                = 0x348B;
+
+    CMD_START_TRIAL_REQ                 = 0x348C;
+    CMD_START_TRIAL_RSP                 = 0x348D;
+
+    CMD_PASS_TRIAL_INSTANCE_REQ         = 0x348E;
+    CMD_PASS_TRIAL_INSTANCE_RSP         = 0x348F;
+
+    CMD_QUIT_TRIAL_INSTANCE_REQ         = 0x3490;
+    CMD_QUIT_TRIAL_INSTANCE_RSP         = 0x3491;
+    
+    CMD_TRIAL_ROOM_INFO_NOTICE          = 0x3492;
+    
+    CMD_BUY_TRIAL_COUNT_REQ             = 0x3493;
+    CMD_BUY_TRIAL_COUNT_RSP             = 0x3494;
+    
+    CMD_LEAVE_TRIAL_ROOM_REQ            = 0x3495;
+    CMD_LEAVE_TRIAL_ROOM_RSP            = 0x3496;
+    
+    CMD_KICK_TRIAL_MEMBER_NOTICE        = 0x3497;
+    
+    CMD_INVITE_TRIAL_NOTICE             = 0x3498;
+    
+    CMD_REPLY_TRIAL_INVITE_REQ          = 0x3499;
+    CMD_REPLY_TRIAL_INVITE_RSP          = 0x349A;
+
+    CMD_QUERY_TRIAL_ONLINE_ROLE_LIST_REQ = 0x349B;
+    CMD_QUERY_TRIAL_ONLINE_ROLE_LIST_RSP = 0x349C;
+
+    CMD_QUERY_TRIAL_RECOURSE_LIST_REQ   = 0x349D;
+    CMD_QUERY_TRIAL_RECOURSE_LIST_RSP   = 0x349E;
+    
+    CMD_QUERY_TRIAL_LIST_REQ            = 0x349F;
+    CMD_QUERY_TRIAL_LIST_RSP            = 0x34A0;
+    
+    CMD_PASS_TRIAL_SCREEN_REQ           = 0x34A1;
+    CMD_PASS_TRIAL_SCREEN_RSP           = 0x34A2;
+    
+    CMD_RENAME_TRIAL_ROOM_REQ           = 0x34A3;
+    CMD_RENAME_TRIAL_ROOM_RSP           = 0x34A4;
+    
+    CMD_CHANGE_TRIAL_INSTANCE_REQ       = 0x34A5;
+    CMD_CHANGE_TRIAL_INSTANCE_RSP       = 0x34A6;
+    
+    CMD_START_TRIAL_NOTICE              = 0x34A7;
+    
+    CMD_SEND_TRIAL_ROBOT_AWARD_NOTICE   = 0x34A8;
+    
+    CMD_SYNC_TRIAL_ROLE_INFO_REQ        = 0x34A9;
+    
+    CMD_ZONE_LEAVE_TRIAL_ROOM_REQ       = 0x34AA;
+    
+    CMD_READY_TRIAL_REQ                 = 0x34AB;
+    CMD_READY_TRIAL_RSP                 = 0x34AC;
+    
+    CMD_CANCEL_TRIAL_PRIVATE_ROOM_REQ   = 0x34AD;
+    CMD_CANCEL_TRIAL_PRIVATE_ROOM_RSP   = 0x34AE;
+
+    CMD_SIGN_UP_GROUP_BATTLE_FIGHTER_LIST_REQ = 0x34AF;
+
+    // 校园宝藏抽奖
+    CMD_QUERY_SCHOOL_TREASURE_SHOP_REQ          = 0x34C1;
+    CMD_QUERY_SCHOOL_TREASURE_SHOP_RSP          = 0x34C2;   
+
+    CMD_BUY_SCHOOL_TREASURE_SHOP_GOODS_REQ      = 0x34C3;
+    CMD_BUY_SCHOOL_TREASURE_SHOP_GOODS_RSP      = 0x34C4;
+
+    CMD_LOTTERY_SCHOOL_TREASURE_SHOP_GOODS_REQ  = 0x34C5;
+    CMD_LOTTERY_SCHOOL_TREASURE_SHOP_GOODS_RSP  = 0x34C6;
+
+    CMD_FRESH_SCHOOL_TREASURE_SHOP_REQ          = 0x34C7;
+    CMD_FRESH_SCHOOL_TREASURE_SHOP_RSP          = 0x34C8;
+    
+    // 版本更新奖励
+    CMD_QUERY_VERSION_AWARD_REQ                 = 0x34E0;
+    CMD_QUERY_VERSION_AWARD_RSP                 = 0x34E1;
+    
+    CMD_AWARD_VERSION_AWARD_REQ                 = 0x34E2;
+    CMD_AWARD_VERSION_AWARD_RSP                 = 0x34E3;
+
+    // 老玩家召回活动
+    CMD_QUERY_RECALL_PLAYER_INFO_REQ            = 0x3500;
+    CMD_QUERY_RECALL_PLAYER_INFO_RSP            = 0x3501;
+
+    CMD_AWARD_RECALL_PLAYER_LOGIN_AWARD_REQ     = 0x3502;
+    CMD_AWARD_RECALL_PLAYER_LOGIN_AWARD_RSP     = 0x3503;
+
+    // 每周任务
+    CMD_QUERY_WEEK_CHALLENGES_REQ               = 0x3510;
+    CMD_QUERY_WEEK_CHALLENGES_RSP               = 0x3511;
+
+    CMD_AWARD_WEEK_CHALLENGES_REQ               = 0x3512;
+    CMD_AWARD_WEEK_CHALLENGES_RSP               = 0x3513;
+    
+    // 社团争霸
+    CMD_QUERY_GROUP_HEGEMONY_INFO_REQ           = 0x3520;
+    CMD_QUERY_GROUP_HEGEMONY_INFO_RSP           = 0x3521;
+
+    CMD_SIGN_UP_GROUP_HEGEMONY_REQ              = 0x3522;
+    CMD_SIGN_UP_GROUP_HEGEMONY_RSP              = 0x3523;
+
+    CMD_MATCH_GROUP_HEGEMONY_REQ                = 0x3524;
+    CMD_MATCH_GROUP_HEGEMONY_RSP                = 0x3525;
+    
+    CMD_START_GROUP_HEGEMONY_NOTICE             = 0x3526;
+
+    CMD_COMPLETE_GROUP_HEGEMONY_REQ             = 0x3527;
+    CMD_COMPLETE_GROUP_HEGEMONY_RSP             = 0x3528;
+
+    CMD_SET_GROUP_HEGEMONY_MEMBER_REQ           = 0x3529;
+    CMD_SET_GROUP_HEGEMONY_MEMBER_RSP           = 0x352A;
+
+    CMD_READY_GROUP_HEGEMONY_NOTICE             = 0x352B;
+    
+    CMD_READY_GROUP_HEGEMONY_REQ                = 0x352C;
+    CMD_READY_GROUP_HEGEMONY_RSP                = 0x352D;
+    
+    CMD_QUERY_GROUP_HEGEMONY_RANK_REQ           = 0x352E;
+    CMD_QUERY_GROUP_HEGEMONY_RANK_RSP           = 0x352F;
+    
+    CMD_QUERY_GROUP_HEGEMONY_AWARD_REQ          = 0x3530;
+    CMD_QUERY_GROUP_HEGEMONY_AWARD_RSP          = 0x3531;
+    
+    CMD_AWARD_GROUP_HEGEMONY_REQ                = 0x3532;
+    CMD_AWARD_GROUP_HEGEMONY_RSP                = 0x3533;
+    
+    CMD_QUERY_GROUP_HEGEMONY_SHOP_REQ           = 0x3534;
+    CMD_QUERY_GROUP_HEGEMONY_SHOP_RSP           = 0x3535;
+    
+    CMD_REFRESH_GROUP_HEGEMONY_SHOP_REQ         = 0x3536;
+    CMD_REFRESH_GROUP_HEGEMONY_SHOP_RSP         = 0x3537;
+    
+    CMD_BUY_GROUP_HEGEMONY_SHOP_REQ             = 0x3538;
+    CMD_BUY_GROUP_HEGEMONY_SHOP_RSP             = 0x3539;
+    
+    CMD_QUERY_GROUP_HEGEMONY_MEMBER_REQ         = 0x353A; 
+    CMD_QUERY_GROUP_HEGEMONY_MEMBER_RSP         = 0x353B;
+
+    CMD_PARTICIPATE_GROUP_HEGEMONY_REQ          = 0x353C; 
+    CMD_PARTICIPATE_GROUP_HEGEMONY_RSP          = 0x353D; 
+    
+    CMD_FINISH_GROUP_HEGEMONY_NOTICE            = 0x353E;
+    CMD_GROUP_HEGEMONY_RANK_NOTICE              = 0x353F;
+    
+    CMD_GROUP_HEGEMONY_TOP_GROUP_NOTICE         = 0x3540;
+
+    CMD_QUERY_GROUP_HEGEMONY_HISTORY_RANK_REQ   = 0x3541;
+    CMD_QUERY_GROUP_HEGEMONY_HISTORY_RANK_RSP   = 0x3542;
+    
+    CMD_QUERY_GROUP_ROLE_HEGEMONY_SCORE_REQ     = 0x3543;
+    CMD_QUERY_GROUP_ROLE_HEGEMONY_SCORE_RSP     = 0x3544;
+    
+    CMD_GROUP_HEGEMONY_ROLE_RANK_NOTICE         = 0x3545;
+
+    CMD_CANCEL_GROUP_HEGEMONY_MATCH_REQ         = 0x3546;
+    CMD_CANCEL_GROUP_HEGEMONY_MATCH_RSP         = 0x3547;
+
+    // 主播人气榜
+    CMD_QUERY_ANCHOR_RANK_REQ                   = 0x3560;
+    CMD_QUERY_ANCHOR_RANK_RSP                   = 0x3561;
+    
+    CMD_PRAISE_ANCHOR_REQ                       = 0x3562;
+    CMD_PRAISE_ANCHOR_RSP                       = 0x3563;
+
+    CMD_SEND_ANCHOR_GIFT_REQ                    = 0x3564;
+    CMD_SEND_ANCHOR_GIFT_RSP                    = 0x3565;
+    
+    CMD_QUERY_FANS_SCORE_AWARD_REQ              = 0x3566;
+    CMD_QUERY_FANS_SCORE_AWARD_RSP              = 0x3567;
+
+    CMD_AWARD_FANS_SCORE_REQ                    = 0x3568;
+    CMD_AWARD_FANS_SCORE_RSP                    = 0x3569;
+
+    CMD_QUERY_FANS_RANK_REQ                     = 0x356A;
+    CMD_QUERY_FANS_RANK_RSP                     = 0x356B;
+
+    CMD_QUERY_ANCHOR_ACTIVIY_INFO_REQ           = 0x356C;
+    CMD_QUERY_ANCHOR_ACTIVIY_INFO_RSP           = 0x356D;
+
+    // 圣装
+    CMD_QUERY_SUPER_EQUIPMENT_REQ               = 0x3580;
+    CMD_QUERY_SUPER_EQUIPMENT_RSP               = 0x3581;
+
+    CMD_PUT_ON_SUPER_EQUIPMENT_REQ              = 0x3582;
+    CMD_PUT_ON_SUPER_EQUIPMENT_RSP              = 0x3583;
+
+    CMD_LEV_UP_SUPER_EQUIPMENT_REQ              = 0x3584;
+    CMD_LEV_UP_SUPER_EQUIPMENT_RSP              = 0x3585;
+
+    CMD_DECOMPOSE_SUPER_EQUIPMENT_PART_REQ      = 0x3586;
+    CMD_DECOMPOSE_SUPER_EQUIPMENT_PART_RSP      = 0x3587;
+
+    CMD_ACTIVATE_SUPER_EQUIPMENT_SUIT_REQ       = 0x3588;
+    CMD_ACTIVATE_SUPER_EQUIPMENT_SUIT_RSP       = 0x3589;
+
+    // 学霸转盘活动
+    CMD_QUERY_SCHOOL_TURNTABLE_SHOP_REQ         = 0x35A0;
+    CMD_QUERY_SCHOOL_TURNTABLE_SHOP_RSP         = 0x35A1;
+
+    CMD_ROTATE_SCHOOL_TURNTABLE_SHOP_GOODS_REQ  = 0x35A2;
+    CMD_ROTATE_SCHOOL_TURNTABLE_SHOP_GOODS_RSP  = 0x35A3;
+
+    CMD_BUY_SCHOOL_TURNTABLE_SHOP_GOODS_REQ     = 0x35A4;
+    CMD_BUY_SCHOOL_TURNTABLE_SHOP_GOODS_RSP     = 0x35A5;
+
+    CMD_FRESH_SCHOOL_TURNTABLE_SHOP_REQ         = 0x35A6;
+    CMD_FRESH_SCHOOL_TURNTABLE_SHOP_RSP         = 0x35A7;
+
+    // 天降珍宝商店
+    CMD_GOD_AWARD_SHOP_NOTICE                   = 0x3600;
+    // CMD_GOD_AWARD_SHOP_NOTICE                   = 0x3601;
+
+    CMD_QUERY_GOD_AWARD_SHOP_GOODS_REQ          = 0x3602;
+    CMD_QUERY_GOD_AWARD_SHOP_GOODS_RSP          = 0x3603;
+
+    CMD_BUY_GOD_AWARD_SHOP_REQ                  = 0x3604;
+    CMD_BUY_GOD_AWARD_SHOP_RSP                  = 0x3605;
+
+    CMD_FRESH_GOD_AWARD_SHOP_REQ                = 0x3606;
+    CMD_FRESH_GOD_AWARD_SHOP_RSP                = 0x3607; 
+}
+
+enum RET
+{
+    RET_SYS_ERR         = -1;
+    RET_SUCCESS         = 0;
+
+    RET_MODULE_SWITCH_OFF              = 0x0100;   // 模块关闭
+                                     
+    // 角色相关                      
+    //RET_LOGIN_DUP_NAME               = 0x1000;   // 角色名字重复
+    RET_NEED_RELOGIN                   = 0x1001;   // 需要重新登录
+                                     
+    RET_ROLE_NOT_EXISTS                = 0x1010;   // 角色不存在
+    RET_ROLE_NOT_ONLINE                = 0x1011;   // 角色不在线
+                                     
+    RET_AUTH_FAIL                      = 0x1021;   // 鉴权失败
+                                     
+    // 资源不足                      
+    RET_INSUFFICIENT_COIN              = 0x1100;
+    RET_INSUFFICIENT_GOLD              = 0x1101;
+    RET_INSUFFICIENT_HONOUR            = 0x1102;
+    RET_INSUFFICIENT_ITEM              = 0x1103;
+    RET_INSUFFICIENT_SP                = 0x1104;   // 体力不足
+    RET_INSUFFICIENT_SPIRIT            = 0x1105;   // 元气不足
+    RET_INSUFFICIENT_FAME              = 0x1106;   // 声望不足
+    RET_INSUFFICIENT_VIP_POINT         = 0x1107;   // vip值不足
+    RET_INSUFFICIENT_SKILL_POINT       = 0x1108;   // 技能点不足
+    
+    RET_PACK_FULL                      = 0x1140;   // 背包满
+    RET_DEGREE_PACK_FULL               = 0x1141;   // 学位背包(书架)满
+                                     
+    // 其他逻辑错误                  
+    RET_CDING                          = 0x1200;   // 正在CD
+    RET_PROB_FAIL                      = 0x1201;   // 概率性失败
+    RET_OUT_OF_DATE                    = 0x1202;   // 过期
+    
+    // 品质
+    RET_QUALITY_IS_MAX                 = 0x1210;   // 品质已经最高了
+                                     
+    // 数值限制                      
+    RET_LIMITED_LEV                    = 0x1300;   // 等级限制
+    RET_LIMITED_FAME_LEV               = 0x1301;   // 声望等级限制
+    RET_LIMITED_VIP_LEV                = 0x1302;   // VIP等级限制
+    RET_LIMITED_SP_BUY_COUNT           = 0x1303;   // 体力购买次数限制
+
+    // 场景 && 关卡
+    RET_INVALID_SCENE_ID               = 0x1400;   // 无效的场景ID
+    RET_HERO_INSTANCE_HAS_PASSED       = 0x1401;   // 精英关卡已经打过了
+    RET_VIP_OR_LEV_NOT_ENOUGH          = 0x1402;   // vip或等级不够
+    RET_NOT_IN_INSTANCE                = 0x1403;   // 不在副本内
+    
+    // 活跃度
+    RET_ACTIVITY_INVALID_SCORE         = 0x1410;   // 无效的积分参数
+    RET_ACTIVITY_INSUFFICIENT_SCORE    = 0x1411;   // 积分不足
+    RET_ACTIVITY_HAS_AWARDED           = 0x1412;   // 重复领奖
+
+    // 好友
+    RET_FRIEND_REPEAT_ADD              = 0x1420;   // 重复添加好友
+    RET_FRIEND_NO_FRIEND               = 0x1421;   // 没有该好友
+    RET_FRIEND_COUNT_LIMIT             = 0x1422;   // 好友数量达到上限
+
+    // 么么
+    RET_MOMO_NO_FRIEND                 = 0x1440;   // 没有该好友
+    RET_MOMO_HAS_MOMOED                = 0x1441;   // 被么过了
+    RET_MOMO_INSUFFICIENT_COUNT        = 0x1442;   // 么么次数不够，无法领奖
+
+    // 日常任务
+    RET_DM_UNFINISHED                  = 0x1460;   // 日常任务未完成
+    RET_DM_NO_ITEM_IN_PACK             = 0x1461;   // 背包中没有该道具
+    RET_DM_SYS_CLOSED                  = 0x1462;   // 尚未开启日常任务系统
+    RET_DM_ALL_FINISHED                = 0x1463;   // 当天所有任务已经完成
+
+    // 装备 && 宝石
+    RET_EQUIP_INVALID_ID               = 0x1481;  // 无效的的装备ID
+    RET_EQUIP_NO_THIS_GEM              = 0x1482;  // 装备上没有镶嵌该类型宝石
+    RET_EQUIP_LEV_BIGGER_THAN_ROLE_LEV = 0x1483; // 装备级别大于大于任务等级
+    RET_EQUIP_WAIT_ADVANCED            = 0x1484;  // 进阶后才能升级
+    RET_GEM_NO_THIS_ITEM               = 0x1491;  // 没有该类型宝石
+    RET_GEM_ERR_LEV                    = 0x1492;  // 宝石等级错误
+    RET_GEM_ERR_TYPE                   = 0x1493;  // 宝石类型错误
+    RET_GEM_REPEAT_INLAY               = 0x1494;  // 重复镶嵌同类型宝石
+
+    // 道具
+    RET_ITEM_INVALID_GUID              = 0x1510;  // 无效的GUID
+    RET_ITEM_EXPIRE                    = 0x1511;  // 道具过期
+
+    // 每日登陆
+    RET_DAILY_AWARD_AWARDED            = 0x1520;  // 奖励已经领过了
+    RET_DAILY_AWARD_DAYS               = 0x1521;  // 累计登陆天数不够
+    
+    // 在线奖励
+    RET_ONLINE_AWARD_LOCKED            = 0x1530;  // 在线奖励没有解锁
+    RET_ONLINE_AWARD_TIME              = 0x1531;  // 在线时间不够
+    
+    // 地盘
+    RET_TERR_HAS_UNLOCKED              = 0x1550; // 已经解锁了
+    RET_TERR_INSUFFICIENT_STARS        = 0x1551; // 星星不足
+    RET_TERR_CELL_LOCKED               = 0x1552; // 未解锁的商店
+    RET_TERR_HAS_COLLECTED             = 0x1553; // 刚收完租
+    RET_TERR_REFRESH_ROB_LIST_FAIL     = 0x1554; // 刷新失败
+
+    // 地盘摆摊
+    RET_TERR_STALL_HAS_UNLOCKED        = 0x1555; // 摊位已经锁定
+    RET_TERR_STALL_NOT_JOIN_GROUP      = 0x1556; // 未参加社团
+    RET_TERR_STALL_HAS_END             = 0x1557; // 摊位已经结束
+    RET_TERR_STALL_HAS_DEFENDED        = 0x1558; // 摊位已有其他人护卫
+    RET_TERR_STALL_NOT_HAS_COUNT       = 0x1559; // 摊位相关的次数用尽
+    RET_TERR_STALL_HAS_HELPED          = 0x155A; // 已经有人助战
+    
+    // 模拟考试
+    RET_EXAM_INVALID_OPTION            = 0x1570;  // 非法的选项
+    RET_EXAM_AWARD_INVALID             = 0x1571;  // 奖励已经领过或过期了
+    RET_EXAM_NOT_FINISHED              = 0x1572;  // 答题还没有结束
+    RET_EXAM_HAS_FINISHED              = 0x1573;  // 今天的模拟考试已经结束了
+
+    // 充值奖励
+    RET_RECHARGE_AWARDED               = 0x1610; // 充值奖励已经领过
+    RET_RECHARGE_AWARD_FAILE           = 0x1611; // 充值奖励领取失败
+    RET_RECHARGE_AWARD_BOOK_ERROR      = 0x1612; // 充值奖励表里没数据
+
+    // 沙包大战
+    RET_SANDBAGS_WAR_NUMBER_RUNOUT     = 0x1630; // 今日沙包大战次数用完了
+    RET_SANDBAGS_WAR_HASCD             = 0x1631; // 沙包大战cd时间没到
+
+    // 弹幕
+    RET_DM_INSUFFICIENT_COUNT          = 0x1650; // 弹幕次数不够
+
+    // 爬塔
+    RET_INVALID_CLIMB_TOWER_HERO       = 0x1670; // 非法的爬塔英雄数据
+    RET_NOT_IN_TOWER_INSTANCE          = 0x1671; // 没有处于爬塔副本内
+    RET_TOWER_INSTANCE_UNBALE_JUMP     = 0x1672; // 此副本不让跳关
+    RET_CLIMB_TOWER_AWARD_FAILE        = 0x1673; // 爬塔领奖失败
+    
+    // 复活
+    RET_INSUFFICIENT_REVIVE_COUNT      = 0x1690; // 没复活次数了
+
+    // 英雄转职
+    RET_IN_TRANSFORM                   = 0x16A0; // 变身中
+    RET_INSUFFICIENT_TRANSFORM_CARD    = 0x16A1; // 变身卡不够
+    RET_HERO_LOCKED                    = 0x16A2; // 英雄未解锁 
+    RET_HERO_STAR_FULL                 = 0x16A3; // 英雄星级达到上限
+
+    // 技能
+    RET_SKILL_WAIT_ADVANCED            = 0x16B0; // 技能进阶后才能升级
+    RET_SKILL_LEV_BIGGER_THAN_ROLE_LEV = 0x16B1; // 技能级别大于人物等级
+
+    // 抽奖
+    RET_INVALID_LOTTERY_COUNT          = 0x16D0;
+    RET_INVALID_LOTTERY_TYPE           = 0x16D1;
+    RET_INVALID_GOODS_INDEX            = 0x16D2;
+    RET_INVALID_EXCHANGE_TYPE          = 0x16D3;
+    RET_GOODS_HAS_EXCHANGED            = 0x16D4;
+    RET_INSUFFICIENT_LOTTERY_ITEM      = 0x16D5;
+    RET_LOTTERY_HAS_CLOSEED            = 0x16D6; // 抽奖已经关闭
+
+    // 世界BOSS
+    RET_WORLD_BOSS_DISABLED             = 0x16E0;   // 未开放或结束了
+    RET_WORLD_BOSS_COUNT_RUNOUT         = 0x16E1;   // 世界BOSS次数用光
+    
+    // 学霸系统
+    RET_PUT_SAME_TYPE_DEGREE           = 0x1710; // 装备了相同的证书
+
+    // 社团
+    RET_GROUP_DUP_NAME                  = 0x1720;   // 社团名字重复
+    RET_GROUP_INVALID_NAME              = 0x1721;   // 社团名字非法
+    RET_GROUP_CAPTAIN_CAN_NOT_LEAVE     = 0x1722;   // 会长不能退出
+    RET_GROUP_INVALID_PRIVILEGES        = 0x1723;   // 权限不够
+    RET_GROUP_INSUFFICIENT_WOOD         = 0x1724;   // 木材不够
+    RET_GROUP_BUILDING_FULL_LEV         = 0x1725;   // 建筑满级
+    RET_NOT_ALLOWED_EXCEED_BASE_LEV     = 0x1726;   // 不能超过基地等级
+    RET_BUILD_PARTICIPANTS_LIMIT        = 0x1727;   // 参与人数已满 
+    RET_INSUFFICIENT_BUILD_COUNT        = 0x1728;   // 参与次数不足
+    RET_GROUP_MEMBER_LIMIT              = 0x1729;   // 社团已满
+    RET_JOIN_GROUP_CD                   = 0x1730;   // 加社团CD(离开后1小时不能加)
+    RET_GROUP_ADMIN_LIMIT               = 0x1731;   // 管理人数已满 
+    RET_JOIN_ORIGIN_GROUP_CD            = 0x1732;   // 加入原社团CD(48小时)
+    RET_JOIN_GROUP_COUNT_LIMIT          = 0x1733;   // 加入次数限制(7天3次)
+    RET_INSUFFICIENT_GROUP_FUND         = 0x1734;   // 经费不足
+    RET_INSUFFICIENT_GROUP_ACTIVE       = 0x1735;   // 社团活跃值不足
+    RET_GROUP_BOSS_DIE                  = 0x1736;   // 社团boss已死亡
+    RET_NOT_IN_GROUP_BATTLE_ROLE_LIST   = 0x1737;   // 不在社团战名单里
+    RET_HERO_BATTLE_ARRAY_EMPTY         = 0x1738;   // 阵容不能为空
+    RET_GROUP_JOIN_APPLY_FAIL           = 0x1739;   // 社团申请失败
+    RET_SINGLE_BATTLE_NOT_EXIST         = 0x1740;   // 社团单场战斗不存在
+
+    // 街头争霸
+    RET_GROUP_INVALID_STEERT_ID         = 0x1750;   // 无效的关卡
+
+    // 组队PVE
+    RET_TEAM_PVE_NOT_ENABLED            = 0x1760;   // 未开始
+    RET_TEAM_PVE_ROOM_NOT_EXISTS        = 0x1765;   // 房间不存在
+    RET_TEAM_PVE_ROOM_FULL              = 0x1766;   // 房间满
+    RET_TEAM_PVE_ROOM_NOT_FULL          = 0x1767;   // 房间未满
+    RET_TEAM_PVE_ROOM_UNQUALIFIED       = 0x1768;   // 没资格，玩过了
+
+    // 武道会
+    RET_TOURNAMENT_RANK_NOT_EMPTY       = 0x1770;   // 榜位不为空
+    
+    // 称号相关
+    RET_TITLE_HAS_ACTIVATION            = 0x1800;   // 称号已激活
+
+    // PK
+    RET_PK_CLOSED                       = 0x1820;   // PK已结束
+
+    // 转盘
+    RET_TURNTABLE_NOT_OPEN              = 0x1840;   // 转盘没开放
+
+    // PK挑战
+    RET_PK_CHALLENGE_BAD_NAME_OR_NOT_ONLINE = 0x1850;   // 角色名无效或者不在线
+    RET_PK_CHALLENGE_REFUSE_CHALLENGED      = 0x1851;   // 拒绝被挑战
+    RET_PK_CHALLENGE_CANCELED_OR_TIMEOUT    = 0x1852;   // 已取消或者超时
+    RET_PK_CHALLENGE_IN_PROCESS             = 0x1853;   // PK挑战进行中
+
+    // 人气赛跑
+    RET_RUNNING_RACE_FINISH             = 0x1870;   // 人气赛跑结束
+    
+    // 试炼
+    RET_INSUFFICIENT_TRIAL_FC           = 0x1880;   // 试炼战力不足
+    RET_INSUFFICIENT_TRIAL_COUNT        = 0x1881;   // 试炼次数不足
+    RET_NOT_HAS_JOINABLE_ROOM           = 0x1882;   // 没有空房间
+    RET_INSUFFICIENT_TRIAL_SP           = 0x1883;   // 房间有人体力不足
+    RET_BUY_TRIAL_COUNT_LIMIT           = 0x1884;   // 购买次数上限
+    RET_TRIAL_LOCKED                    = 0x1885;   // 试炼未解锁
+    RET_TRIAL_ROOM_PRIVATE              = 0x1886;   // 私人房间不能进入
+    RET_TRIAL_MEMBER_NOT_READY          = 0x1887;   // 试炼成员没有准备好
+
+    // 觉醒
+    RET_PLEASE_AWAKE                    = 0x1890;   // 必须先觉醒
+    RET_HERO_LEV_LIMIT                  = 0x1891;   // 英雄等级必须小于角色等级
+
+    // 校园宝藏
+    RET_SCHOOL_TREASURE_CLOSED          = 0x18A0;
+
+    // 学霸转盘活动
+    RET_SCHOOL_TURNTABLE_CLOSED         = 0x18B0;
+
+    // 社团争霸
+    RET_GROUP_HEGEMONY_MEMBER_FULL        = 0x1900;   // 参与人数已满
+    RET_GROUP_HEGEMONY_SET_MEMBER_CLOSED  = 0x1901;   // 设置名单已经关闭
+
+    // 天降宝藏
+    RET_GOD_AWARD_SHOP_CLOSED           = 0x1940;
+    
+    // 多倍道具
+    RET_MULTIPLE_ITEM_VALID             = 0x1950;    // 多倍道具未失效
+}
+

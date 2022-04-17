@@ -1,0 +1,17 @@
+// s伤害梯度
+package Table;
+
+message MONSTERWEAPON
+{
+    optional int32    		id      = 1;
+	optional uint32 		range_lev_begin = 2;
+	optional uint32 		range_lev_end = 3;
+    optional string         quan	= 4;
+	optional string         dan	= 5;
+	optional string         tou	= 6;
+}
+
+message MONSTERWEAPON_ARRAY
+{
+    repeated MONSTERWEAPON rows = 1;
+}

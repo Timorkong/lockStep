@@ -1,0 +1,139 @@
+// 觉醒系统星盘协议
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+import "common_effect.proto";
+import "common_shop.proto";
+
+package Cmd.User;
+
+// 觉醒升级
+message AWAKE_LEV_UP_REQ
+{
+    optional uint32         hero_id   = 1;
+    optional uint32         item_id   = 2; 
+    optional sint32         count     = 3[default = 1];
+}
+
+message AWAKE_LEV_UP_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 觉醒神技
+message AWAKE_HERO_REQ
+{
+    optional uint32     hero_id = 1;
+    optional bool       keep    = 2; 
+}
+
+message AWAKE_HERO_RSP
+{
+    optional bool       issuccess = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 升级星盘
+message CONSTELLATION_LEV_UP_REQ
+{
+    optional bool       is_keep = 1;
+}
+
+message CONSTELLATION_LEV_UP_RSP
+{
+    optional bool            issuccess      = 1;
+    optional Common.Pack     item_pack      = 2;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 查询星盘
+message QUERY_CONSTELLATION_INFO_REQ
+{
+}
+
+message QUERY_CONSTELLATION_INFO_RSP
+{
+    optional sint32                      lev = 1;
+    optional Common.ConstellationAllInfo constellation_all_info = 2;
+}
+
+message INSTALL_CONSTELLATION_HERO_REQ
+{
+    optional uint32 pos          = 1;
+    optional uint32 hero_id      = 2;
+    repeated uint32 buffer_id    = 3;
+}
+
+message INSTALL_CONSTELLATION_HERO_RSP
+{
+    optional sint32 lev                                         = 1;
+    optional Common.ConstellationAllInfo constellation_all_info = 2;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message UNINSTALL_CONSTELLATION_HERO_REQ
+{
+    optional uint32 pos          = 1;
+}
+
+message UNINSTALL_CONSTELLATION_HERO_RSP
+{
+    optional Common.ConstellationAllInfo constellation_all_info = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message SET_HERO_BUFFER_ID_REQ
+{
+    optional uint32 hero_id      = 2;
+    repeated uint32 buffer_id    = 3;
+}
+
+message SET_HERO_BUFFER_ID_RSP
+{
+}
+
+message REBORN_HERO_REQ
+{
+    optional uint32 hero_id = 1;
+}
+
+message REBORN_HERO_RSP
+{
+    optional bool issuccess = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_DIVINE_SOUL_SHOP_REQ
+{
+}
+
+message QUERY_DIVINE_SOUL_SHOP_RSP
+{
+    repeated Common.DivineSoulShop.Goods goods_list     = 1;
+    optional sint32                      refresh_count  = 2;
+    optional Common.Pack                 item_pack      = 3;
+}
+
+message BUY_DIVINE_SOUL_SHOP_REQ
+{
+    optional uint32 idx = 1;
+}
+
+message BUY_DIVINE_SOUL_SHOP_RSP
+{
+    repeated Common.DivineSoulShop.Goods goods_list = 1;
+    optional Common.Pack item_pack                  = 2;
+}
+
+message FRESH_DIVINE_SOUL_SHOP_REQ
+{
+}
+
+message FRESH_DIVINE_SOUL_SHOP_RSP
+{
+    repeated Common.DivineSoulShop.Goods goods_list     = 1;
+    optional sint32                      refresh_count  = 2;
+    optional Common.Pack                 item_pack      = 3;
+}
+

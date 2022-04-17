@@ -1,0 +1,192 @@
+// 商城表
+
+import "common_game_res.proto";
+
+package TABLE;
+
+// 商品列表
+message GOODS
+{
+    optional uint32         id      = 1;
+
+    repeated Common.GameRes cost    = 3;
+    repeated Common.GameRes output  = 4;
+}
+
+message GOODS_ARRAY
+{
+    repeated GOODS rows = 1;
+}
+
+// 商店
+message COLLECTION_SHOP
+{
+    optional sint32 lev             = 1;
+    repeated uint32 coin_goods_list = 2;
+    repeated uint32 gold_goods_list = 3;
+}
+
+message COLLECTION_SHOP_ARRAY
+{
+    repeated COLLECTION_SHOP rows = 1;
+}
+
+// 古董商店
+message ANTIQUE_SHOP
+{
+    optional sint32 lev                 = 1;
+    repeated uint32 random_goods_list   = 2;
+    repeated uint32 fixed_goods_list    = 3; // 固定商品
+}
+
+message ANTIQUE_SHOP_ARRAY
+{
+    repeated ANTIQUE_SHOP rows = 1;
+}
+
+// 神秘商店
+message MYSTERY_SHOP
+{
+    optional sint32 lev         = 1;
+    repeated uint32 goods_list  = 2;
+    repeated uint32 cheap_goods = 3;
+}
+
+message MYSTERY_SHOP_ARRAY
+{
+    repeated MYSTERY_SHOP rows = 1;
+}
+
+// 竞技商店
+message ARENA_SHOP
+{
+    optional sint32 lev               = 1;
+    repeated uint32 random_goods_list = 2;
+    repeated uint32 fixed_goods_list  = 3; // 固定商品
+}
+
+message ARENA_SHOP_ARRAY
+{
+    repeated ARENA_SHOP rows = 1;
+}
+
+// 街霸商店
+message STREET_SHOP
+{
+    optional sint32 lev               = 1;
+    repeated uint32 random_goods_list = 2;
+    repeated uint32 fixed_goods_list  = 3; // 固定商品
+}
+
+message STREET_SHOP_ARRAY
+{
+    repeated STREET_SHOP rows = 1;
+}
+
+// 学霸商店
+message DEGREE_SHOP
+{
+    optional sint32 lev = 1;
+    repeated uint32 goods_list = 2;
+}
+
+message DEGREE_SHOP_ARRAY
+{
+    repeated DEGREE_SHOP rows = 1;
+}
+
+// 道具商品表
+message ITEM_GOODS
+{
+    optional uint32 item_id  = 1;
+    optional sint32 item_lev = 2;
+    optional uint32 goods_id = 3;
+}
+
+message ITEM_GOODS_ARRAY
+{
+    repeated ITEM_GOODS rows = 1;
+}
+
+// 宝石兑换表
+message GEM_EXCHANGE
+{
+    optional uint32         id      = 1;
+    optional Common.GameRes consume = 3;
+    optional Common.GameRes output  = 4;
+}
+
+message GEM_EXCHANGE_ARRAY
+{
+    repeated GEM_EXCHANGE rows = 1;
+}
+
+// 武道会商店
+message TOURNAMENT_SHOP
+{
+    optional sint32 lev               = 1;
+    repeated uint32 random_goods_list = 2;
+    repeated uint32 fixed_goods_list  = 3; // 固定商品
+}
+
+message TOURNAMENT_SHOP_ARRAY
+{
+    repeated TOURNAMENT_SHOP rows = 1;
+}
+
+message TERRITORY_SHOP
+{
+    optional sint32 lev               = 1;
+    repeated uint32 random_goods_list = 2;
+    repeated uint32 fixed_goods_list  = 3; // 固定商品
+}
+
+message TERRITORY_SHOP_ARRAY
+{
+    repeated TERRITORY_SHOP rows = 1;
+}
+
+message GROUP_BATTLE_SHOP
+{
+    optional sint32 lev                 = 1;
+    repeated uint32 random_goods_list   = 2;
+    repeated uint32 fixed_goods_list    = 3; // 固定商品
+}
+
+message GROUP_BATTLE_SHOP_ARRAY
+{
+    repeated GROUP_BATTLE_SHOP rows = 1;
+}
+
+message GROUP_HEGEMONY_SHOP
+{
+    optional sint32 lev                 = 1;
+    repeated uint32 random_goods_list   = 2;
+}
+
+message GROUP_HEGEMONY_SHOP_ARRAY
+{
+    repeated GROUP_HEGEMONY_SHOP rows = 1;
+}
+
+message DIVINE_SOUL_SHOP
+{
+    optional sint32 lev                 = 1;
+    repeated uint32 random_goods_list   = 2;
+}
+
+message DIVINE_SOUL_SHOP_ARRAY
+{
+    repeated DIVINE_SOUL_SHOP rows = 1;
+}
+
+message GOD_AWARD_SHOP
+{
+    optional sint32 lev                 = 1;
+    repeated uint32 random_goods_list   = 2;
+}
+
+message GOD_AWARD_SHOP_ARRAY
+{
+    repeated GOD_AWARD_SHOP rows = 1;
+}

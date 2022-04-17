@@ -1,0 +1,13 @@
+package Table;
+
+// 敏感词
+message SENSITIVE_WORD
+{
+    optional uint32 id  	= 1;
+    optional string word	= 2;
+}
+
+message SENSITIVE_WORD_ARRAY
+{
+    repeated SENSITIVE_WORD rows = 1;
+}

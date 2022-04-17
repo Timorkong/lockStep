@@ -1,0 +1,45 @@
+// 技能
+
+import "common_quality.proto";
+
+package Common;
+
+enum SkillType
+{
+    SKILL_TYPE_INVALID      = 0;
+    SKILL_TYPE_ACTIVE       = 1;    // 主动技能
+    SKILL_TYPE_PASSIVE      = 2;    // 被动技能
+    SKILL_TYPE_COMMON       = 3;    // 普通攻击
+	SKILL_TYPE_ITEM   	    = 4;    // 使用道具攻击技能
+	SKILL_TYPE_ITEM_THROW   = 5;    // 使用道具投掷
+	SKILL_TYPE_STAND_UP   	= 6;	// 倒地起身技能
+	SKILL_TYPE_DDJ   		= 7;	// DDJ
+}
+
+// 技能
+message Skill
+{
+    optional sint32           idx     = 1;
+    optional sint32           lev     = 2 [default = 1];
+    optional QualityType      quality = 3 [default = QUALITY_WHITE];
+}
+
+message RoleSkill
+{
+    repeated Skill    list           = 1;
+    optional int32    skill_point    = 2 [default = 0];  // 技能点
+    optional sfixed64 last_timestamp = 3; // 最近一次计算技能点的时间戳
+    optional int32    buy_count      = 4; // 技能点购买次数
+}
+
+message SkillCD
+{
+    optional string skill_name  = 1;
+    optional float  skill_cd    = 2;
+}
+
+message SkillBuff
+{
+    optional string skill_name  = 1;
+    repeated uint32 buff_list   = 2;
+}

@@ -1,0 +1,124 @@
+import "common_pack_item.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+// 抽奖奖励表
+message LOTTERY_AWARD
+{
+    optional uint32                  id          = 1;
+    optional Common.LotteryAwardType type        = 2;
+    repeated Common.GameRes          output      = 3;
+    optional float                   probability = 4;
+    optional Common.LotteryEvent     event       = 5[default = NULL_EVENT];
+    optional uint32                  hero_id     = 6;
+}
+
+message LOTTERY_AWARD_ARRAY
+{
+    repeated LOTTERY_AWARD rows = 1;
+}
+
+// 抽奖商品表
+message LOTTERY_SHOP_GOODS
+{
+    optional uint32                      id          = 1;
+    optional Common.LotteryShopGoodsType type        = 2;
+    repeated Common.GameRes              cost        = 3;
+    repeated Common.GameRes              output      = 4;
+    optional float                       probability = 5;
+}
+
+message LOTTERY_SHOP_GOODS_ARRAY
+{
+    repeated LOTTERY_SHOP_GOODS rows = 1;
+}
+
+// 抽奖等级 
+message LOTTERY_LEV
+{
+    optional sint32     lev             = 1;
+    repeated uint32     goods_list      = 2;
+    optional string     begin_datetime  = 3;
+    optional string     end_datetime    = 4;
+    repeated uint32     activity_goods_list = 5;
+
+    optional sfixed64   begin_timestamp = 101;
+    optional sfixed64   end_timestamp   = 102;
+}
+
+message LOTTERY_LEV_ARRAY
+{
+    repeated LOTTERY_LEV rows = 1;
+}
+
+// 土豪私藏特别商品
+message LOTTERY_SPECIAL_GOODS
+{
+    optional uint32             id          = 1;
+    repeated Common.GameRes     first_cost  = 2;  // 首次消耗
+    repeated Common.GameRes     normal_cost = 3;  // 正常消耗
+    repeated Common.GameRes     output      = 4;
+    optional string             begin_datetime  = 5;
+    optional string             end_datetime    = 6;
+    
+    optional sfixed64           begin_timestamp = 101;
+    optional sfixed64           end_timestamp   = 102;
+}
+
+message LOTTERY_SPECIAL_GOODS_ARRAY
+{
+    repeated LOTTERY_SPECIAL_GOODS rows = 1;
+}
+
+// 神龙抽奖表
+message LOTTERY_LUCKY_DRAGON
+{
+    optional uint32                         id          = 1;
+    optional Common.LotteryDragonOutputType type        = 2;
+    repeated Common.GameRes                 output      = 3;
+    optional float                          probability = 4;
+}
+
+message LOTTERY_LUCKY_DRAGON_ARRAY
+{
+    repeated  LOTTERY_LUCKY_DRAGON rows = 1;
+}
+
+// 龙珠概率表
+message LOTTERY_DRAGON_BALL
+{
+    optional uint32     lev         = 1;
+    optional float      probability = 2;
+}
+
+message LOTTERY_DRAGON_BALL_ARRAY
+{
+    repeated LOTTERY_DRAGON_BALL rows = 1;
+}
+
+message LOTTERY_SCHOOL
+{
+    optional uint32                         id          = 1;
+    optional Common.LotterySchoolOutputType type        = 2;
+    repeated Common.GameRes                 output      = 3;
+    optional float                          probability = 4;
+    optional sint32                         flag        = 5; // 是否播放奖品特效    
+}
+
+message LOTTERY_SCHOOL_ARRAY
+{
+    repeated LOTTERY_SCHOOL rows = 1;    
+}
+
+message LOTTERY_WEEK_AWARD
+{
+    optional uint32 id           = 1;
+    repeated uint32 award_list   = 2;
+    optional uint32 display_item = 3;
+}
+
+message LOTTERY_WEEK_AWARD_ARRAY
+{
+    repeated LOTTERY_WEEK_AWARD rows = 1;
+}

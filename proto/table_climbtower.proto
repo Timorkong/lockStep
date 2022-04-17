@@ -1,0 +1,51 @@
+// 爬塔
+
+import "common_game_res.proto";
+import "common_climb_tower.proto";
+
+package TABLE;
+
+message CLIMB_TOWER_LAYER
+{
+    optional uint32                   id                = 1;
+    optional Common.MonsterRandomType monster_rand_type = 2;
+    optional sint32                   monster_count     = 3;
+    optional Common.MonsterRandomType boss_rand_type    = 13;
+    optional sint32                   role_boss_count   = 14;
+    optional sint32                   boss_count        = 15;
+    optional sint64                   boss_hp           = 18;
+    optional sint64                   boss_cdef         = 20;
+    optional sint64                   boss_sdef         = 21;
+    repeated Common.GameRes           award_list        = 28;
+
+    optional sint32                   chests_count      = 30;
+    repeated uint32                   chests_list       = 31;
+}
+
+message CLIMB_TOWER_LAYER_ARRAY
+{
+    repeated CLIMB_TOWER_LAYER rows   = 1;
+}
+
+message CLIMB_TOWER_MONSTER
+{
+    optional uint32                  id      = 1;
+    optional Common.TowerMonsterType type    = 3;
+}
+
+message CLIMB_TOWER_MONSTER_ARRAY
+{
+    repeated CLIMB_TOWER_MONSTER rows = 1;
+}
+
+message CLIMB_TOWER_CHESTS
+{
+    optional uint32             id          = 1;
+    repeated Common.GameRes     award_list  = 2;
+    optional float              probability = 3;
+}
+
+message CLIMB_TOWER_CHESTS_ARRAY
+{
+    repeated CLIMB_TOWER_CHESTS rows = 1;
+}

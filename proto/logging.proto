@@ -1,0 +1,86 @@
+// 日志定义
+
+enum LOG_ID
+{
+    option allow_alias = false;
+
+    // 系统日志
+    LOG_ID_ROLE_REGISTER             = 0x0101;   // 角色注册
+    LOG_ID_ROLE_LOGIN                = 0x0102;   // 角色登录
+    LOG_ID_ROLE_LOGOUT               = 0x0103;   // 角色下线
+    LOG_ID_ROLE_RENAME               = 0x0104;   // 角色改名                                  
+    LOG_ID_ROLE_EFFECTIVE_REGISTER   = 0x0105;   // 有效注册(改名时额外上报)
+    LOG_ID_ROLE_OFFLINE              = 0x0106;   // 玩家离线
+    LOG_ID_ROLE_STRONG_EFFECTIVE_REG = 0x0107;   // 强有效注册
+    
+    // 财产变更                             
+    LOG_ID_RECHARGE                 = 0x0201;   // 玩家充值
+    LOG_ID_BUY                      = 0x0202;   // 购买道具
+    LOG_ID_SELL                     = 0x0203;   // 出售道具
+    LOG_ID_ITEM_CONSUME             = 0x0204;   // 道具消耗(合成/镶嵌等系统回收)
+    LOG_ID_ITEM_OUTPUT              = 0x0205;   // 道具产出(类似礼包)
+    LOG_ID_COIN_FLOW                = 0x0206;   // 金币流动
+    LOG_ID_GOLD_FLOW                = 0x0207;   // 钻石流动
+    LOG_ID_ITEM_FLOW                = 0x0208;   // 道具流动
+    LOG_ID_FAME_FLOW                = 0x0209;   // 声望流动
+    LOG_ID_SCORE_FLOW               = 0x020A;   // 积分流动
+    LOG_ID_UNLOCK_HERO              = 0x020B;   // 解锁英雄
+
+    // 属性变更                             
+    LOG_ID_LEV_UPGRADE              = 0x0301;   // 角色升级
+    LOG_ID_VIP_LEV_CHANGE           = 0x0304;   // VIP等级变更
+    LOG_ID_DEGREE_CHANGE            = 0x0308;   // 学位证书变更
+    LOG_ID_DEGREE_UPGRADE           = 0x0309;   // 升级学位证书
+    LOG_ID_SP_CHANGE                = 0x0310;   // 体力变更
+    LOG_ID_FC_CHANGE                = 0x0311;   // 战力变更
+    LOG_ID_EXP_CHANGE               = 0x0312;   // 经验变更
+    LOG_ID_ACTIVITY_CHANGE          = 0x0313;   // 活跃度变更
+    LOG_ID_INS_STAR_CHANGE          = 0x0314;   // 副本星级变更
+    LOG_ID_VIP_EXP_CHANGE           = 0x0315;   // VIP 经验变更
+    LOG_ID_HERO_EXP_CHANGE          = 0x0316;   // 英雄经验变更
+    
+    // 任务相关
+    LOG_ID_ACCEPT_MISSION           = 0x0401;   // 领取任务
+    LOG_ID_FINISH_MISSION           = 0x0402;   // 任务完成
+    LOG_ID_AWARD_MISSION            = 0x0403;   // 领取任务奖励
+    LOG_ID_PASS_INSTANCE            = 0x0405;   // 副本通关
+    
+    // 玩家状态                 
+    LOG_ID_ROLE_DIE                 = 0x0503;   // 玩家死亡
+    
+    // 装备相关
+    LOG_ID_UPGRADE_EQUIP            = 0x0603;   // 装备升级
+    LOG_ID_ADVANCED_EQUIP           = 0x0604;   // 装备进阶
+
+    // 宝石相关
+    LOG_ID_INLAY_GEM                = 0x0613;   // 宝石镶嵌
+    LOG_ID_EXCHANGE_GEM             = 0x0614;   // 宝石合成
+    
+    // 道具
+    LOG_ID_EXCHANGE_ITEM            = 0x0622;   // 道具合成
+
+    // 技能相关
+    LOG_ID_UPGRADE_SKILL            = 0x0633;   // 技能升级
+    LOG_ID_ADVANCED_SKILL           = 0x0634;   // 技能进阶
+    
+    // 宝物
+    LOG_ID_COLLECTION               = 0x0642;   // 宝物表更
+    
+    // 活跃
+    LOG_ID_ACTIVITIES               = 0x0651;   // 参加活动
+    
+    // 被动变更
+    LOG_ID_ARENA_RANK_CHANGE        = 0x0702;   // 竞技场排名变更
+    
+    // 排行榜
+    LOG_ID_RANK_TABLE               = 0x0710;   // 排行榜信息
+
+    // 街头争霸
+    LOG_ID_STREET_WAR               = 0x0801;   // 街头争霸关卡变更
+    
+    LOG_ID_GROUP_INFO               = 0x0901;   // 社团信息更新
+    
+    // 英雄
+    LOG_ID_HERO_LEV_UP              = 0x0A01;  // 英雄升级
+}
+

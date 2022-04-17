@@ -1,0 +1,19 @@
+// 公告
+
+import "common_notification.proto";
+
+package TABLE;
+
+message BULLETIN_MSG
+{
+    optional uint32 id              = 1;
+    optional string headline        = 2;
+    repeated string subtitle        = 3;
+    repeated string content         = 4;
+    optional sint32 display         = 5;
+}
+
+message BULLETIN_MSG_ARRAY
+{
+    repeated BULLETIN_MSG rows      = 1;
+}

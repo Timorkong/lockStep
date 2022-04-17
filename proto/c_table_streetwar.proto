@@ -1,0 +1,16 @@
+import "common_game_res.proto";
+
+package Table;
+// ½±Àø³Ø±í
+message STREET_WAR_AWARD_POOL
+{
+    optional    uint32           id              = 1;  
+    optional    uint32           stage           = 2;  //¹Ø¿¨
+    repeated    Common.GameRes   award_list      = 3;
+    optional    float            probability     = 4;
+}
+
+message STREET_WAR_AWARD_POOL_ARRAY
+{
+    repeated STREET_WAR_AWARD_POOL rows     = 1;    
+}

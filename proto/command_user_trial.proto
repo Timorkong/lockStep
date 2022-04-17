@@ -1,0 +1,311 @@
+import "common_role.proto";
+import "common_trial.proto";
+import "common_scene.proto";
+import "common_game_res.proto";
+import "common_pk.proto";
+import "command_user.proto";
+import "common_system.proto";
+
+package Cmd.User;
+
+message QUERY_TRIAL_LIST_REQ
+{
+}
+
+message QUERY_TRIAL_LIST_RSP
+{
+    repeated Common.TrialRecord record_list = 1;
+    optional bool       enable_private_room = 2[default = false];
+}
+
+message QUERY_TRIAL_ROOM_LIST_REQ
+{
+    optional uint32            req_role_id  = 10; 
+    optional Common.PKRoleInfo pk_role_info = 11;
+}
+
+message QUERY_TRIAL_ROOM_LIST_RSP
+{
+    repeated Common.TrialRoomInfo room_list = 1;
+    optional sint32 last_trial_count    = 2;
+    optional sint32 buy_trial_count     = 3;
+    optional bool   enable_private_room = 4[default = false]; // 是否开启私房功能
+}
+
+message CREATE_TRIAL_ROOM_REQ
+{
+    optional uint32 instance_id = 1;
+    optional string voice_url   = 2; 
+    optional string name        = 3; 
+    optional bool   isprivate   = 4[default = false]; 
+    
+    optional uint32 req_role_id     = 10; 
+    optional Common.PKRoleInfo pk_role_info = 11;
+}
+
+message CREATE_TRIAL_ROOM_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message RENAME_TRIAL_ROOM_REQ
+{
+    optional string voice_url   = 1; 
+    optional string name        = 2; 
+    
+    optional uint32 req_role_id     = 10; 
+}
+
+message RENAME_TRIAL_ROOM_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message CANCEL_TRIAL_PRIVATE_ROOM_REQ
+{
+    optional uint32 req_role_id  = 11; 
+}
+
+message CANCEL_TRIAL_PRIVATE_ROOM_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message CHANGE_TRIAL_INSTANCE_REQ
+{
+    optional uint32              trial_id = 1;
+    optional Common.InstanceType type     = 2[default = INSTANCE_TYPE_INVLID];
+    
+    optional uint32              req_role_id = 10; 
+    optional uint32              instance_id = 11;
+}
+
+message CHANGE_TRIAL_INSTANCE_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message JOIN_TRIAL_ROOM_REQ
+{
+    optional uint32     room_id   = 1;
+    optional bool       isprivate = 2;
+
+    optional uint32            req_role_id  = 10; 
+    optional Common.PKRoleInfo pk_role_info = 11;
+}
+
+message JOIN_TRIAL_ROOM_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message LEAVE_TRIAL_ROOM_REQ
+{
+    optional uint32     req_role_id = 10; 
+}
+
+message LEAVE_TRIAL_ROOM_RSP
+{
+}
+
+// 查询在线可邀请角色
+message QUERY_TRIAL_ONLINE_ROLE_LIST_REQ
+{
+    optional uint32     req_role_id = 10; 
+}
+
+message QUERY_TRIAL_ONLINE_ROLE_LIST_RSP
+{
+    repeated Common.TrialInviteRole role_list = 1;
+    
+    optional sint64 need_fc        = 10;
+    repeated uint32 room_role_list = 11;
+}
+
+// 查询可求助好友
+message QUERY_TRIAL_RECOURSE_LIST_REQ
+{
+    optional uint32     req_role_id = 10; 
+}
+
+message QUERY_TRIAL_RECOURSE_LIST_RSP
+{
+    repeated Common.TrialInviteRole role_list = 1;
+    
+    optional sint64 need_fc = 10;
+}
+
+// 求助
+message RECOURSE_FRIEND_TRIAL_REQ
+{
+    optional uint32 role_id     = 1;
+    
+    optional uint32 req_role_id = 10;
+    optional Common.PKRoleInfo pk_role_info = 11;
+}
+
+message RECOURSE_FRIEND_TRIAL_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+// 踢人
+message KICK_TRIAL_ROOM_MEMBER_REQ
+{
+    optional uint32 role_id     = 1;
+    optional uint32 req_role_id = 10;
+}
+
+message KICK_TRIAL_ROOM_MEMBER_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+// 被踢通知
+message KICK_TRIAL_MEMBER_NOTICE
+{
+    optional bool change_trial = 1[default = false];
+}
+
+message INVITE_TRIAL_REQ
+{
+    optional uint32 role_id     = 1;
+    optional uint32 req_role_id = 10;
+}
+
+message INVITE_TRIAL_RSP
+{
+    optional uint32 room_id     = 1;
+    optional uint32 instance_id = 2;
+}
+
+message INVITE_TRIAL_NOTICE
+{
+    repeated Common.TrialInvite invite_list = 1; 
+}
+
+message REPLY_TRIAL_INVITE_REQ
+{
+    optional uint32 room_id = 1;
+    optional bool   agree   = 2[default = false];
+    
+    optional uint32 req_role_id             = 10;
+    optional Common.PKRoleInfo pk_role_info = 11;
+}
+
+message REPLY_TRIAL_INVITE_RSP
+{
+    optional Common.TrialRoomInfo room        = 1;
+    repeated Common.TrialInvite   invite_list = 2; 
+}
+
+message READY_TRIAL_REQ
+{
+    optional uint32 req_role_id = 10;
+}
+
+message READY_TRIAL_RSP
+{
+    optional Common.TrialRoomInfo room = 1;
+}
+
+message START_TRIAL_REQ
+{
+    optional uint32 req_role_id = 10;
+    optional Common.TrialResInfo  trial_res_info  = 11;
+}
+
+message START_TRIAL_RSP
+{
+    optional uint32 instance_id = 10;
+    optional float  factor      = 11;
+    optional uint32 room_id     = 12;
+}
+
+message START_TRIAL_NOTICE
+{
+    optional string ip         = 1;
+    optional sint32 port       = 2;
+    optional string sign       = 3;
+    optional uint64 scene_guid = 4;
+    optional uint32 scene_id   = 5;
+    
+    optional uint32 instance_id = 10;
+    optional uint32 room_id     = 11;
+    optional Common.TrialResInfo  trial_res_info  = 12;
+}
+
+message PASS_TRIAL_SCREEN_REQ
+{
+    optional sint32 screen_idx  = 1;
+    optional uint32 req_role_id = 10;
+}
+
+message PASS_TRIAL_SCREEN_RSP
+{
+    repeated Common.GameRes award_list = 1;
+}
+
+message PASS_TRIAL_INSTANCE_REQ
+{
+    optional sint32 star       = 1;
+    optional bool   king_boss  = 2[default = false];
+    repeated uint32 role_list  = 3;
+    optional bool   success    = 4[default = false];
+    optional Common.PlayerBattleInfo player_battle_info = 5;
+    optional uint32 req_role_id = 10;
+    repeated Common.GameRes robot_award_list = 11;
+}
+
+message PASS_TRIAL_INSTANCE_RSP
+{
+    optional bool               success        = 1[default = false];
+    repeated Common.TrialAward  award_table    = 2;
+
+    repeated Common.TrialRolePassInfo   role_list      = 10;
+    
+    optional Common.RoleInfo            diff_role_info = 15;
+}
+
+message SEND_TRIAL_ROBOT_AWARD_NOTICE
+{
+    repeated Common.GameRes award_list = 1;
+}
+
+message QUIT_TRIAL_INSTANCE_REQ
+{
+    optional uint32             req_role_id = 10;
+    optional Common.PKRoleInfo  pk_role_info = 11;
+}
+
+message QUIT_TRIAL_INSTANCE_RSP
+{
+    optional Common.TrialRoomInfo info = 1;
+}
+
+message TRIAL_ROOM_INFO_NOTICE
+{
+    optional bool                 kick_captain  = 1[default = false];
+    optional Common.TrialRoomInfo info          = 2;
+}
+
+message BUY_TRIAL_COUNT_REQ
+{
+}
+
+message BUY_TRIAL_COUNT_RSP
+{
+	optional Common.RoleInfo    diff_role_info = 15;
+}
+
+// 服务器内部协议
+message SYNC_TRIAL_ROLE_INFO_REQ
+{
+    optional Common.PKRoleInfo info = 1;
+}
+
+message ZONE_LEAVE_TRIAL_ROOM_REQ
+{
+    optional uint32 req_role_id = 10;
+}
+

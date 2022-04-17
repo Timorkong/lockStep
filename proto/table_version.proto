@@ -1,0 +1,17 @@
+import "common_game_res.proto";
+
+package TABLE;
+
+message VERSION
+{
+    optional uint32 id      = 1;
+    optional string version = 2;
+    optional string content = 3;
+    repeated Common.GameRes award_list = 4;
+}
+
+message VERSION_ARRAY
+{
+    repeated VERSION rows = 1;
+}
+

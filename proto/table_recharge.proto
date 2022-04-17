@@ -1,0 +1,50 @@
+// 付费产品表
+
+import "common_game_res.proto";
+package TABLE;
+
+message RECHARGE_PRODUCT
+{
+    optional uint32 id                  = 1;
+    optional string name                = 2;
+    optional sint32 price               = 3;
+    optional sint32 divide_days         = 4;
+    optional sint64 output_gold         = 5;
+    optional sint32 double_output_count = 6;
+    optional bool   onsale              = 9;
+    optional sint32 quota_count         = 11; // 限购次数
+    optional bool   exclude_app         = 12; // APP正版不卖
+}
+
+message RECHARGE_PRODUCT_ARRAY
+{
+    repeated RECHARGE_PRODUCT rows = 1;
+}
+
+// 充值奖励表
+message RECHARGE_AWARD
+{
+    optional uint32         id                      = 1;
+    optional sint32         cumulative_recharge     = 2;
+    repeated Common.GameRes award_list              = 3;
+    repeated uint32         hero_list               = 4;
+    optional bool           daily_refresh           = 9;
+}
+
+message RECHARGE_AWARD_ARRAY
+{
+    repeated RECHARGE_AWARD rows = 1;
+}
+
+// 首充奖励表
+message FIRST_RECHARGE_AWARD
+{
+    optional uint32         id         = 1;
+    repeated Common.GameRes award_list = 3;
+}
+
+message FIRST_RECHARGE_AWARD_ARRAY
+{
+    repeated FIRST_RECHARGE_AWARD rows = 1;
+}
+

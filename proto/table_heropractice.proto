@@ -1,0 +1,48 @@
+// 英雄洗练
+import "common_effect.proto";
+
+package TABLE;
+
+
+// 洗练兑换表
+message PRACTICE_STONE_EXCHANGE
+{
+    optional uint32     lev     = 1;
+    optional float      scale   = 2;
+    optional uint32     item_id = 3;
+}
+
+message PRACTICE_STONE_EXCHANGE_ARRAY
+{
+    repeated PRACTICE_STONE_EXCHANGE rows = 1;
+}
+
+// 洗练属性概率表
+message PRACTICE_PROPERTY_PROBABILITY
+{
+    optional uint32             id              = 1;
+    optional uint32             stone_id        = 2;
+    optional Common.EffectType  effect_type     = 3;
+    optional float              probability     = 4;
+}
+
+message PRACTICE_PROPERTY_PROBABILITY_ARRAY
+{
+    repeated PRACTICE_PROPERTY_PROBABILITY rows = 1;
+}
+
+// 洗练数值概率表
+message PRACTICE_VALUE_PROBABILITY
+{
+    optional uint32 id          = 1;
+    optional uint32 pratice_id  = 2;
+    optional int32  begin_value = 3;
+    optional int32  end_value   = 4;
+    optional float  probability = 5;            
+}
+
+message PRACTICE_VALUE_PROBABILITY_ARRAY
+{
+    repeated PRACTICE_VALUE_PROBABILITY rows = 1;    
+}
+

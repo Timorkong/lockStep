@@ -1,0 +1,17 @@
+
+package Common;
+
+enum TowerMonsterType
+{
+    NORMAL_MONSTER_ONE = 1;
+    NORMAL_MONSTER_TWO = 2;
+    NORMAL_BOSS        = 3;
+    MAIN_ROLE_BOSS     = 4;
+}
+
+enum MonsterRandomType
+{
+    SINGLE_MONSTER  = 1;
+    DOUBLE_MONSTER  = 2;
+    MIXTURE_MONSTER = 3;
+}

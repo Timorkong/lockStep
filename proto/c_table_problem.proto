@@ -1,0 +1,17 @@
+import "common_game_res.proto";
+
+package Table;
+
+message PROBLEM
+{
+    optional uint32         id          = 1; //编号
+    optional string         description = 2; //题目描述
+    repeated string         option_list = 3; //选项
+}
+
+message PROBLEM_ARRAY
+{
+    repeated PROBLEM rows   = 1;
+}
+
+

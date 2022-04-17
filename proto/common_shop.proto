@@ -1,0 +1,123 @@
+package Common;
+
+// 竞技商店
+message ArenaShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+    repeated Goods    goods_list        = 1; // 竞技商店商品列表
+    optional sfixed64 refresh_timestamp = 2; // 竞技商店刷新时间戳
+}
+
+// 街霸商店
+message StreetShop
+{
+    message Goods
+    {
+        optional uint32 id = 1;
+        optional bool   purchased = 2;
+    }
+    repeated Goods goods_list = 1;
+    optional sfixed64 refresh_timestamp = 2;
+}
+
+// 学霸商店
+message DegreeShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+    repeated Goods    goods_list        = 1; // 竞技商店商品列表
+    optional sfixed64 refresh_timestamp = 2; // 竞技商店刷新时间戳
+}
+
+// 武道会商店
+message TournamentShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+    repeated Goods    goods_list        = 1; // 武道会商店商品列表
+    optional sfixed64 refresh_timestamp = 2; // 武道会商店刷新时间戳
+}
+
+// 地盘商店
+message TerritoryShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+    repeated Goods    goods_list        = 1; // 地盘商店商品列表
+    optional sfixed64 refresh_timestamp = 2; // 地盘商店刷新时间戳
+    optional int32    refresh_count     = 3; // 金币刷新次数
+}
+
+// 校园宝藏
+message SchoolTreasureShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+        optional bool   isdiscount  = 3; // 折扣标记
+        optional int32 pos         = 4; // 宝箱位置
+    }
+
+    repeated Goods    goods_list         = 1; // 校园宝藏商品列表
+    optional sfixed64 refresh_timestamp  = 2; // 校园宝藏刷新时间戳
+    optional int32    refresh_count      = 3; // 刷新次数
+    optional int32    lottery_count      = 4;
+    optional int32    accu_free_lottery_count = 5; // 累计免费抽奖次数
+    optional int32    accu_gold_lottery_count = 6; // 累计钻石抽奖次数
+}
+
+// 社团争霸商店
+message GroupHegemonyShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+    repeated Goods    goods_list        = 1; // 商品列表
+    optional sfixed64 refresh_timestamp = 2; // 刷新时间戳
+    optional int32    refresh_count     = 3; // 刷新次数
+}
+
+// 圣魂商店
+message DivineSoulShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2; // 购买标记
+    }
+
+    repeated Goods    goods_list        = 1; // 商品列表
+    optional sfixed64 refresh_timestamp = 2; // 刷新时间戳
+    optional sint32   refresh_count     = 3; // 刷新次数
+}
+
+// 天降珍宝商店
+message GodAwardShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2;
+    }
+    repeated Goods    goods_list        = 1; // 商品列表
+    optional sint32   refresh_count     = 2; // 刷新次数
+    optional bool     isdisplay         = 3; // 是否显示标记(一天商店只出现一次)
+    optional sfixed64 begin_timestamp   = 4; // 商店开始时间戳
+    optional sint32   count             = 5; // notice次数
+}

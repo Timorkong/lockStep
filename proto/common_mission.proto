@@ -1,0 +1,111 @@
+// 任务公共定义
+
+import "common_game_res.proto";
+
+package Common;
+
+// 任务
+enum MissionType
+{
+    MISSION_TYPE_INVALID  = 0;
+    MISSION_TYPE_MAIN     = 1; // 主线任务
+    MISSION_TYPE_ELITE_CHALLENGE = 2; // 精英挑战
+    MISSION_TYPE_DEVIL_CHALLENGE = 3; // 魔王挑战
+    MISSION_TYPE_ABRSS_CHALLENGE = 4; // 深渊挑战
+    MISSION_TYPE_END = 5;
+}
+
+enum MissionAcceptCondType
+{
+    MISSION_ACCEPT_COND_TYPE_INVALID        = 0;
+    MISSION_ACCEPT_COND_TYPE_ROLE_LEV       = 1;
+    MISSION_ACCEPT_COND_TYPE_PRE_MISSION    = 2;
+}
+
+enum MissionFinishCondType
+{
+    MISSION_FINISH_COND_TYPE_INVALID            = 0;
+    MISSION_FINISH_COND_TYPE_ROLE_LEV           = 1;
+    MISSION_FINISH_COND_TYPE_PASS_INSTANCE      = 2;
+    MISSION_FINISH_COND_TYPE_ITEM_COLLECT       = 3;
+}
+
+message MissionAcceptCond
+{
+    optional MissionAcceptCondType  type        = 1 [default = MISSION_ACCEPT_COND_TYPE_INVALID];
+    repeated sint64                 param_list  = 2;
+}
+
+message MissionFinishCond
+{
+    optional MissionFinishCondType  type        = 1 [default = MISSION_FINISH_COND_TYPE_INVALID];
+    repeated sint64                 param_list  = 2;
+}
+
+message Mission
+{
+    enum State
+    {
+        STATE_INVALID       = 0;    // 无效值
+        STATE_ACCEPTABLE    = 1;    // 可接受
+        STATE_ACCEPTED      = 2;    // 已接受
+        STATE_FINISHED      = 3;    // 已完成
+        STATE_AWARDED       = 4;    // 已领奖
+    }
+
+    optional uint32 id          = 1;
+    optional MissionType type   = 2;
+    optional State  state       = 5;
+    optional int32  progress    = 11;
+    optional sfixed64 accept_timestamp = 12;
+}
+
+// =============================================================================
+// 日常任务
+
+enum DailyMissionType
+{
+    DAILY_MISSION_TYPE_INVALID   = 0; 
+    DAILY_MISSION_TYPE_COMBO     = 1; // 连击任务
+    DAILY_MISSION_TYPE_CHALLENGE = 2; // 竞技任务
+    DAILY_MISSION_TYPE_MOP_UP    = 3; // 扫荡任务
+    DAILY_MISSION_TYPE_ITEM      = 4; // 道具任务
+    DAILY_MISSION_TYPE_PASS      = 5; // 通关任务
+    DAILY_MISSION_TYPE_END       = 6;
+}
+
+// message DailyMissionAward
+// {
+//     optional int32 exp  = 1; // 经验奖励
+//     optional int32 coin = 2; // 金币奖励
+// }
+
+message DailyMission
+{
+    enum State
+    {
+        STATE_INVALID    = 0;  // 无效值
+        STATE_ACCEPTABLE = 1;  // 可接受
+        STATE_ACCEPTED   = 2;  // 已接受
+        STATE_FINISHED   = 3;  // 已完成
+        STATE_AWARDED    = 4;  // 已领奖
+    }
+    
+    optional DailyMissionType type = 2;
+    optional State state = 5 [default = STATE_INVALID];
+    optional int32 layer_num = 6; // 当前任务所在层数(环)，每接一次值+1
+    optional int32 progress = 11;
+    
+    //           finish_cond  related_id
+    // ---------------------------------
+    // 连击任务  连击次数
+    // 竞技任务
+    // 扫荡任务  扫荡次数     普通关卡ID
+    // 道具任务  扫荡次数     道具ID
+    // 通关任务               精英关卡ID
+    optional int32  finish_cond = 12;
+    optional uint32 related_id  = 13;
+    
+    //optional DailyMissionAward award = 15;
+    repeated Common.GameRes    award_list = 16;
+}

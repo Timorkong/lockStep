@@ -1,0 +1,912 @@
+// 角色相关信息拉取
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+import "common_mission.proto";
+import "common_activity.proto";
+import "common_dm_message.proto";
+import "common_rank_table.proto";
+import "common_award.proto";
+import "common_effect.proto";
+import "common_system.proto";
+
+package Cmd.User;
+
+// =============================================================================
+//   角色状态
+// =============================================================================
+enum RoleDieLocation
+{
+    ROLE_DIE_IN_NULL     = 0;
+    ROLE_DIE_IN_INSTANCE = 1; // 副本中死亡
+    ROLE_DIE_IN_ARENA    = 2; // 竞技场中死亡
+}
+
+message ROLE_DIE_NOTICE_REQ
+{
+    optional RoleDieLocation location = 1; // 死亡位置
+    // 关联ID，如果在副本中死亡，对应副本ID，在竞技场中死亡，填对手ID，以此类推
+    optional uint32          related_id = 2;
+}
+
+message ROLE_DIE_NOTICE_RSP
+{
+}
+
+message QUERY_HERO_INFO_REQ
+{
+}
+
+message QUERY_HERO_INFO_RSP
+{
+    repeated Common.HeroInfo hero_info_list = 1;
+}
+
+// =============================================================================
+//   角色好友
+// =============================================================================
+message FriendInfo
+{
+    optional uint32  role_id    = 1;
+    optional string  name       = 2;
+    optional sint32  lev        = 3;
+    optional uint32  career     = 4;
+    //optional sint32 team_fc   = 5;
+    optional int32   transform  = 6;
+    optional sint32  fc         = 7;
+    optional bool    has_momoed = 8;
+}
+
+message QUERY_FRIEND_LIST_REQ
+{
+}
+
+message QUERY_FRIEND_LIST_RSP
+{
+    repeated FriendInfo friend_list = 1;
+}
+
+// id和name填一个即可, 优先选择id
+message ADD_FRIEND_REQ
+{
+    optional uint32 role_id   = 1;
+    optional string role_name = 2;
+}
+
+message ADD_FRIEND_RSP
+{
+    repeated FriendInfo friend_list = 1;
+}
+
+// id和name填一个即可, 优先选择id
+message REMOVE_FRIEND_REQ
+{
+    optional uint32 role_id   = 1;
+    optional string role_name = 2;
+}
+
+message REMOVE_FRIEND_RSP
+{
+    repeated FriendInfo friend_list = 1;
+}
+ 
+message REMOVE_FRIEND_LIST_REQ
+{
+    repeated uint32 friend_id_list = 1;     
+}
+
+message REMOVE_FRIEND_LIST_RSP
+{
+    repeated FriendInfo friend_list = 1;
+}
+
+// 检查是否是好友
+message CHECK_FRIEND_ADDED_REQ
+{
+    repeated uint32 id_list = 1;
+}
+
+message CHECK_FRIEND_ADDED_RSP
+{
+    repeated bool ret_list  = 1; // 是否已经加过好友
+}
+
+// 查询被么么次数
+message QUERY_MOMO_COUNT_REQ
+{
+}
+
+message QUERY_MOMO_COUNT_RSP
+{
+    optional int32 momo_count          = 1;
+    repeated int32 has_momo_award_list = 2;
+}
+
+// 么么好友
+message MOMO_FRIEND_REQ
+{
+    optional uint32 friend_id = 1; 
+}
+
+message MOMO_FRIEND_RSP
+{
+}
+
+// 么么奖励
+message MOMO_AWARD_REQ
+{
+    optional int32 count        = 1; 
+}
+
+message MOMO_AWARD_RSP
+{
+    repeated Common.GameRes  award_list     = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 么么奖励提醒(目前不用)
+message MOMO_AWARD_NOTICE
+{
+    optional int32 momo_count = 1;
+}
+
+// =============================================================================
+//   主线、挑战任务相关
+// =============================================================================
+// 任务接受
+message MISSION_ACCEPT_REQ
+{
+    optional Common.MissionType type = 1 [ default = MISSION_TYPE_INVALID];
+}
+
+message MISSION_ACCEPT_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 任务奖励领取
+message MISSION_AWARD_REQ
+{
+    optional Common.MissionType type = 1[ default = MISSION_TYPE_INVALID];
+}
+
+message MISSION_AWARD_RSP
+{
+	optional uint32          skill_id       = 1; //解锁的技能id，无新技能解锁则不赋值
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 查询挑战任务
+message QUERY_CHALL_MISSION_REQ
+{
+}
+
+message QUERY_CHALL_MISSION_RSP
+{
+    optional Common.Mission elite = 1; // 精英
+    optional Common.Mission devil = 2; // 魔王
+    optional Common.Mission abrss = 3; // 深渊
+    optional Common.StarAward star_award = 4; // 星级奖励
+}
+
+// =============================================================================
+// 日常任务相关
+// =============================================================================
+message RESET_DAILY_MISSION_REQ
+{
+}
+
+message RESET_DAILY_MISSION_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message ACCEPT_DAILY_MISSION_REQ
+{
+}
+
+message ACCEPT_DAILY_MISSION_RSP
+{
+    optional Common.DailyMission daily_mission = 1;
+}
+
+message QUERY_DAILY_MISSION_REQ
+{
+}
+
+message QUERY_DAILY_MISSION_RSP
+{
+    optional Common.DailyMission daily_mission = 1;
+    optional bool   has_reseted  = 2 [default = false]; // 今天是否重置过日常任务
+    optional sint32 reset_price  = 3; // 重置价格
+}
+
+message AWARD_DAILY_MISSION_REQ
+{
+}
+
+message AWARD_DAILY_MISSION_RSP
+{
+    optional Common.DailyMission next_daily_mission= 1;
+    optional bool has_reseted = 2 [default = false]; // 今天是否重置过日常任务
+    optional Common.RoleInfo diff_role_info = 15; 
+}
+
+// =============================================================================
+// 技能相关
+// =============================================================================
+// 升级
+message UPGRADE_SKILL_REQ
+{
+    optional sint32 idx   = 1;
+    optional sint32 count = 2 [default = 1]; // 升级次数
+}
+
+message UPGRADE_SKILL_RSP
+{
+    optional int32 skill_point = 1;
+    optional int32 timedelta   = 2; // 距离下次更新技能点的时间(单位: 秒) 
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 进阶
+message ADVANCED_SKILL_REQ
+{
+    optional sint32 idx       = 1;
+    optional bool   gold_fill = 2[default = false]; // 是否用钻石补齐
+}
+
+message ADVANCED_SKILL_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_SKILL_POINT_REQ
+{
+}
+
+message QUERY_SKILL_POINT_RSP
+{
+    optional int32 skill_point = 1;
+    optional int32 timedelta   = 2; // 距离下次更新技能点的时间(单位: 秒)
+    optional int32 buy_count   = 3; // 今日购买次数
+}
+
+message BUY_SKILL_POINT_REQ
+{
+}
+
+message BUY_SKILL_POINT_RSP
+{
+    optional int32 skill_point = 1;
+    optional int32 timedelta   = 2; // 距离下次更新技能点的时间(单位: 秒)
+    optional int32 buy_count   = 3; // 今日购买次数
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// =============================================================================
+// 活跃度相关
+// =============================================================================
+message QUERY_ACTIVITY_REQ
+{
+}
+
+message QUERY_ACTIVITY_RSP
+{
+    optional Common.Activity activity = 1;
+}
+
+message AWARD_ACTIVITY_REQ
+{
+    optional int32 score = 1; // 需要领奖的积分, 值参考配置表
+}
+
+message AWARD_ACTIVITY_RSP
+{
+    optional Common.Activity activity = 1; 
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// =============================================================================
+// 体力相关
+// =============================================================================
+message BUY_SP_REQ
+{
+}
+
+message BUY_SP_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 查询体力下一次更新CD
+message QUERY_SP_UPDATE_CD_REQ
+{
+}
+
+message QUERY_SP_UPDATE_CD_RSP
+{
+    optional uint32 cd_seconds = 1;
+}
+
+// =============================================================================
+// 每日登陆
+// =============================================================================
+message AWARD_DAILY_LOGIN_REQ
+{
+    optional sint32 id = 1;
+}
+
+message AWARD_DAILY_LOGIN_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;    
+}
+
+message QUERY_DAILY_AWARD_INFO_REQ
+{
+}
+
+message QUERY_DAILY_AWARD_INFO_RSP
+{
+    optional sint32 login_days   = 1; //当前累计天数
+    repeated sint32 awarded_list = 2; //已领取的列表
+}
+
+// =============================================================================
+// 在线奖励
+// =============================================================================
+message AWARD_ONLINE_REQ
+{
+}
+
+message AWARD_ONLINE_RSP
+{
+    optional sint32          id             = 1 ; //当前的id，用来让前端显示获取的奖励
+    optional Common.RoleInfo diff_role_info = 15;    
+}
+
+message QUERY_ONLINE_REQ
+{
+}
+message QUERY_ONLINE_RSP
+{
+    optional sint32 id          = 1;//没解锁id是默认值0,领完了返回-1
+    optional sint32 countdown   = 2;
+}
+
+
+// =============================================================================
+// 充值奖励
+// =============================================================================
+message AWARD_RECHARGE_REQ
+{
+    optional uint32 id      = 1;
+    optional uint32 hero_id = 2; // 如果奖励有送英雄就填
+}
+
+message AWARD_RECHARGE_RSP
+{
+    optional uint32 hero_id = 1;
+    optional uint32 id      = 2; // 和请求 id 一样，前端用于逻辑处理
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_RECHARGE_AWARD_INFO_REQ
+{
+}
+
+message QUERY_RECHARGE_AWARD_INFO_RSP
+{
+    optional sint32 cumulative_recharge   = 1;
+    repeated uint32 recharge_awarded_list = 2;
+    optional sint32 daily_cumulative_recharge   = 3;
+    repeated uint32 daily_recharge_awarded_list = 4;
+}
+
+// 查询充值信息
+message QUERY_RECHARGE_INFO_REQ
+{
+}
+
+message QUERY_RECHARGE_INFO_RSP
+{
+    message Recharge
+    {
+        optional uint32 id          = 1;
+        optional sint32 count       = 2;
+        optional sint32 days_left   = 3;
+    }
+    repeated Recharge recharge_list = 1;
+}
+
+// 充值通知
+message RECHARGE_NOTICE
+{
+    optional uint32             id              = 1;
+    optional Common.RoleInfo    role_info       = 2;
+    optional string             order_id        = 3;
+    optional string             order_serial    = 4;
+}
+
+// 首充奖励查询
+message QUERY_FIRST_RECHARGE_AWARD_REQ
+{
+}
+
+message QUERY_FIRST_RECHARGE_AWARD_RSP
+{
+    message FirstRechargeAward
+    {
+        optional uint32 id           = 1;
+        optional bool   awarded_flag = 2;
+    }
+    
+    repeated FirstRechargeAward first_recharge_award_list = 1;
+}
+
+// 首充奖励领取
+message AWARD_FIRST_RECHARGE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message AWARD_FIRST_RECHARGE_RSP
+{
+    repeated Common.GameRes  award_list     = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// =============================================================================
+// 每日活动总的状态(方便前端控制最外面的UI)
+// =============================================================================
+message QUERY_EVERY_ACTIVITY_STATE_REQ
+{
+}
+
+message QUERY_EVERY_ACTIVITY_STATE_RSP
+{
+    //模拟考试
+    optional bool                 mock_exam_enable      = 1;
+    optional Common.MockExamState mock_exam_state       = 2 [default = MOCK_EXAM_NOTSTART];
+
+    //沙包大战
+    optional bool   sandbags_war_enable                 = 3;
+    optional sint32 sandbags_war_remaining_number       = 4; //剩余次数
+    optional sint32 sandbags_war_cd_time                = 5; 
+    
+    optional bool   world_boss_enable                   = 6;
+    optional sint32 world_boss_remaining_number         = 7;
+    
+    // 社团火拼
+    optional Common.ActivityStateRet  group_pvp_ret     = 9[default = ACTIVITY_NOT_START];
+    
+    // 街头争霸
+    optional bool   street_war_enable      = 11;
+    optional uint32 street_id              = 12;
+    optional sint32 street_challenge_count = 13;
+
+    // 组队PVE
+    optional bool   team_pve_enable        = 15;
+    optional bool   tournament_enable      = 16;
+
+    // 人气赛跑
+    optional bool   running_race_enable     = 17;
+    optional sint32 running_race_left_count = 18;
+    optional sint32 buy_running_race_gold   = 19;
+
+    // 活动还可以参与
+    optional bool   street_war_go_enable    = 20;
+    optional bool   team_pve_go_enable      = 21;
+    optional bool   climb_tower_go_enable   = 22;
+}
+
+// =============================================================================
+// 模拟考试
+// =============================================================================
+message OPEN_MOCK_EXAM_REQ
+{
+}
+
+message OPEN_MOCK_EXAM_RSP
+{
+	optional Common.MockExamState state   = 1 [ default = MOCK_EXAM_NOTSTART];
+    optional uint32 problem_index   = 2; // 第几题
+    optional uint32 problem_id      = 3; // 当前在回答的题目
+    repeated uint32 option_list     = 4; // 当前题目的选项列表(随机后)
+    optional bool   problem_started = 5; // 题目答题状态 
+    optional sint32 countdown       = 6; // 剩余时间
+    optional sint32 score           = 7;
+    optional sint32 rank            = 8;
+}
+
+message OPEN_CURRENT_PROBLEM_REQ
+{
+}
+
+message OPEN_CURRENT_PROBLEM_RSP
+{
+    optional uint32 index       = 1;
+    optional uint32 id          = 2;
+    repeated uint32 option_list = 3;
+}
+
+message SUBMIT_PROBLEM_ANWSER_REQ
+{
+    optional bool   choosed     = 1[default = false];//是否有填选项
+    optional uint32 option_id   = 2;
+    optional sint32 last_time   = 3;//剩余秒数，用于计分
+}
+
+message SUBMIT_PROBLEM_ANWSER_RSP
+{
+    optional sint32 score       = 1;
+    optional sint32 rank        = 2;
+}
+
+message AWARD_MOCK_EXAM_REQ
+{
+
+}
+
+message AWARD_MOCK_EXAM_RSP
+{
+    optional sint64          coin           = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// =============================================================================
+// 沙包大战
+// =============================================================================
+message OPEN_SANDBAGS_WAR_REQ
+{
+}
+
+message OPEN_SANDBAGS_WAR_RSP
+{
+}
+
+message FINISH_SANDBAGS_WAR_REQ
+{
+    optional bool       passed           = 1[default = false];
+}
+
+message FINISH_SANDBAGS_WAR_RSP
+{
+    repeated Common.GameRes  award_list     = 1;
+    optional Common.RoleInfo diff_role_info = 15; 
+}
+
+// 领取排行奖励，不给选择，给你什么就是什么
+message FETCH_RANK_AWARD_REQ
+{
+}
+
+message FETCH_RANK_AWARD_RSP
+{
+    optional Common.RankAwardType   type        = 1[default = RANK_AWARD_TYPE_ARENA];
+    repeated Common.GameRes         award_list  = 2;
+    optional Common.RoleInfo     diff_role_info = 15; 
+}
+
+// 印钞机
+message USE_PRINTING_PRESS_REQ
+{
+}
+
+message USE_PRINTING_PRESS_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUERY_PRINTING_PRESS_REQ
+{
+}
+
+message QUERY_PRINTING_PRESS_RSP
+{
+    optional sint32 remaining_count = 1;
+    optional sint64 input_gold      = 2; // 投入钻石
+    optional sint64 output_coin     = 3; // 产出金币
+    optional sint32 used_count      = 4; // 使用次数
+}
+
+// 弹幕
+// 获取弹幕内容不在这里，要访问webserver，返回xml格式数据
+// 地址/dm/get?screen(场景有几幕)=XX&scene_id=XX
+message QUERY_DM_COUNT_REQ
+{
+}
+
+message QUERY_DM_COUNT_RSP
+{
+    optional sint32 general_dm_used  = 1;
+    optional sint32 vip_dm_used      = 2;
+    optional sint32 general_dm_count = 3; // 普通弹幕总次数
+    optional sint32 vip_dm_count     = 4; // vip弹幕总次数
+}
+
+message SEND_DM_MESSAGE_REQ
+{
+    optional Common.DmMessageType   type      = 1 [default = SCROLL_DM];
+    optional Common.DmMessageColour colour    = 2 [default = color0];
+    optional sint32 screen_id = 3;//幕ID
+    optional string msg       = 4;
+}
+
+message SEND_DM_MESSAGE_RSP
+{
+}
+
+// 查询爬塔进度信息
+message QUERY_CLIMB_TOWER_INFO_REQ
+{
+}
+
+message QUERY_CLIMB_TOWER_INFO_RSP
+{
+    optional sint32                layers             = 1; // 通过多少层
+    repeated Common.ClimbTowerHero hero_list          = 2;
+    repeated uint32                used_hero_idx_list = 3; // 已上阵的英雄
+    optional sint32                climb_count        = 4; // 今日爬塔次数        
+    repeated uint32                monster_list       = 5; // 外显怪物列表
+    optional sfixed64              refresh_countdown  = 6; // 刷新倒计时
+}
+
+// 改变英雄排列
+message CHANGE_CLIMB_TOWER_HERO_ORDER_REQ
+{
+    repeated uint32 hero_idx_list = 1;
+}
+
+message CHANGE_CLIMB_TOWER_HERO_ORDER_RSP
+{
+    repeated Common.Numeric numeric_list = 1;
+}
+
+// 进入爬塔副本
+message INTO_CLIMB_TOWER_INSTANCE_REQ
+{
+}
+
+// 返回生成的怪物
+message INTO_CLIMB_TOWER_INSTANCE_RSP
+{
+    repeated uint32 left_monster_list  = 1;
+    repeated uint32 right_monster_list = 2;
+}
+
+// 英雄死亡记录
+message RECORD_HERO_DEATH_REQ
+{
+    optional uint32 hero_id = 1;
+}
+
+message RECORD_HERO_DEATH_RSP
+{
+}
+
+// 物品掉落
+message AWARD_CLIMB_TOWER_ITEM_DROP_REQ
+{
+    repeated Common.GameRes award_list  = 1;
+}
+
+message AWARD_CLIMB_TOWER_ITEM_DROP_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 离开爬塔副本
+message LEAVE_CLIMB_TOWER_INSTANCE_REQ
+{
+    optional bool                  passed    = 1[default = false];
+    repeated Common.ClimbTowerHero hero_list = 2; //有变化的英雄(只需要填id、anger、hp)，失败就不用填了
+    optional bool                  jump      = 3[default = false];
+    optional Common.PlayerBattleInfo player_battle_info = 4;
+}
+
+message LEAVE_CLIMB_TOWER_INSTANCE_RSP
+{
+    repeated Common.GameRes  award_list     = 1;
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 花钱再来一次
+message BUY_CLIMB_TOWER_COUNT_REQ
+{
+}
+
+message BUY_CLIMB_TOWER_COUNT_RSP
+{
+    repeated Common.ClimbTowerHero hero_list = 1;
+    optional Common.RoleInfo diff_role_info  = 15;
+}
+
+// 查询每层怪物代表(外显用)
+message QUERY_LAYER_MONSTER_REQ
+{
+    optional sint32 first_layer = 1; // 查询区间内的最底层
+    optional sint32 last_layer  = 2; // 查询区间内的最高层
+}
+
+message QUERY_LAYER_MONSTER_RSP
+{
+    repeated uint32 monster_list = 1;
+}
+
+// 查询角色信息
+message QUERY_ROLE_INFO_REQ
+{
+    optional uint32 id   = 1;
+    optional string name = 2; // 不填id则按name查询
+}
+
+message QUERY_ROLE_INFO_RSP
+{
+    optional Common.RoleInfo role_info = 15;
+}
+
+message UPDATE_ROLE_INFO_NOTICE
+{
+    optional Common.RoleInfo role_info = 15;
+}
+
+// 签到奖励
+message AWARD_SIGN_REQ
+{
+}
+
+message AWARD_SIGN_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;    
+}
+
+message QUERY_SIGN_AWARD_INFO_REQ
+{
+}
+
+message QUERY_SIGN_AWARD_INFO_RSP
+{
+    optional sint32            index      = 1; // 今天该领的奖励索引
+    repeated Common.SignAward  award_list = 2; // 奖励列表
+    repeated sint32            cumulative_sign_award_list = 3; // 累计签到已经领奖励
+    optional sint32            mday       = 4; // 月第几天(从0开始)
+}
+
+// 补签
+message SUPPLEMENT_SIGN_AWARD_REQ
+{
+    repeated sint32            idx_list      = 1;
+}
+
+message SUPPLEMENT_SIGN_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;    
+}
+
+// 累计签到
+message CUMULATIVE_SIGN_AWARD_REQ
+{
+    optional sint32             days        = 1;
+}
+
+message CUMULATIVE_SIGN_AWARD_RSP
+{
+    repeated sint32          has_awarded_list   = 1;
+    optional Common.RoleInfo diff_role_info     = 15;    
+}
+
+//------------------------------------------------------------------------------
+// 钻石投资
+//------------------------------------------------------------------------------
+
+message QUERY_GOLD_INVEST_REQ
+{
+}
+
+message QUERY_GOLD_INVEST_RSP
+{
+    optional bool   purchased        = 1; // 购买标记
+    repeated int32  awarded_lev_list = 2; // 领取的等级列表
+    optional sint32 total_count      = 3; // 总购买人数
+}
+
+message BUY_GOLD_INVEST_REQ
+{
+}
+
+message BUY_GOLD_INVEST_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message AWARD_GOLD_INVEST_REQ
+{
+    optional int32 lev = 1;
+}
+
+message AWARD_GOLD_INVEST_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// 全民福利
+//------------------------------------------------------------------------------
+message QUERY_FULL_AWARD_REQ
+{
+}
+
+message QUERY_FULL_AWARD_RSP
+{
+    optional sint32 total_count = 1; // 总购买人数
+    repeated sint32 award_list  = 2; // 领奖列表
+}
+
+message AWARD_FULL_AWARD_REQ
+{
+    optional sint32 count = 1;
+}
+
+message AWARD_FULL_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// 等级商店投资
+//------------------------------------------------------------------------------
+
+// 查询已购买商品列表
+message QUERY_LEV_SHOP_BUY_LIST_REQ
+{
+}
+
+message QUERY_LEV_SHOP_BUY_LIST_RSP
+{
+    repeated sint32 goods_list = 1;
+}
+
+// 购买商品
+message BUY_LEV_SHOP_GOODS_REQ
+{
+    optional sint32 goods_id = 1;
+}
+
+message BUY_LEV_SHOP_GOODS_RSP
+{
+    optional Common.Pack pack       = 1;
+    repeated sint32      goods_list = 2;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message NUMERIC_CHANGE_NOTICE
+{
+    optional Common.Numeric  numeric    = 1;
+}
+
+// 版本更新奖励
+message QUERY_VERSION_AWARD_REQ
+{
+    optional string version = 1;
+}
+
+message QUERY_VERSION_AWARD_RSP
+{
+    optional uint32 id      = 1;
+    optional string version = 2;
+    optional string content = 3;
+    repeated Common.GameRes award_list = 4;
+}
+
+message AWARD_VERSION_AWARD_REQ
+{
+}
+
+message AWARD_VERSION_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}

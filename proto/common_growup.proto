@@ -1,0 +1,31 @@
+
+package Common;
+
+enum GrowupFinishCondType
+{
+    GROWUP_FINISH_CONF_TYPE_3STAR_PASS          = 1;
+    GROWUP_FINISH_CONF_TYPE_EQUIP_QUALITY_LEV   = 2;
+    GROWUP_FINISH_CONF_TYPE_EQUIP_STAR          = 3;
+    GROWUP_FINISH_CONF_TYPE_EQUIP_GEM           = 4;
+    GROWUP_FINISH_CONF_TYPE_SKILL_QUALITY_LEV   = 5;
+    GROWUP_FINISH_CONF_TYPE_COLLECTION_LEV      = 6;
+    GROWUP_FINISH_CONF_TYPE_TERR_BUILDING       = 7;
+    GROWUP_FINISH_CONF_TYPE_DEGREE              = 8;
+    GROWUP_FINISH_CONF_TYPE_ARTIFACT_LEV        = 9;
+    GROWUP_FINISH_CONF_TYPE_CLOTHES_QUALITY     = 10;
+    GROWUP_FINISH_CONF_TYPE_HERO_STAR           = 11;
+    GROWUP_FINISH_CONF_TYPE_HERO_QUALITY        = 12;
+    GROWUP_FINISH_CONF_TYPE_3STAR_PASS_CHAPTER  = 13;
+}
+
+message GrowupInfo
+{
+    optional uint32 category    = 1;
+    optional uint32 id          = 2;
+    optional bool   finished    = 3;
+    optional int32  progress    = 4;
+    optional bool   awarded     = 5;
+
+    optional uint32 first_unpassed_instance = 15;
+}
+

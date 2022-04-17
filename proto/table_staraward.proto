@@ -1,0 +1,18 @@
+// 星级奖励
+
+import "common_scene.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+message STAR_AWARD
+{
+    optional sint32              chapter    = 1;
+    optional Common.InstanceType type       = 2;
+    repeated Common.GameRes      award_list = 3; 
+}
+
+message STAR_AWARD_ARRAY
+{
+    repeated STAR_AWARD rows = 1;
+}

@@ -1,0 +1,230 @@
+// 用户指令-角色
+
+import "common_role.proto";
+import "common_system.proto";
+import "common_quality.proto";
+
+package Cmd.User;
+
+// 心跳
+message HEART_BEAT_REQ
+{
+}
+
+message HEART_BEAT_RSP
+{
+    optional sfixed64 timestamp = 1; // 对时时间戳
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message COLLECTION_DATA_REQ
+{
+    optional string mark_data  = 1;
+}
+
+message COLLECTION_DATA_RSP
+{
+}
+
+message CHAT_NOTICE
+{
+    optional Common.ChatType    type        = 1[default = CHAT_TYPE_ZONE];    // 聊天类型
+    optional string             name        = 2;    // 聊天源角色名字
+    optional uint32             base_id     = 3;    // 角色职业
+    optional uint32             transform   = 4;
+    optional uint32             role_id     = 5;
+    optional Common.QualityType quality     = 6[default = QUALITY_INVALID];
+    optional sint32             star        = 7;
+    optional sint32             chat_id     = 8;
+    optional string             anchor      = 9;
+    optional Common.ChatData    data        = 11;
+}
+
+// =============================================================================
+// 旧的协议, 或者可能在用，但是命名不规范(所有通信协议全部大写)
+// =============================================================================
+// GM指令
+message GMCommandReq
+{
+    optional string command = 1;
+}
+
+message GMCommandRsp
+{
+	optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 客户端协议转发
+message Vector3
+{
+	optional float x	= 1;
+	optional float y	= 2;
+	optional float z	= 3;
+}
+
+// buff数据
+message BuffData
+{
+    optional uint32 role_id             = 1;
+    optional sint32 monster_index       = 2;
+    optional uint32 buff_id             = 3;
+    optional sint32 count               = 4;
+    optional uint32 src_role_id         = 5;
+    optional sint32 src_monster_index   = 6;
+}
+
+message TransmitData
+{
+	message AttackData
+	{
+		optional int32 iAttackIndex = 1;
+	}
+	
+	message SkillData
+	{
+		optional uint32 iSkillId = 1;
+	}
+	
+	message HurtData
+	{
+		optional uint32 src_role_id = 1;
+        optional uint32 dst_role_id = 2;
+        optional float boomDist = 3;
+        optional float cameraShake = 4;
+        optional float damagePercent = 5;
+        optional float hurtAirDistort = 6;
+        optional float hurtDist = 7;
+        optional string hurtFXName = 8;
+        optional int32 hurtLev = 9;
+        optional float hurtMaxHeight = 10;
+        optional float hurtPauseTime = 11;
+        optional float hurtRecoverTimeTotal = 12;
+        optional float hurtSmoothTime = 13;
+        optional string hurtSoundName = 14;
+        optional float hurtSpeed = 15;
+        optional bool isUpHurt = 16;
+        optional float srcFaceDir = 17;
+        optional uint32 src_skill_id = 18;
+        optional bool superSkill = 19;
+        optional Vector3 hurtPos = 20;
+        optional bool isGodTime = 21;
+        optional uint32 damageCount = 22;
+        repeated HurterHP hurterHP = 23;  // 本次伤害对应的血量变化
+	}
+
+    message HurterHP
+    {
+        optional sint64 hurterCurHp = 1;
+        optional bool   isCrit = 2;
+		optional sint64 recoverHpValues = 3;//同步吸血数值
+        optional uint32 hurt_buff_fx_id = 4;//攻击buff特效
+        optional uint32 be_hurt_buff_fx_id = 5;//被攻击buff特效
+        optional bool   isMiss = 6;
+	}
+	
+	// 多人PVE玩家数据
+	message PlayerData
+	{
+		optional uint32 role_id				= 1; // 玩家ID
+		optional string name				= 2; // 玩家姓名
+		optional sint64	main_total_damage 	= 3; // 主角累计输出伤害
+		optional sint64 sub_total_damage	= 4; // 主角助手累计输出伤害
+        optional sint64 hp                  = 5; // 玩家血量
+        optional sint64 max_hp              = 6; // 玩家最大血量
+        optional bool   is_dead             = 7; // 是否死亡
+	}
+	
+	// 多人PVE怪物数据
+	message MonsterData
+	{
+		optional int32 monster_index	= 1; // 怪物索引
+		optional sint64	current_hp		= 2; // 当前血量
+		optional bool is_dead			= 3; // 是否死亡
+        optional sint64 change_hp       = 4; // 血量变化
+	}
+	
+	// 多人PVE数据
+	message MultiPVEData
+	{
+		optional float current_time			= 1; // 当前剩余时间
+		optional sint32 current_stage		= 2; // 当前幕编号(0~n)
+		repeated PlayerData player_data		= 3; // 玩家数据
+		repeated MonsterData monster_data	= 4; // 怪物数据
+	}
+   
+	optional int32 iFrame				= 1;
+    optional float fTime				= 2;
+    optional uint32 iSrcRoleId			= 3;
+    optional Vector3 vPos				= 4;
+    optional Vector3 vDir				= 5;
+    optional int32 iState				= 6;
+    optional AttackData attackData		= 10;
+    optional SkillData skillData		= 11;
+    optional HurtData hurtData			= 12;
+    optional MultiPVEData multiPVEData	= 13; // 多人PVE数据
+    optional float curStrength          = 14;
+    optional int64 pingValue            = 15;
+    repeated BuffData buff_data         = 16;
+}
+
+message TransmitReq
+{
+    //enum TransmitType
+    //{
+    //    TYPE_SCENE  = 1;    // 转发当前场景用户
+    //    TYPE_LISTED = 2;    // 转发所列举用户
+    //}
+    //optional TransmitType	transmit_type   = 1;
+    //repeated uint32         user_list   	= 2;
+    optional TransmitData   data        = 10;
+}
+
+message TransmitNotice
+{
+    optional uint32         role_id     = 1;
+    optional TransmitData   data        = 10;
+}
+
+message SEND_FRMAE_DATA_REQ
+{
+    optional Common.FrameData data  = 1;
+}
+
+message SYNC_FRAME_NOTICE
+{
+    optional uint32           curr_frame_id = 1;
+    repeated Common.FrameData frame_list    = 2;
+}
+
+// MessageBox
+message MessageBoxNotice
+{
+    enum Type
+    {
+        TYPE_OK      = 1;
+        TYPE_PROMPT  = 2;
+    }
+
+    optional Type   type    = 1;    // 提示框类型
+    optional string content = 2;    // 提示内容
+}
+
+// 事件通知
+message EventNotice
+{
+    // event 是C#的关键字。。。
+    //optional EVENT  the_event       = 1 [default = EVENT_INVALID];
+    optional string additional_tips = 2;
+}
+
+
+// 保持在线请求
+message KeepAliveReq
+{
+}
+
+message KeepAliveRsp
+{
+}
+

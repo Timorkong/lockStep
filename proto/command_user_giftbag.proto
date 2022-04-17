@@ -1,0 +1,52 @@
+// 礼包相关协议
+
+import "common_role.proto";
+
+package Cmd.User;
+
+// -----------------------------------------------------------------------------
+// 每日礼包
+// -----------------------------------------------------------------------------
+
+// 普通礼包查询
+message QUERY_DAILY_NORMAL_GIFTBAG_REQ
+{
+}
+
+message QUERY_DAILY_NORMAL_GIFTBAG_RSP
+{
+    optional int32 id       = 1; // 礼包ID
+    optional int32 buy_flag = 2; // true 已经购买, false: 尚未购买
+}
+
+// 普通礼包购买
+message BUY_DAILY_NORMAL_GIFTBAG_REQ
+{
+}
+
+message BUY_DAILY_NORMAL_GIFTBAG_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// VIP礼包
+message QUERY_DAILY_VIP_GIFTBAG_REQ
+{
+}
+
+message QUERY_DAILY_VIP_GIFTBAG_RSP
+{
+    repeated int32 vip_lev_list = 1; // 已经购买过的 VIP 级别列表
+}
+
+message BUY_DAILY_VIP_GIFTBAG_REQ
+{
+    optional int32 vip_lev = 1;
+}
+
+message BUY_DAILY_VIP_GIFTBAG_RSP
+{
+    repeated int32 vip_lev_list = 1;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}

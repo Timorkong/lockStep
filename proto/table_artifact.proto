@@ -1,0 +1,69 @@
+// 神器
+
+import "common_quality.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+
+package TABLE;
+
+// 神器兑换表
+message ARTIFACT_EXCHANGE
+{
+    optional uint32 id          = 1; // 碎片ID
+    optional sint32 count       = 2; // 碎片个数
+    optional uint32 artifact_id = 3; // 神器ID
+    optional sint32 gold        = 5; // 购买单价
+    optional Common.GameRes output = 6; // 分解产出
+}
+
+message ARTIFACT_EXCHANGE_ARRAY
+{
+    repeated ARTIFACT_EXCHANGE rows = 1;
+}
+
+// 神器属性表
+message ARTIFACT_ATTR
+{
+    optional uint32             id                   = 1; // 神器ID
+    optional Common.QualityType quality              = 2 [default = QUALITY_INVALID]; // 品质
+    optional int32              base_attr_add        = 4; // 英雄属性加成
+    optional int32              upgrade_attr_add     = 5; // 升级属性加成
+    repeated Common.GameRes     advance_consume_list = 6; // 进阶消耗
+    optional Common.GameRes     decompose_output     = 9; // 分解产出
+}
+
+message ARTIFACT_ATTR_ARRAY
+{
+    repeated ARTIFACT_ATTR rows = 1;
+}
+
+message ARTIFACT_UPGRADE
+{
+    optional Common.QualityType quality = 1 [default = QUALITY_INVALID]; // 品质
+    optional sint32 lev             = 2; // 等级
+    optional sint32 count           = 3; // 消耗个数
+    optional sint32 prob            = 4; // 合成概率
+    optional sint32 gold            = 5; // 合成单价
+
+    // 概率提升消耗钻石公式参数
+    optional sint32 improve_prob_consume_argx   = 6;
+    optional sint32 improve_prob_consume_argy   = 7;
+}
+
+message ARTIFACT_UPGRADE_ARRAY
+{
+    repeated ARTIFACT_UPGRADE rows = 1;
+}
+
+// 神器镶嵌
+message ARTIFACT_INLAY
+{
+    optional Common.QualityType quality  = 1 [default = QUALITY_INVALID]; // 品质
+    repeated uint32             gem_list = 2; 
+}
+
+message ARTIFACT_INLAY_ARRAY
+{
+    repeated ARTIFACT_INLAY rows = 1;
+}
+

@@ -1,0 +1,35 @@
+// 成长之路
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_growup.proto";
+
+package Cmd.User;
+
+// 查询
+message QUERY_GROWUP_INFO_REQ
+{
+}
+
+message QUERY_GROWUP_INFO_RSP
+{
+    repeated Common.GrowupInfo info_list    = 1;
+    optional uint32 last_passed_elite       = 2;
+    optional uint32 last_passed_devil       = 3;
+}
+
+// 领奖
+message FETCH_GROWUP_AWARD_REQ
+{
+    optional uint32 category  = 1;
+}
+
+message FETCH_GROWUP_AWARD_RSP
+{
+    repeated Common.GrowupInfo  info_list   = 1;
+    optional uint32 last_passed_elite       = 2;
+    optional uint32 last_passed_devil       = 3;
+
+	optional Common.RoleInfo diff_role_info = 15;
+}
+

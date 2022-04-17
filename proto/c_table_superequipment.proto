@@ -1,0 +1,96 @@
+// 圣装表格
+
+import "common_game_res.proto";
+import "common_effect.proto";
+
+package Table;
+
+// 升级表
+message SUPER_EQUIPMENT_LEV_UP
+{
+    optional sint32         lev         = 1;
+    repeated Common.GameRes cost        = 2;
+    optional float          probability = 3;
+    optional sint32         fail_lev    = 4;
+}
+
+message SUPER_EQUIPMENT_LEV_UP_ARRAY
+{
+    repeated SUPER_EQUIPMENT_LEV_UP rows = 1;
+}
+
+message SUPER_EQUIPMENT_EFFECT
+{
+    optional uint32 equip_id                    = 1;
+    optional sint32 lev                         = 2;
+    optional string name                        = 3;
+    repeated Common.Effect effect               = 4;
+    optional uint32 suit_id                     = 5;
+    optional string icon                        = 6;
+}
+
+message SUPER_EQUIPMENT_EFFECT_ARRAY
+{
+    repeated SUPER_EQUIPMENT_EFFECT rows = 1;
+}
+
+message SUPER_SUIT_FC
+{
+    optional uint32             suit_id                 = 1;
+    optional sint32             lev                     = 2;
+    optional sint32             quality                 = 3;
+    optional sint32             fx_quality              = 4;
+    repeated Common.GameRes     three_activate_cost     = 5;
+    repeated uint32             buff3_list              = 7;
+    optional string             des3                    = 8;
+    repeated Common.GameRes     six_activate_cost       = 9;
+    repeated uint32             buff6_list              = 11;
+    optional string             des6                    = 12;
+    optional string             buff3_name              = 13;
+    optional string             buff3_icon              = 14;
+    optional string             buff6_name              = 15;
+    optional string             buff6_icon              = 16;
+}
+
+message SUPER_SUIT_FC_ARRAY
+{
+    repeated SUPER_SUIT_FC rows = 1;
+}
+
+message SUPER_EQUIPMENT_PART_DECOMPOSE
+{
+    optional uint32         equip_id = 1;
+    repeated Common.GameRes output   = 2;
+}
+
+message SUPER_EQUIPMENT_PART_DECOMPOSE_ARRAY
+{
+    repeated SUPER_EQUIPMENT_PART_DECOMPOSE rows = 1;
+}
+
+message SUPER_SUIT_INFO
+{
+    optional uint32                 suit_id     = 1;
+    optional string                 name        = 2;
+    repeated uint32                 equip_list  = 3;
+    optional string                 model_name  = 4;
+}
+
+message SUPER_SUIT_INFO_ARRAY
+{
+    repeated SUPER_SUIT_INFO    rows = 1;
+}
+
+message SUPER_EQUIPMENT_LEV_EFFECT
+{
+    optional sint32         lev         = 1;
+    repeated Common.Effect  effect      = 2;
+    optional string         des         = 3;
+    optional string         name        = 4;
+    repeated uint32         buff_list   = 5;
+}
+
+message SUPER_EQUIPMENT_LEV_EFFECT_ARRAY
+{
+    repeated SUPER_EQUIPMENT_LEV_EFFECT rows = 1;
+}

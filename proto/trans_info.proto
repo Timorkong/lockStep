@@ -1,0 +1,29 @@
+// 事务档案
+
+message TransInfo
+{
+    // 重启时用来恢复事务的恒量
+    optional uint32     id          = 1;    // 事务ID
+    optional sint32     tgroup      = 2;    // 事务组ID(group是pb关键字)
+    optional uint32     key         = 3;    // 注册命令字
+
+    // 事务行为控制变量
+    optional sint32     timeout     = 5 [default = 10000]; // 事务超时(毫秒)
+    optional sint32     phase       = 7;   // 事务阶段
+    optional sint32     retval      = 8;   // 事务返回值
+
+    // 协议触发源协议信息(用于回包)
+    optional uint32 src_user_id     = 10;
+    optional uint32 src_trans_id    = 11;
+    optional uint32 src_svr_id      = 12;
+    optional uint32 src_task_id     = 13;
+
+    // 反射事务成员变量存档
+    message Field
+    {
+        optional string name        = 1;
+        optional bytes  data        = 2;
+    }
+    repeated Field  field_list      = 15;
+}
+

@@ -1,0 +1,31 @@
+// 活跃度
+
+import "common_activity.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+// 活跃度任务
+message ACTIVITY_MISSION
+{
+    optional Common.ActivityType type = 1;
+    optional int32 finish_cond    = 3;  // 完成条件
+    optional int32 score_addition = 5;  // 完成后的积分加成
+}
+
+message ACTIVITY_MISSION_ARRAY
+{
+    repeated ACTIVITY_MISSION rows = 1;
+}
+
+// 活跃度奖励
+message ACTIVITY_AWARD
+{
+    optional int32          score      = 1;      // 积分下限
+    repeated Common.GameRes award_list = 2; 
+}
+
+message ACTIVITY_AWARD_ARRAY
+{
+    repeated ACTIVITY_AWARD rows = 1;
+}

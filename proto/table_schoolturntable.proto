@@ -1,0 +1,77 @@
+// 学霸转盘活动
+
+import "common_game_res.proto";
+import "common_pack_item.proto";
+import "common_school_turntable.proto";
+
+package TABLE;
+
+message SCHOOL_TURNTABLE_STORE
+{
+    optional uint32 id                              = 1;
+    optional Common.SchoolTurntableStoreType type   = 2;
+    optional sint32 probability                     = 3;
+    repeated Common.GameRes old_cost                = 4;
+    repeated Common.GameRes real_cost               = 5;
+    repeated Common.GameRes output                  = 6;
+}
+
+message SCHOOL_TURNTABLE_STORE_ARRAY
+{
+    repeated SCHOOL_TURNTABLE_STORE rows = 1;
+}
+
+message SCHOOL_TURNTABLE_STRATEGY
+{
+    optional uint32 id              = 1;
+    optional sint32 probability     = 2;
+    optional sint32 num_one_store   = 3; 
+    optional sint32 num_two_store   = 4;
+    optional sint32 num_three_store = 5;
+}
+
+message SCHOOL_TURNTABLE_STRATEGY_ARRAY
+{
+    repeated SCHOOL_TURNTABLE_STRATEGY rows = 1;
+}
+
+message SCHOOL_TURNTABLE_DISCOUNT
+{
+    optional uint32                          id          = 1;
+    optional Common.SchoolTurntableStoreType type        = 2;
+    optional sint32                          discount    = 3;
+    optional sint32                          probability = 4;
+}
+
+message SCHOOL_TURNTABLE_DISCOUNT_ARRAY
+{
+    repeated SCHOOL_TURNTABLE_DISCOUNT rows = 1;
+}
+
+message SCHOOL_TURNTABLE_FRESH
+{
+    optional sint32         count = 1;
+    repeated Common.GameRes cost  = 2;
+}
+
+message SCHOOL_TURNTABLE_FRESH_ARRAY
+{
+    repeated SCHOOL_TURNTABLE_FRESH rows = 1;
+}
+
+message SCHOOL_TURNTABLE_CONFIG
+{
+    optional uint32 id                  = 1;
+    optional string begin_datetime      = 2;
+    optional string end_datetime        = 3;
+    
+    optional sfixed64 begin_timestamp   = 101;
+    optional sfixed64 end_timestamp     = 102;
+}
+
+message SCHOOL_TURNTABLE_CONFIG_ARRAY
+{
+    repeated SCHOOL_TURNTABLE_CONFIG rows = 1;
+}
+
+

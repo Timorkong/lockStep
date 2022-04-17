@@ -1,0 +1,253 @@
+// 开服活动协议
+
+import "common_role.proto";
+import "common_quality.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+import "common_open_server.proto";
+
+package Cmd.User;
+
+//------------------------------------------------------------------------------
+// (1) 战力竞速赛
+//------------------------------------------------------------------------------
+message QUERY_FC_RACE_REQ
+{
+}
+
+message QUERY_FC_RACE_RSP
+{
+    optional sfixed64 duration   = 1; // 开服时长(单位:秒)
+    repeated sint32   award_list = 2; // 领取列表
+}
+
+message AWARD_FC_RACE_REQ
+{
+    optional sint32 id = 1;
+}
+
+message AWARD_FC_RACE_RSP
+{
+    optional Common.Pack pack       = 1;
+    optional sfixed64    duration   = 2; // 开服时长(单位:秒)
+    repeated sint32      award_list = 3; // 领取列表
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (2) 闯关竞速赛
+//------------------------------------------------------------------------------
+message QUERY_PASS_RACE_REQ
+{
+}
+
+message QUERY_PASS_RACE_RSP
+{
+    optional sint32  days         = 1; // 开服时间
+    optional sint32  remain_count = 2; // 已领取个数
+    optional bool    awarded_flag = 3; // 是否已领过
+    optional bool    passed_flag  = 4; // 是否通关
+
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_PASS_RACE_REQ
+{
+}
+
+message AWARD_PASS_RACE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (3) 招募炮姐
+//------------------------------------------------------------------------------
+message QUERY_RECRUIT_PAOJIE_REQ
+{
+}
+
+message QUERY_RECRUIT_PAOJIE_RSP
+{
+    optional sint32   days           = 1; // 开服天数
+    optional sint32   remain_count   = 2; // 已领取个数
+    optional bool     awarded_flag   = 3; // 是否已领过
+    optional bool     recruited_flag = 4; // 是否已经招募
+
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_RECRUIT_PAOJIE_REQ
+{
+}
+
+message AWARD_RECRUIT_PAOJIE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (4) 五贤相助
+//------------------------------------------------------------------------------
+message QUERY_COLLECT_HERO_REQ
+{
+}
+
+message QUERY_COLLECT_HERO_RSP
+{
+    optional sint32   days           = 1; // 开服天数
+    optional sint32   remain_count   = 2; // 已领取个数
+    optional bool     awarded_flag   = 3; // 是否已领过
+    optional sint32   hero_count     = 4; // 解锁英雄个数
+
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_COLLECT_HERO_REQ
+{
+}
+
+message AWARD_COLLECT_HERO_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (5) 进阶春丽
+//------------------------------------------------------------------------------
+message QUERY_ADVANCED_CHUNLI_REQ
+{
+}
+
+message QUERY_ADVANCED_CHUNLI_RSP
+{
+    optional sint32    days          = 1; // 开服天数
+    optional sint32    awarded_count = 2; // 已领取个数
+    optional bool      awarded_flag  = 3; // 是否已领过
+    optional Common.QualityType quality = 4[default = QUALITY_INVALID]; // 春丽品质，INVALID 表示没有该英雄
+
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_ADVANCED_CHUNLI_REQ
+{
+}
+
+message AWARD_ADVANCED_CHUNLI_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (6) 宝石全套
+//------------------------------------------------------------------------------
+message QUERY_COLLECT_GEM_REQ
+{
+}
+
+message QUERY_COLLECT_GEM_RSP
+{
+    optional sint32    days          = 1; // 开服天数
+    optional sint32    awarded_count = 2; // 已领取个数
+    optional bool      awarded_flag  = 3; // 是否已领过
+    optional sint32    gem_count     = 4; // 宝石个数
+    
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_COLLECT_GEM_REQ
+{
+}
+
+message AWARD_COLLECT_GEM_RSP
+{
+    optional Common.Pack pack = 1;
+}
+
+//------------------------------------------------------------------------------
+// (7) 初中毕业->收集证书
+//------------------------------------------------------------------------------
+message QUERY_COLLECT_DEGREE_REQ
+{
+}
+
+message QUERY_COLLECT_DEGREE_RSP
+{
+    optional sint32    days          = 1; // 开服天数
+    optional sint32    awarded_count = 2; // 已领取个数
+    optional bool      awarded_flag  = 3; // 是否已领过
+    optional sint32    degree_count  = 4; // 初中证书个数
+    
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_COLLECT_DEGREE_REQ
+{
+}
+
+message AWARD_COLLECT_DEGREE_RSP
+{
+    optional Common.Pack pack = 1;
+}
+
+//------------------------------------------------------------------------------
+// (8) 全身紫装
+//------------------------------------------------------------------------------
+message QUERY_EQUIP_PURPLE_REQ
+{
+}
+
+message QUERY_EQUIP_PURPLE_RSP
+{
+    optional sint32    days          = 1; // 开服天数
+    optional sint32    awarded_count = 2; // 已领取个数
+    optional bool      awarded_flag  = 3; // 是否已领过
+    optional sint32    purple_count  = 4; // 紫装个数
+
+    repeated Common.GameRes award_list = 10; // 活动奖励
+}
+
+message AWARD_EQUIP_PURPLE_REQ
+{
+}
+
+message AWARD_EQUIP_PURPLE_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// (9) 排行奖励: 天下第一、新人王、街头霸王
+//------------------------------------------------------------------------------
+message QUERY_RANK_AWARD_REQ
+{
+    optional Common.WeekRankType type = 1[default = WEEK_RANK_TYPE_INVALID];
+}
+
+message QUERY_RANK_AWARD_RSP
+{
+    message RankRoleInfo
+    {
+        optional sint32   rank = 1; // 排名
+        optional uint32   id   = 2; // 角色ID
+        optional string   name = 3; // 角色名
+    }
+    
+    optional sint32       my_rank      = 1; // 我的排名
+    optional sint32       day          = 2; // 开服天数(>=8才可以领奖)
+    optional bool         awarded_flag = 3; // 是否领过奖
+    repeated RankRoleInfo rank_table   = 4; // 排行榜角色
+    optional Common.WeekRankType type  = 5[default = WEEK_RANK_TYPE_INVALID];
+}
+
+message AWARD_RANK_AWARD_REQ
+{
+    optional Common.WeekRankType type = 1 [default = WEEK_RANK_TYPE_INVALID];
+}
+
+message AWARD_RANK_AWARD_RSP
+{
+    optional Common.Pack pack = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}

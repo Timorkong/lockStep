@@ -1,0 +1,28 @@
+//投资理财表
+
+import "common_game_res.proto";
+
+package Table;
+
+message GOLD_INVEST
+{
+    optional int32 lv    = 1;
+    optional int32 award = 2;
+}
+
+message GOLD_INVEST_ARRAY
+{
+    repeated GOLD_INVEST   rows    = 1;
+}
+
+message FULL_AWARD
+{
+    optional sint32         count    = 1;
+    optional Common.GameRes game_res = 2;
+    optional string			des		 = 3;
+}
+
+message FULL_AWARD_ARRAY
+{
+    repeated FULL_AWARD rows = 1;
+}

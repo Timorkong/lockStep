@@ -1,0 +1,107 @@
+// Buff
+
+import "common_effect.proto";
+
+package Table;
+
+message CamboDamageUp
+{
+	optional uint32 count = 1;
+	optional float  rate  = 2;
+}
+
+message TBUFF
+{
+	optional uint32             	id                	 	= 1;	// ID
+	repeated Common.BuffFx			fx_list					= 3;	// 特效
+    optional uint32             	max_count          		= 4;	// 最大叠加上限
+    optional float					time 					= 5;	// 时间
+    repeated float					warn_time				= 6;	// 消失警告 类型/时间
+    repeated sint32					type 					= 7;	// 类型    类型/优先级
+    optional bool					dont_refresh_tick_time	= 8;	// 不立即生效
+	optional sint32					add_hurt_Count			= 9;	// 增加连击数
+	optional float					add_god_time			= 10;	// 倒地起身后无敌时间增加
+	optional float					cost_xp_percent			= 11;	// 技能耗怒百分比
+	repeated float					recover_hp				= 12;	// 血量恢复百分比	回复百分比/时间
+	repeated float 					recover_xp				= 13;	// 怒气恢复百分比  回复点数/时间
+	optional float					static_speed_up			= 14;	// 恒定速度提高
+	optional float					speed_change			= 15;	// 速度变化
+	optional float					big_skill_cd			= 16;	// 大招CD
+	optional float					small_skill_cd			= 17;	// 小招CD
+	optional sint32					xp_add					= 18;	// 能量上限增加
+	optional float					damage_add				= 19;	// 伤害增加
+	optional float					damage_down				= 20;	// 伤害减少
+	repeated float					once_cdamage_down		= 21;	// 受到的当次普通伤害减少
+	repeated float					once_sdamage_down		= 22;	// 受到的当次技能伤害减少
+	repeated float					once_hemophagia_skill	= 23;	// 技能吸血
+	repeated float					once_hemophagia_attack	= 24;	// 普攻吸血
+	optional sint32					Stoic					= 25;	// 霸体
+	repeated Common.EffectNum		base_effect_num_list	= 26;	// 基础属性增加固定值
+	repeated Common.Effect    		base_effect_list    	= 27;	// 基础属性增加百分比
+	repeated Common.EffectHasLimit 	hp_base_effect_list 	= 28;	// 每损失1%Hp基础属性增加百分比
+	optional float					absorb_hurt				= 29;	// 伤害转化为回血
+	optional sint32					frozen					= 30;	// 冰冻
+	optional sint32					silent					= 31;	// 沉默
+	optional float					auto_get_xp				= 32;	// 自然怒气恢复
+	optional float					attack_get_xp			= 33;	// 攻击时额外回怒
+	optional float					be_attack_get_xp		= 34;	// 被攻击额外回怒
+	optional Common.RateBuff		attack_self_buff 		= 35;	// 攻击时给自己加buff 概率/buff
+	optional Common.RateBuff		attack_enemy_buff		= 36;	// 攻击追加buff 概率/buff
+	optional Common.RateBuff 		be_attack_self_buff 	= 37;	// 被攻击时给自己加buff
+	optional Common.RateBuff 		be_attack_enemy_buff	= 38;	// 被攻击时给敌人加buff
+	optional Common.RateBuffBoth	attack_buff_both 		= 39;	// 攻击时给自己和敌人加buff 概率/buff
+	optional Common.RateBuffBoth	be_attack_buff_both		= 40;	// 被攻击给自己和敌人加buff
+	optional Common.RateBuff		cattack_self_buff 		= 41;	// 普通攻击时给自己加buff 概率/buff
+	optional Common.RateBuff		cattack_enemy_buff		= 42;	// 普通攻击追加buff 概率/buff
+	optional Common.RateBuff 		be_cattack_self_buff 	= 43;	// 被普通攻击时给自己加buff
+	optional Common.RateBuff 		be_cattack_enemy_buff	= 44;	// 被普通攻击时给敌人加buff
+	optional Common.RateBuffBoth	cattack_buff_both 		= 45;	// 普通攻击时给自己和敌人加buff 概率/buff
+	optional Common.RateBuffBoth	be_cattack_buff_both	= 46;	// 被攻击给自己和敌人加buff
+	optional Common.RateBuff		sattack_self_buff 		= 47;	// 技能攻击时给自己加buff 概率/buff
+	optional Common.RateBuff		sattack_enemy_buff		= 48;	// 技能攻击追加buff 概率/buff
+	optional Common.RateBuff 		be_sattack_self_buff 	= 49;	// 被技能攻击时给自己加buff
+	optional Common.RateBuff 		be_sattack_enemy_buff	= 50;	// 被技能攻击时给敌人加buff
+	optional Common.RateBuffBoth	sattack_buff_both 		= 51;	// 技能攻击时给自己和敌人加buff 概率/buff
+	optional Common.RateBuffBoth	be_sattack_buff_both	= 52;	// 被攻击给自己和敌人加buff
+	optional float					satk_add_catk			= 53;	// 技攻增加x%普攻
+	repeated float					crit					= 54;	// x%概率造成y%的暴击伤害
+	repeated float					anti_crit				= 55;	// x%概率减少暴击伤害
+	repeated float					ignore_defence			= 56;	// 忽视对方防御力
+	repeated float					thorns					= 57;	// 反伤
+	repeated uint32					global_buff_enemy		= 58;	// 全局给敌人的光环
+	repeated uint32					dead_buff 				= 59;	// 死亡时附加buff
+	repeated uint32					stand_up_buff			= 60;	// 倒地起身buff
+	optional sint32					vertigo					= 61;	// 眩晕
+	repeated uint32					buff_when_xp_down		= 62;	// 消耗一定怒气时加buff
+	repeated Common.SkillDamageUp	skill_damage_up			= 63;	// 技能伤害提升
+	optional Common.SkillRateBuff	use_skill_buff 			= 64;	// 使用技能时加buff
+	optional float 					be_attack_miss 			= 65;	// 闪避攻击
+	optional CamboDamageUp 			cambo_damage_up 		= 66; 	// 连击伤害加深
+	repeated uint32 				global_buff_friend 		= 67;	// 全局给队友的光环（不包括自己）
+	optional Common.RateBuff 		hp_low_buff 			= 68;	// 血量低于x%时给自己buff
+	optional sint32					chaos 					= 69;	// 混乱
+	optional string					change_model_name 		= 70;	// 修改模型
+}
+
+message TBUFF_ARRAY
+{
+	repeated TBUFF rows = 1;
+}
+
+enum AttributeID
+{
+    TYPE_INVALID = 0;
+    SPEED = 1;
+}
+
+message ATTRIBUTE_LIMIT
+{
+    optional AttributeID type       = 1 [default = TYPE_INVALID];
+    optional bool is_max            = 2;
+    optional float attribute_value  = 3;
+}
+
+message ATTRIBUTE_LIMIT_ARRAY
+{
+    repeated ATTRIBUTE_LIMIT rows = 1;
+}

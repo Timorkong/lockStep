@@ -1,0 +1,230 @@
+// 角色领奖
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_award.proto";
+import "common_scene.proto";
+import "common_pack_item.proto";
+
+package Cmd.User;
+
+//------------------------------------------------------------------------------
+// 等级奖励协议
+//------------------------------------------------------------------------------
+message QUERY_LEV_AWARD_REQ
+{
+}
+
+message QUERY_LEV_AWARD_RSP
+{
+    optional sint32 lev = 1; // 当前可领的等级
+}
+
+message LEV_AWARD_REQ
+{
+    optional sint32 lev = 1; // 领奖等级
+}
+
+message LEV_AWARD_RSP
+{
+    optional Common.Pack pack = 1;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// 满星奖励协议
+//------------------------------------------------------------------------------
+message AWARD_FULL_STAR_REQ
+{
+    optional sint32              chapter    = 1;
+    optional Common.InstanceType type       = 2[default = INSTANCE_TYPE_NORMAL];
+}
+
+message AWARD_FULL_STAR_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// 七日奖励协议
+//------------------------------------------------------------------------------
+message QUERY_WEEK_AWARD_REQ
+{
+}
+
+message QUERY_WEEK_AWARD_RSP
+{
+    optional sint32           day        = 1; // 当前是第几天
+    optional Common.WeekAward week_award = 2;
+    optional sint32           recharge   = 3;
+}
+
+// 登录领奖
+message AWARD_WEEK_LOGIN_REQ
+{
+    optional sint32 day = 1;
+}
+
+message AWARD_WEEK_LOGIN_RSP
+{
+    optional sint32           day        = 1;
+    optional Common.WeekAward week_award = 2;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 累充领奖
+message AWARD_WEEK_RECHAGE_REQ
+{
+    optional sint32 day = 1;
+}
+
+message AWARD_WEEK_RECHAGE_RSP
+{
+    optional sint32           day        = 1;
+    optional Common.WeekAward week_award = 2;
+    optional Common.Pack      pack       = 3;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 特惠抢购
+message AWARD_WEEK_RUSH_PURCHASE_REQ
+{
+    optional sint32 day = 1;
+}
+
+message AWARD_WEEK_RUSH_PURCHASE_RSP
+{
+    optional sint32           day        = 1;
+    optional Common.WeekAward week_award = 2;
+    optional Common.Pack      pack       = 3;
+    
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+//------------------------------------------------------------------------------
+// VIP 每日奖励
+//------------------------------------------------------------------------------
+message QUERY_VIP_DAILY_AWARD_REQ
+{
+}
+
+message QUERY_VIP_DAILY_AWARD_RSP
+{
+    optional Common.VipDailyAward vip_daily_award = 1;
+}
+
+message AWARD_VIP_DAILY_AWARD_REQ
+{
+    optional sint32 vip_lev = 1;
+}
+
+message AWARD_VIP_DAILY_AWARD_RSP
+{
+    optional Common.VipDailyAward vip_daily_award = 1;
+    optional Common.Pack          pack            = 2;
+    optional Common.RoleInfo      diff_role_info  = 15;
+}
+
+//------------------------------------------------------------------------------
+// 美味包子额外奖励
+//------------------------------------------------------------------------------
+message AWARD_MEAT_BUN_REQ
+{
+}
+
+message AWARD_MEAT_BUN_RSP
+{
+    optional Common.MeatBunAward award_list     = 1;
+    optional Common.RoleInfo     diff_role_info = 15;
+}
+
+message QUERY_MEAT_BUN_AWARD_REQ
+{
+    
+}
+
+message QUERY_MEAT_BUN_AWARD_RSP
+{
+    optional Common.MeatBunAward award_list     = 1;
+    optional bool                is_valided     = 2;
+}
+
+//------------------------------------------------------------------------------
+// VIP每周礼包
+//------------------------------------------------------------------------------
+message QUERY_VIP_WEEK_AWARD_REQ
+{
+}
+
+message QUERY_VIP_WEEK_AWARD_RSP
+{
+    optional Common.VipWeekAward    vip_week_award           = 1;
+    optional sfixed64               remain_timestamp_of_week = 2;
+}
+
+message AWARD_VIP_WEEK_AWARD_REQ
+{
+    optional sint32 vip_lev     = 1;
+}
+
+message AWARD_VIP_WEEK_AWARD_RSP
+{
+    optional Common.VipWeekAward    vip_week_award = 1;
+    optional Common.RoleInfo        diff_role_info = 15;
+}
+
+message QUERY_SHARE_AWARD_REQ
+{
+}
+
+message QUERY_SHARE_AWARD_RSP
+{
+    optional Common.ShareAward share_award  = 1;
+}
+
+message FINISH_SHARE_REQ
+{
+    optional uint32 id = 1;
+}
+
+message FINISH_SHARE_RSP
+{
+}
+
+message AWARD_SHARE_AWARD_REQ
+{
+    optional uint32 id = 1;
+}
+
+message AWARD_SHARE_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+
+//------------------------------------------------------------------------------
+// 老玩家召回活动
+//------------------------------------------------------------------------------
+message QUERY_RECALL_PLAYER_INFO_REQ
+{
+}
+
+message QUERY_RECALL_PLAYER_INFO_RSP
+{
+    optional sint32  login_days = 1;
+    repeated sint32  login_awarded_list = 2;
+}
+
+message AWARD_RECALL_PLAYER_LOGIN_AWARD_REQ
+{
+    optional sint32 day = 1;
+}
+
+message AWARD_RECALL_PLAYER_LOGIN_AWARD_RSP
+{
+    repeated sint32  login_awarded_list = 2;
+    optional Common.RoleInfo diff_role_info = 15;
+}

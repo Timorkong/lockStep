@@ -1,0 +1,9 @@
+import "common_group.proto";
+
+package Archive;
+
+// 全服存档
+message Zone
+{
+    optional Common.GroupHegemonyHistoryRank group_hegemony_rank = 1;
+}

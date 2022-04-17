@@ -1,0 +1,48 @@
+// 排行榜
+
+import "common_rank_table.proto";
+import "common_game_res.proto";
+
+package Cmd.User;
+
+message QUERY_RANK_TABLE_REQ
+{
+    optional Common.RankTableType   type = 1 [ default = RANK_TABLE_TYPE_LEV ];
+}
+
+message QUERY_RANK_TABLE_RSP
+{
+    optional Common.RankTableType   type        = 1[ default = RANK_TABLE_TYPE_LEV ];
+    optional Common.RankTable       rank_table  = 2;
+    optional uint32                 my_rank     = 3;
+    optional sint32                 group_battle_rounds = 4; 
+}
+
+message QUERY_EGG_RANK_CONFIG_REQ
+{
+}
+
+message QUERY_EGG_RANK_CONFIG_RSP
+{
+    message EggRankAward
+    {
+        optional uint32         rank        = 1;
+        repeated Common.GameRes award_list  = 2;
+    }
+
+    optional sint32     id                  = 1;    
+    optional sint64     gold_consume_count  = 2;
+    optional string     begin_timestamp     = 3;
+    optional string     end_timestamp       = 4;
+    optional string     description         = 5;
+    repeated EggRankAward rank_award_list   = 6;
+}
+
+message QUERY_EGG_ROBOT_RANK_REQ
+{
+}
+
+message QUERY_EGG_ROBOT_RANK_RSP
+{
+    repeated Common.EggLotteryBrief robot = 1;
+}

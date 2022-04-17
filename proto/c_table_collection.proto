@@ -1,0 +1,51 @@
+// 宝物收集表格
+
+import "common_effect.proto";
+import "common_game_res.proto";
+
+package Table;
+
+message COLLECTION
+{
+    optional uint32         layer           = 1;
+    repeated uint32         treasure_list   = 2;
+    optional Common.Effect  effect_1_3      = 3;
+    optional Common.Effect  effect_3_5      = 4;
+    optional Common.Effect  effect_5_7      = 5;
+    optional Common.Effect  effect_7_1      = 6;
+    optional Common.Effect  effect_single   = 7;
+	optional sint32			open_lev		= 8; // 开启等级要求
+}
+
+message COLLECTION_ARRAY
+{
+    repeated COLLECTION rows = 1;
+}
+
+message TREASURE
+{
+    optional uint32         id          = 1;
+	optional string         name	    = 2;
+    repeated Common.GameRes res_list    = 3;
+	optional string         icon_name	= 4;
+}
+
+message TREASURE_ARRAY
+{
+    repeated TREASURE rows = 1;
+}
+
+
+message TREASURE_LEV
+{
+	optional uint32			id			= 1;
+	optional string			bg			= 2;
+	repeated float			lv_color	= 3;
+	repeated float			effect_color= 4;
+	repeated float			shadow_color= 5;
+}
+
+message TREASURE_LEV_ARRAY
+{
+    repeated TREASURE_LEV rows = 1;
+}

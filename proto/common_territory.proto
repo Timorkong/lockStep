@@ -1,0 +1,280 @@
+// 地盘系统
+
+import "common_role.proto";
+import "common_quality.proto";
+import "common_game_res.proto";
+
+package Common;
+
+// 触发事件类型
+enum TerrEventType
+{
+    TERR_EVENT_INVALID = 0; // 什么都不做
+    TERR_EVENT_CELL    = 1; // 到达商店
+    TERR_EVENT_RANDOM  = 2; // 随机事件
+    TERR_EVENT_SPECIAL = 3; // 特殊事件
+    TERR_EVENT_STALL   = 4; // 摆摊事件
+}
+
+// 特殊事件类型
+enum TerrSpecialEventType
+{
+    TERR_SPECIAL_EVENT_INVALID       = 0; // 什么都不做
+    TERR_SPECIAL_EVENT_EXTRA_FORWARD = 1; // 额外骰子
+    TERR_SPECIAL_EVENT_JUMP_FORWARD  = 2; // 向前前进3步
+    TERR_SPECIAL_EVENT_JUMP_ORIGIN   = 3; // 回到起点
+    TERR_SPECIAL_EVENT_BOSS_CALL     = 4; // 老大召见
+}
+
+// 摊位品质
+enum TerrStallQuality
+{
+    TERR_STALL_INVALID      = 0;
+    TERR_STALL_GREEN        = 1;
+    TERR_STALL_BLUE         = 2;
+    TERR_STALL_PURPLE       = 3;
+    TERR_STALL_ORANGE       = 4;
+    TERR_STALL_RED          = 5;
+}
+
+// 摊位奖励类型
+enum TerrStallAwardType
+{
+    STALL_TYPE  = 1;
+    ROB_TYPE    = 2;
+    DEFEND_TYPE = 3;
+}
+
+// 摊位刷新类型
+enum TerrStallFreshType
+{
+    DEFAULT_FRESH   = 0;
+    COIN_FRESH      = 1;
+    GOLD_FRESH      = 2;
+}
+
+// 摊位状态类型
+enum TerrStallState
+{
+    TERR_STALL_STATE_INVALID    = 0;
+    TERR_STALL_STATE_UNLOCKED   = 1;
+    TERR_STALL_STATE_LOCKED     = 2;
+    TERR_STALL_STATE_OCCUPY     = 3;
+}
+
+// 摊位次数类型
+enum TerrStallBuyType
+{
+    TERR_STALL_BUY_INVALID          = 0;
+    TERR_STALL_BUY_ROB              = 1;  // 打劫次数
+    TERR_STALL_BUY_DEFEND           = 2;  // 护卫次数
+    TERR_STALL_BUY_HELP             = 3;  // 助战次数
+    TERR_STALL_BUY_BACK_POINT       = 4;  // 后退筛子
+    TERR_STALL_BUY_OCCUPY           = 5;  // 摆摊次数
+    TERR_STALL_BUY_FORWARD_POINT    = 6;  // 前进筛子
+}
+
+// 摊位邀请类型
+enum TerrStallInviteType
+{
+    TERR_STALL_INVITE_DEFEND_TYPE = 1; // 邀请护卫
+    TERR_STALL_INVITE_HELP_TYPE   = 2; // 邀请助战
+}
+
+// 商店
+message NormalCell
+{
+    enum State
+    {
+        STATE_UNLOCKED = 1; // 已解锁, 可以升级
+        STATE_LEV_FULL = 2; // 满级，可以领取额外收益
+    };
+    
+    optional uint32 id    = 1;
+    optional State  state = 2 [default = STATE_UNLOCKED];
+    optional sint32 lev   = 3;
+    
+    optional sfixed64 collect_timestamp  = 10; // 上次收租时间(毫秒，服务器使用)
+    optional sint32   accumulate         = 11; // 累计单位时间(小时，客户端使用)
+    optional bool     first_collect_flag = 12; // 第一次收租标记
+}
+
+// 英雄商店
+message HeroCell
+{
+    enum State
+    {
+        STATE_LOCKED         = 1; // 未解锁        
+        STATE_SELF_OCCUPYING = 2; // 自己占
+        STATE_HAS_OCCUPIED   = 3; // 被别人占
+        STATE_IDLE           = 4; // 空闲状态，解锁但未被占用
+    };
+    
+    optional State    state              = 1 [default = STATE_LOCKED];
+    optional uint32   hero_id            = 2;  // 未被占领时有效    
+    optional Common.RoleBrief role_brief = 4;  // 占领英雄的角色角色摘要
+    
+    optional sfixed64 occupied_timestamp = 10; // 解锁、自己占领、被别人占都更新
+    optional sfixed64 collect_timestamp  = 11; // 上次收租时间(毫秒，服务器使用)
+    optional sint32   accumulate         = 12; // 累计单位时间(小时，客户端使用)
+    optional bool     op_change_flag     = 13 [default = false]; // 是否可以更换占领对手标志
+}
+
+// 地盘块
+message Block
+{
+    optional uint32     idx              = 1;
+    repeated NormalCell normal_cell_list = 2;
+    optional HeroCell   hero_cell        = 3;
+}
+
+message Territory
+{
+    repeated Block    block_list            = 1; // 所有商店
+    optional int32    total_stars           = 2; // 总星星数量
+    optional int32    spent_stars           = 3; // 花费的星星个数
+    optional uint32   current_step          = 4 [default = 1] ; // 当前位置
+    optional int32    remaining_jump_count  = 5; // 剩余的可前进次数
+    optional sfixed64 last_timestamp        = 6; // 最后一次更新时间
+    optional sint32   timedelta             = 7; // 下一次更新时间(单位: 秒)
+    optional uint32   roll_count            = 8; // 掷骰子次数
+    
+    optional sfixed64 supper_terr_timestamp = 10; // 制霸地盘收租时间戳
+    optional sint32   robbed_count          = 11; // 当天被打劫的次数
+    optional int32    remainng_back_count   = 12; // 剩余的可后退次数
+    optional Common.RoleInfo help_role      = 13; // 帮助打劫角色, 这个不放入存档
+    optional int32    stall_rob_count       = 14; // 剩余打劫次数, 这个也放入存档的
+    // optional uint32   stall_pos             = 15; // 我的摊位位置
+}
+
+message TerrBuyCount
+{
+    optional sint32  buy_rob_count           = 1;
+    optional sint32  buy_defend_count        = 2;
+    optional sint32  buy_help_count          = 3;
+    optional sint32  buy_back_point_count    = 4;
+    optional sint32  buy_occupy_count        = 5;
+    optional sint32  buy_forward_point_count = 6;
+}
+
+message VoiceInfo
+{
+    optional string   voice_url  = 1;
+    optional int32    voice_time = 2; 
+    optional string   voice_text = 3;
+}
+
+
+message Stall
+{
+    message ReceiveInfo
+    {
+        optional uint32   role_id     = 1;
+        optional sfixed64 timestamp   = 2;
+        optional VoiceInfo voice_info = 3;
+    }
+
+    message RobbedInfo
+    {
+        optional uint32  role_id      = 1;
+        optional sint32  award_count  = 2;
+    }
+
+
+    optional uint32         pos             = 1; // 占领的摊位
+    // repeated uint32      rob_role_id     = 2; // 仇人列表
+    optional sint32         rob_count       = 3; // 打劫次数
+    optional sint32         defend_count    = 4; // 护卫次数
+    optional uint32         rob_pos         = 5; // 上次打劫的位置, 移动后清空
+
+    repeated ReceiveInfo    receive_defend_list = 7; // 收到守护邀请
+    optional sint32         occupy_count        = 8; // 摆摊次数
+    repeated RobbedInfo     robbed_role_list    = 9; // 被打劫列表
+    optional uint32         help_role_id        = 10; // 助战角色ID
+    repeated ReceiveInfo    receive_help_list   = 11; // 收到助战邀请
+    optional sint32         help_rob_count      = 12; // 助战抢劫个数
+    optional TerrBuyCount   buy_count           = 13; // 消耗点购买次数
+}
+
+// 摊位信息
+message StallInfo
+{
+    optional TerrStallQuality quality       = 1 [default = TERR_STALL_INVALID];
+    optional sfixed64         timestamp     = 2;   
+    optional sint32           robbed_count  = 3;    // 被打劫次数
+    optional TerrStallState   state         = 4 [default = TERR_STALL_STATE_INVALID];
+    optional uint32           pos           = 5;   // 摊位位置 
+    optional sint32           left_rob_count = 6;  // 剩余可被打劫次数
+
+    optional Common.RoleInfo  role          = 15;  // 摊主
+    optional Common.RoleInfo  defend_role   = 16;  // 护卫
+}
+
+message RobbedStallLog
+{
+    optional uint32 role_id     = 1;
+    optional string name        = 2;
+    optional uint32 transform   = 3;
+    optional sint32 award_count = 4;
+    optional uint32 stall_pos   = 5;
+}
+
+// 社团中可邀请成员的信息
+message InviteInfo
+{
+    optional bool   isonline        = 1 [default = false];
+    optional string name            = 2;
+    optional uint32 transform       = 3;
+    optional sint32 left_count      = 4;
+    optional Common.Numeric numeric = 5;
+    optional bool   has_invited     = 6 [default = false];
+    optional uint32 role_id         = 7;
+}
+
+// 收到邀请信息
+message ReceiveInviteInfo
+{
+    optional uint32           role_id     = 1;
+    optional string           name        = 2;
+    optional uint32           transform   = 3;
+    optional sfixed64         timestamp   = 4;
+    optional TerrStallQuality quality     = 5 [default = TERR_STALL_INVALID];
+    optional sint32           award_count = 6;
+    optional VoiceInfo        voice_info  = 7;
+}
+
+// 制霸地盘
+message SupperCell
+{
+    optional uint32 rank = 1;
+    optional Common.RoleInfo role_info = 2;
+}
+
+message SupperTerr
+{
+    repeated SupperCell rank_table = 1;
+};
+
+// 附近的玩家
+message NearbyPlayerInfo
+{
+    message NearbyPlayer
+    {
+        optional uint32          id         = 1;
+        optional string          name       = 2;  // 玩家名称
+        optional uint32          base_id    = 3;  // 职业
+        optional sint32          lev        = 4;  // 等级
+        optional sint64          fc         = 5;  // 战斗力
+        repeated Common.GameRes  award_list = 6;  // 打劫所得
+        optional uint32          transform  = 7;
+        optional QualityType     quality    = 8[default = QUALITY_INVALID];  // 英雄品质
+        optional sint32          star       = 9;  // 星级
+        optional bool            rob_flag   = 10; // 是否打劫过
+    }
+    
+    optional NearbyPlayer s_lev = 1; // S 级玩家
+    optional NearbyPlayer a_lev = 2; // A 级玩家
+    optional NearbyPlayer b_lev = 3; // B 级玩家
+    
+    optional int32 remaining_count = 4; // 剩余的刷新次数
+}

@@ -1,0 +1,76 @@
+// 节日活动
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_pack_item.proto";
+
+package Cmd.User;
+
+message QUERY_FESTIVAL_REQ
+{
+}
+
+message QUERY_FESTIVAL_RSP
+{ 
+    optional uint32 id  = 1;
+}
+
+message FestivalSign
+{
+    enum State
+    {
+        STATE_LOCKED    = 1;    // 不可签
+        STATE_VALID     = 2;    // 未签
+        STATE_SIGNED    = 3;    // 已签
+    }
+
+    optional uint32 day     = 1;
+    optional State  state   = 2 [default = STATE_LOCKED];
+}
+
+message QUERY_FESTIVAL_SIGN_REQ
+{
+}
+
+message QUERY_FESTIVAL_SIGN_RSP
+{
+    repeated FestivalSign   list    = 1;
+}
+
+message FESTIVAL_SIGN_REQ
+{
+    optional uint32 day = 1;    // 签哪天
+}
+
+message FESTIVAL_SIGN_RSP
+{
+    repeated FestivalSign   list    = 1;
+    optional Common.Pack    bag_pack    = 2;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+
+message FESTIVAL_EXCHANGE_REQ
+{
+    optional sint32 count   = 1;
+}
+
+message FESTIVAL_EXCHANGE_RSP
+{
+    optional Common.Pack bag_pack = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message FESTIVAL_LOTTERY_REQ
+{
+    optional bool   ten = 1;    // 十连抽
+}
+
+message FESTIVAL_LOTTERY_RSP
+{
+    repeated Common.GameRes award_list  = 1;
+    optional Common.Pack    bag_pack    = 2;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+

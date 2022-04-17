@@ -1,0 +1,53 @@
+// 人气赛跑协议
+import "common_runningrace.proto";
+import "common_game_res.proto";
+import "common_role.proto";
+import "common_system.proto";
+
+package Cmd.User;
+
+message OPEN_RUNNING_RACE_REQ
+{
+}
+
+message OPEN_RUNNING_RACE_RSP
+{
+    optional uint32 scene_id    = 1;
+    optional sfixed64 speed     = 2;
+    optional sfixed64 timestamp = 3;
+    optional string   name      = 4;        // 排名第一角色名
+    optional Common.RunningRaceResult first_result = 15;
+}
+
+message BUY_RUNNING_RACE_COUNT_REQ
+{
+}
+
+message BUY_RUNNING_RACE_COUNT_RSP
+{
+    optional sint32 left_count = 1;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message FINISH_RUNNING_RACE_REQ
+{
+    optional sfixed64                 speed        = 1;
+    optional Common.PlayerBattleInfo player_battle_info = 2;
+    optional Common.RunningRaceResult running_race = 15;
+}
+
+message FINISH_RUNNING_RACE_RSP
+{
+    optional uint32         rank        = 1;
+    repeated Common.GameRes award_list  = 2;
+    optional sfixed64       timestamp   = 3;
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+message QUIT_RUNNING_RACE_REQ
+{
+}
+
+message QUIT_RUNNING_RACE_RSP
+{
+}

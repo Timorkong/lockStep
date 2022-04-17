@@ -1,0 +1,44 @@
+// 运营活动相关协议
+
+import "common_operation.proto";
+import "common_coefficient.proto";
+import "common_role.proto";
+
+package Cmd.User;
+
+// 查询运营活动
+message QUERY_OPERATION_LIST_REQ
+{
+}
+
+message QUERY_OPERATION_LIST_RSP
+{
+    repeated Common.Operation list = 1;
+}
+
+// 获取运营活动奖励
+message FETCH_OPERATION_AWARD_REQ
+{
+    optional uint32 id      = 1;
+}
+
+message FETCH_OPERATION_AWARD_RSP
+{
+    optional Common.RoleInfo diff_role_info = 15;
+}
+
+// 查询运营系数
+message QUERY_COEFFICIENT_REQ
+{
+}
+
+message QUERY_COEFFICIENT_RSP
+{
+    message Coefficient
+    {
+        optional Common.CoefficientType type        = 1[default = COEFFICIENT_TYPE_INVALID];
+        optional float                  coefficient = 2;
+    }
+    repeated Coefficient coefficient_list = 1;
+}
+

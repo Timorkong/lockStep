@@ -1,0 +1,76 @@
+import "common_game_res.proto";
+
+package TABLE;
+
+message GROUP_BASE_LEV
+{
+    optional sint32  lev            = 1;
+    optional sint32  member_count   = 2;
+    optional sint32  output_wood    = 3;
+    optional sint32  need_member    = 4;
+    optional sint32  cost_time      = 5;
+    optional sint32  wood_limit     = 6;
+}
+
+message GROUP_BASE_LEV_ARRAY
+{
+    repeated GROUP_BASE_LEV rows = 1;
+}
+
+message CHESS_ROOM_LEV
+{
+    optional sint32  lev            = 1;
+    optional sint32  cost_wood      = 2;
+    optional sint32  cost_time      = 3;
+    optional sint32  member_count   = 4;
+    optional sint32  output_coin    = 5;
+    repeated Common.GameRes output_item    = 6;
+}
+
+message CHESS_ROOM_LEV_ARRAY
+{
+    repeated CHESS_ROOM_LEV rows = 1;
+}
+
+message BUN_ROOM_LEV
+{
+    optional sint32  lev            = 1;
+    optional sint32  cost_wood      = 2;
+    optional sint32  cost_time      = 3;
+    optional sint32  member_count   = 4;
+    optional sint32  output_sp      = 5;
+    repeated Common.GameRes output_item = 6;
+}
+
+message BUN_ROOM_LEV_ARRAY
+{
+    repeated BUN_ROOM_LEV rows = 1;
+}
+
+message GYM_LEV
+{
+    optional sint32  lev            = 1;
+    optional sint32  cost_wood      = 2;
+    optional sint32  cost_time      = 3;
+    optional sint32  member_count   = 4;
+    optional sint32  output_fame    = 5;
+}
+
+message GYM_LEV_ARRAY
+{
+    repeated GYM_LEV rows = 1;
+}
+
+message ANTIQUE_LEV
+{
+    optional sint32  lev                    = 1;
+    optional sint32  cost_wood              = 2;
+    optional sint32  cost_time              = 3;
+    optional sint32  member_count           = 4;
+    optional sint32  output_shop_number      = 5;
+}
+message ANTIQUE_LEV_ARRAY
+{
+    repeated ANTIQUE_LEV rows = 1;
+}
+

@@ -1,0 +1,46 @@
+// 收集表格
+
+import "common_effect.proto";
+import "common_game_res.proto";
+
+package TABLE;
+
+message COLLECTION
+{
+    optional uint32         layer           = 1;
+    repeated uint32         treasure_list   = 2;
+    optional Common.Effect  effect_0_2      = 3;
+    optional Common.Effect  effect_2_4      = 4;
+    optional Common.Effect  effect_4_6      = 5;
+    optional Common.Effect  effect_6_0      = 6;
+    optional Common.Effect  effect_single   = 7;
+    optional sint32         lev_limit       = 8;
+}
+
+message COLLECTION_ARRAY
+{
+    repeated COLLECTION rows = 1;
+}
+
+message TREASURE
+{
+    optional uint32         id          = 1;
+    optional string         name        = 2;
+    repeated Common.GameRes res_list    = 3;
+}
+
+message TREASURE_ARRAY
+{
+    repeated TREASURE rows = 1;
+}
+
+message TREASURE_LEVEL
+{
+    optional sint32 lev = 1;
+}
+
+message TREASURE_LEVEL_ARRAY
+{
+    repeated TREASURE_LEVEL rows = 1;
+}
+

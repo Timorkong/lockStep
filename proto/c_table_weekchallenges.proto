@@ -1,0 +1,27 @@
+// 爬塔
+import "common_game_res.proto";
+import "common_week_challenges.proto";
+package Table;
+
+message WEEK_CHALLENGE_TESK
+{
+    optional sint32 id          					= 1;
+    optional sint32 fin_num     					= 3; // 完成次数列表
+}
+
+message WEEK_CHALLENGE_TESK_ARRAY
+{
+    repeated WEEK_CHALLENGE_TESK   rows    = 1;
+}
+
+message WEEK_CHALLENGE_AWARD
+{
+    optional sint32 id          					= 1;
+    optional sint32 week     					= 2; // 完成次数 
+	repeated Common.GameRes award_list				= 3;
+	optional string desc							= 4;
+}
+message WEEK_CHALLENGE_AWARD_ARRAY
+{
+    repeated WEEK_CHALLENGE_AWARD   rows    = 1;
+}

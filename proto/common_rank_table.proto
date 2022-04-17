@@ -1,0 +1,64 @@
+// 排行榜公共定义
+
+import "common_role.proto";
+import "common_group.proto";
+
+package Common;
+
+enum RankTableType
+{
+    RANK_TABLE_TYPE_LEV             = 1; // 等级排行榜
+    RANK_TABLE_TYPE_FC              = 2; // 战斗力排行榜
+    RANK_TABLE_TYPE_ARENA           = 3; // 竞技场排行榜
+    RANK_TABLE_TYPE_EXAM            = 4; // 答题排行榜
+    RANK_TABLE_TYPE_CLIMB_TOWER     = 5; // 爬塔排行榜
+    RANK_TABLE_TYPE_HERO_FC         = 6; // 英雄战斗力排行榜
+    RANK_TABLE_TYPE_GROUP           = 7; // 社团排行榜
+    RANK_TABLE_TYPE_EGG_LOTTERY     = 8; // 扭蛋抽奖钻石消耗排行榜
+    RANK_TABLE_TYPE_RUNNING_RACE    = 9; // 人气赛跑排行榜
+    RANK_TABLE_TYPE_GROUP_BATTLE    = 10; // 社团战排行榜
+    RANK_TABLE_TYPE_GROUP_BATTLE_ROLE = 11; // 社团战个人排行榜
+    RANK_TABLE_TYPE_GROUP_HEGEMONY      = 12; // 社团争霸排行榜
+    RANK_TABLE_TYPE_GROUP_HEGEMONY_ROLE = 13; // 社团争霸个人排行榜
+}
+
+// 排行奖励类型
+enum RankAwardType
+{
+    RANK_AWARD_TYPE_ARENA       = 1;
+    RANK_AWARD_TYPE_EXAM        = 2;
+    RANK_AWARD_TYPE_CLIMB_TOWER = 3;
+}
+
+message EggLotteryBrief
+{
+    optional string name = 1;    
+    optional sint64 gold_egg_count = 2;
+}
+
+message RankEntryBrief
+{
+    optional string name    = 1;
+    optional sint64 val     = 2;
+}
+
+message GroupHegemonyRole
+{
+    optional string name  = 1;
+    optional sint64 score = 2;
+    optional string group_name = 3;
+}
+
+message RankTable
+{
+    repeated RoleBrief  list        = 1;
+    repeated GroupBrief group_list  = 2;
+    repeated EggLotteryBrief   egg_lottery_list   = 3;
+    repeated RankEntryBrief    entry_list         = 4;
+    repeated GroupHegemonyRole hegemony_role_list = 5;
+}
+
+message RankTableBrief
+{
+    repeated RankEntryBrief entry_list   = 1;
+}

@@ -1,0 +1,59 @@
+import "common_game_res.proto";
+import "common_pack_item.proto";
+
+// 抽奖配置表
+package Table;
+
+message LOTTERY_SETTINGS
+{
+	optional uint32	id = 1;
+	optional string content = 2;
+	optional uint32 hero_id = 4;
+}
+
+message LOTTERY_SETTINGS_ARRAY
+{
+	repeated LOTTERY_SETTINGS rows = 1;
+}
+
+//皇冠英雄兑换活动
+message LOTTERY_SPECIAL_GOODS
+{
+    optional uint32             id          	= 1; //活动ID
+	repeated Common.GameRes     first_cost  	= 2; //首次消耗
+    repeated Common.GameRes     normal_cost 	= 3; //正常消耗
+    repeated Common.GameRes     output      	= 4; //产出
+	optional uint32				hero_id			= 7; //英雄ID
+	optional string				activity_name	= 8; //活动名称
+}
+
+message LOTTERY_SPECIAL_GOODS_ARRAY
+{
+    repeated LOTTERY_SPECIAL_GOODS rows = 1;
+}
+
+// 神龙抽奖表
+message LOTTERY_LUCKY_DRAGON
+{
+    optional uint32                         id          = 1;
+    optional Common.LotteryDragonOutputType type        = 2 [default = SINGLE_LOTTERY];
+    repeated Common.GameRes                 output      = 3;
+    optional float                          probability = 4;
+}
+
+message LOTTERY_LUCKY_DRAGON_ARRAY
+{
+    repeated  LOTTERY_LUCKY_DRAGON rows = 1;
+}
+
+// 女仆书店
+message LOTTERY_MAID_LIBRARY
+{
+	optional uint32				id 		= 1;
+	repeated Common.GameRes 	output 	= 2;
+}
+
+message LOTTERY_MAID_LIBRARY_ARRAY
+{
+	repeated LOTTERY_MAID_LIBRARY rows = 1;
+}

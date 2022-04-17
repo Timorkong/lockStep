@@ -1,0 +1,9 @@
+// 特殊道具
+
+package Common;
+
+message MultipleItem
+{
+    optional uint32     item_id         = 1;
+    optional sfixed64   end_timestamp = 2;
+}

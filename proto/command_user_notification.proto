@@ -1,0 +1,94 @@
+// 消息通知和公告消息
+
+import "common_role.proto";
+import "common_notification.proto";
+
+package Cmd.User;
+
+// 奖励消息查询
+message QUERY_AWARD_MSG_REQ
+{
+}
+
+message QUERY_AWARD_MSG_RSP
+{
+    optional Common.AwardMsg msg   = 1;
+    optional int32           count = 2;
+}
+
+// 领奖
+message DO_MSG_AWARD_REQ
+{
+}
+
+message DO_MSG_AWARD_RSP
+{
+    optional Common.AwardMsg msg   = 1;
+    optional int32           count = 2;
+    
+    optional Common.RoleInfo  diff_role_info = 15;
+}
+
+// 领奖消息通知
+message AWARD_MSG_NOTICE
+{
+    optional Common.AwardMsg msg   = 1;
+    optional int32           count = 2;
+}
+
+// 互动消息查询
+message QUERY_INTER_MSG_REQ
+{
+}
+
+message QUERY_INTER_MSG_RSP
+{
+    optional Common.InteractiveMsg msg   = 1;
+    optional int32                 count = 2;
+}
+
+// 删除顶部互动消息
+message DEL_TOP_INTER_MSG_REQ
+{
+}
+
+message DEL_TOP_INTER_MSG_RSP
+{
+    optional Common.InteractiveMsg msg   = 1;
+    optional int32                 count = 2;
+}
+
+// 互动消息通知
+message INTER_MSG_NOTICE
+{
+    optional Common.InteractiveMsg msg   = 1;
+    optional int32                 count = 2;
+}
+
+// 滚动公告通知
+message ROLL_MSG_NOTICE
+{
+    optional string            		msg          	= 1;
+    optional Common.UnifiedMsg 		unified_msg  	= 2;  
+    optional Common.RollMsgType 	type 			= 3[default = RIGHT_LEFT_ROLL];
+    optional Common.RollMsgSource 	source 			= 4[default = ROLL_MSG_SOURCE_DEFAULT];
+}
+
+message QUERY_ROLE_ACTION_REMAIN_CD_REQ
+{
+}
+
+message QUERY_ROLE_ACTION_REMAIN_CD_RSP
+{
+    repeated Common.RoleActionRemainCD action_cd_list = 1;
+}
+// 运营活动介绍
+message QUERY_ACTIVITY_BULLETIN_MSG_REQ
+{
+
+}
+
+message QUERY_ACTIVITY_BULLETIN_MSG_RSP
+{
+    repeated Common.ActivityBulletinMsg activity_bulletin_msg_list = 1;     
+}

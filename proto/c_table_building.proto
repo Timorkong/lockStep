@@ -1,0 +1,80 @@
+package Table;
+
+
+// 洪兴大酒楼升级表
+message BASE_BUILDING
+{
+    optional int32         lev                  = 1;//等级
+    optional int32         population_limit     = 2;//人口上限
+    optional int64         timber_production    = 3;//木材产量/小时
+    optional int32         people_needed        = 4;//升级需要的人力
+    optional int32         time_cost            = 5;//升级耗时
+    optional sint32        wood_limit           = 6;//木材限制
+}
+
+message BASE_BUILDING_ARRAY
+{
+    repeated BASE_BUILDING rows = 1;
+}
+
+
+// 棋牌室升级表
+message CHESS_BUILDING
+{
+    optional int32         lev                  = 1;//等级
+    optional int64         timber_needed        = 2;//升级所需木材
+    optional int32         time_cost            = 3;//升级耗时
+    optional int32         population_count     = 4;//可参与人力
+    optional int32         coin_production      = 5;//金币产量 / 天
+}
+
+message CHESS_BUILDING_ARRAY
+{
+    repeated CHESS_BUILDING rows = 1;
+}
+
+
+//包子铺升级表
+message BNU_BUILDING
+{
+    optional int32         lev                  = 1;//等级
+    optional int64         timber_needed        = 2;//升级所需木材
+    optional int32         time_cost            = 3;//升级耗时
+    optional int32         population_count     = 4;//可参与人力
+    optional int32         sp_production        = 5;//金币产量 / 天
+}
+
+message BNU_BUILDING_ARRAY
+{
+    repeated BNU_BUILDING rows = 1;
+}
+
+//古董商店升级表
+message SHOP_BUILDING
+{
+    optional int32         lev                  = 1;//等级
+    optional int64         timber_needed        = 2;//升级所需木材
+    optional int32         time_cost            = 3;//升级耗时
+    optional int32         population_count     = 4;//可参与人力
+    optional int32         goods_count          = 5;//商品数量
+}
+
+message SHOP_BUILDING_ARRAY
+{
+    repeated SHOP_BUILDING rows = 1;
+}
+
+//健身房升级表
+message GYM_BUILDING
+{
+    optional int32         lev                  = 1;//等级
+    optional int64         timber_needed        = 2;//升级所需木材
+    optional int32         time_cost            = 3;//升级耗时
+    optional int32         population_count     = 4;//可参与人力
+    optional int32         fame_production      = 5;//商品数量
+}
+
+message GYM_BUILDING_ARRAY
+{
+    repeated GYM_BUILDING rows = 1;
+}

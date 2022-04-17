@@ -1,0 +1,63 @@
+// 世界BOSS协议
+
+import "common_role.proto";
+import "common_game_res.proto";
+
+package Cmd.User;
+
+// 世界BOSS信息
+message WorldBossInfo
+{
+    optional uint32 id  = 2;
+    optional sint64 hp  = 3;
+
+    optional sint64 my_hurt = 6;
+    optional sint32 my_rank = 7;
+
+    message Rank
+    {
+        optional string name = 1;
+        optional sint64 hurt = 2;
+    }
+    repeated Rank top3  = 10;
+}
+
+// 进入世界BOSS副本
+message ENTER_WORLD_BOSS_INSTANCE_REQ
+{
+}
+
+message ENTER_WORLD_BOSS_INSTANCE_RSP
+{
+    optional WorldBossInfo info = 1;
+}
+
+// 离开世界BOSS副本
+message LEAVE_WORLD_BOSS_INSTANCE_REQ
+{
+}
+
+message LEAVE_WORLD_BOSS_INSTANCE_RSP
+{
+}
+
+// 世界BOSS战斗结果通知
+message KICK_WORLD_BOSS_ASS_REQ
+{
+    optional sint64 hurt    = 2;
+    optional bool   over    = 3;
+}
+
+message KICK_WORLD_BOSS_ASS_RSP
+{
+    optional WorldBossInfo  info = 1;
+
+    // 个人结算
+    optional sint64         hurt_award_exp  = 5;
+    // 杀手结算
+    optional string         killer_name    = 10;
+    //repeated Common.GameRes killer_award   = 11;
+
+    optional Common.RoleInfo diff_role_info = 15;
+}
+

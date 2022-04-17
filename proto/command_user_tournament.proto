@@ -1,0 +1,51 @@
+// 武道会
+
+import "common_role.proto";
+import "common_game_res.proto";
+import "common_system.proto";
+
+package Cmd.User;
+
+message TournamentInfo
+{
+    message RankEntry
+    {
+        optional sint32             rank        = 1;
+        optional Common.RoleInfo    role        = 2;
+        optional sfixed64           timestamp   = 3;
+        optional sint32             layer       = 4;
+    }
+    repeated RankEntry  rank_entry_list = 1;
+}
+
+message QUERY_TOURNAMENT_INFO_REQ
+{
+    optional  sint32                layer = 1;
+}
+
+message QUERY_TOURNAMENT_INFO_RSP
+{
+    optional TournamentInfo         info        = 1;
+    repeated Common.TournamentMsg   msg_list    = 2;
+
+    optional sint32                 cd_sec      = 3;
+    repeated Common.GameRes         award_list  = 4;
+    // optional sint32                 layer       = 5;
+    optional sint32                 max_layer   = 6;
+}
+
+message OCCUPY_TOURNAMENT_RANK_REQ
+{
+    optional sint32 rank        = 1; //位置
+    optional bool   win         = 2;
+    optional bool   empty_rank  = 3; //是否占空位
+    optional sint32 layer       = 4;
+    optional Common.PlayerBattleInfo player_battle_info = 5;
+}
+
+message OCCUPY_TOURNAMENT_RANK_RSP
+{
+    optional TournamentInfo         info        = 1;
+    repeated Common.TournamentMsg   msg_list    = 2;
+}
+

@@ -1,0 +1,93 @@
+// 学霸系统相关协议
+
+import "common_degree.proto";
+import "common_pack_item.proto";
+import "common_game_res.proto";
+import "common_role.proto";
+
+package Cmd.User;
+
+// 查询学位背包
+message QUERY_DEGREE_PACK_REQ
+{
+}
+
+message QUERY_DEGREE_PACK_RSP
+{
+    optional Common.Pack degree_equip_pack      = 1;
+    optional Common.Pack degree_item_pack       = 2;
+    repeated sint32      lev_limit_list         = 3;
+}
+
+// 放上学位证书
+message PUT_ON_DEGREE_REQ
+{
+    optional uint64 guid = 1;
+    optional sint32 pos  = 2; // 装备位置
+}
+
+message PUT_ON_DEGREE_RSP
+{
+    optional Common.Pack        degree_equip_pack  = 1;
+    optional Common.Pack        degree_item_pack   = 2;
+    optional Common.RoleInfo    diff_role_info     = 15;
+}
+
+// 卸下学位证书
+message TAKE_OFF_DEGREE_REQ
+{
+    optional uint64 guid = 1;
+}
+
+message TAKE_OFF_DEGREE_RSP
+{
+    optional Common.Pack        degree_equip_pack  = 1;
+    optional Common.Pack        degree_item_pack   = 2;
+    optional Common.RoleInfo    diff_role_info     = 15;
+}
+
+// 吞噬证书经验(可以是证书或其他道具)
+message DEVOUR_DEGREE_EXP_REQ
+{
+    optional uint64  dest_guid    = 1;  // 必须是已装备的
+    repeated uint64  guid_list    = 2;  // 必须是未装备的
+}
+
+message DEVOUR_DEGREE_EXP_RSP
+{
+    optional Common.Pack        degree_equip_pack  = 1;
+    optional Common.Pack        degree_item_pack   = 2;
+    optional Common.RoleInfo    diff_role_info     = 15;
+}
+
+// 一键吞噬 
+message DEVOUR_ALL_DEGREE_REQ
+{
+}
+
+message DEVOUR_ALL_DEGREE_RSP
+{
+    optional Common.Pack        degree_item_pack   = 1;
+}
+
+message DECOMPOSITION_DEGREE_REQ
+{
+    optional uint64 guid = 1;
+}
+
+message DECOMPOSITION_DEGREE_RSP
+{
+    optional Common.Pack        degree_item_pack   = 1;
+    optional Common.Pack        item_pack          = 2;
+}
+
+message ADVANCED_DEGREE_REQ
+{
+    optional uint64 guid = 1;
+}
+
+message ADVANCED_DEGREE_RSP
+{
+    optional Common.Pack        degree_equip_pack  = 1;
+    optional Common.RoleInfo    diff_role_info     = 15;
+}

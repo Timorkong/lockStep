@@ -1,0 +1,89 @@
+// 排行榜奖励
+
+import "common_game_res.proto";
+
+package TABLE;
+
+message RANK_AWARD
+{
+    optional uint32         rank        = 1;
+    repeated Common.GameRes award_list  = 2;
+}
+
+message RANK_AWARD_ARRAY
+{
+    repeated RANK_AWARD rows = 1;
+}
+
+message GROUP_SCORE_AWARD
+{
+    optional uint32 rank               = 1;
+    repeated Common.GameRes award_list = 2;
+}
+
+message GROUP_SCORE_AWARD_ARRAY
+{
+    repeated GROUP_SCORE_AWARD rows = 1;
+}
+
+message EGG_LOTTERY_RANK_AWARD
+{
+    optional uint32         rank        = 1;
+    optional sint32         id          = 2;
+    repeated Common.GameRes award_list  = 3;
+}
+
+message EGG_LOTTERY_RANK_AWARD_ARRAY
+{
+    repeated EGG_LOTTERY_RANK_AWARD rows = 1;        
+}
+
+message EGG_LOTTERY_RANK_CONFIG
+{
+    optional sint32     id             = 1;
+    optional string     begin_datetime = 2;
+    optional string     end_datetime   = 3;
+    optional string     description    = 4;
+
+    optional sfixed64   begin_timestamp  = 101;
+    optional sfixed64   end_timestamp    = 102;
+}
+
+message EGG_LOTTERY_RANK_CONFIG_ARRAY
+{
+    repeated EGG_LOTTERY_RANK_CONFIG rows = 1;    
+}
+
+message EGG_LOTTER_RANK_ROBOT
+{
+    optional uint32     rank = 1;    
+    optional string     name = 2;
+    optional sint32     value = 3;
+}
+
+message EGG_LOTTER_RANK_ROBOT_ARRAY
+{
+    repeated EGG_LOTTER_RANK_ROBOT rows = 1;    
+}
+
+message RUNNING_RACE_RANK_AWARD
+{
+    optional uint32 rank               = 1;
+    repeated Common.GameRes award_list = 2;
+}
+
+message RUNNING_RACE_RANK_AWARD_ARRAY
+{
+    repeated RUNNING_RACE_RANK_AWARD rows = 1;
+}
+
+message GROUP_BATTLE_ROLE_RANK_AWARD_ARRAY
+{
+    repeated RANK_AWARD rows = 1;
+}
+
+message GROUP_BATTLE_RANK_AWARD_ARRAY
+{
+    repeated RANK_AWARD rows = 1;
+}
+

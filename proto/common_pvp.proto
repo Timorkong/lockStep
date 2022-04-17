@@ -1,0 +1,92 @@
+// pvp
+
+import "common_role.proto";
+
+package Common;
+
+// 条件判断顺序与枚举值声明顺序相同
+enum GVGState
+{
+    GVG_STATE_INVALID          = 0;
+    GVG_STATE_CLOSED           = 1; // 关闭状态(时间不对)
+    GVG_STATE_NOT_IN_GROUP     = 2; // 没加入任何公会
+    GVG_STATE_BATTLE_NOT_EXIST = 3; // 战斗不存在
+    GVG_STATE_WAIT_NEXT        = 4; // 等待下一轮
+    GVG_STATE_FULL             = 5; // 人数已满
+    GVG_STATE_OPEN             = 6; // 开放状态(可进入)
+}
+
+enum HeroAction
+{
+    HERO_ACTION_INVALID = 0;
+    HERO_ACTION_WAIT    = 1; // 等待
+    HERO_ACTION_WALK    = 2; // 走
+    HERO_ACTION_ATK     = 3; // 攻击
+    HERO_ACTION_HURT    = 4; // 被攻击
+    HERO_ACTION_DIE     = 5; // 死亡
+}
+
+enum RoadState
+{
+    ROAD_STATE_INVALID = 0;
+    ROAD_STATE_MOVE    = 1;
+    ROAD_STATE_WIN     = 2;
+    ROAD_STATE_FAIL    = 3;
+}
+
+enum PVPState
+{
+    PVP_STATE_INVALID = 0;
+    PVP_STATE_RUNNING = 1; // 战斗中
+    PVP_STATE_WIN     = 2; // 战胜
+    PVP_STATE_FAIL    = 3; // 战败
+}
+
+enum PVPBattleType
+{
+    PVP_BATTLE_TYPE_INVALID = 0;
+    PVP_BATTLE_TYPE_TERR    = 1; // 地盘
+    PVP_BATTLE_TYPE_ROB     = 2; // 打劫
+    PVP_BATTLE_TYPE_GROUP   = 3; // 公会
+}
+
+// PVP战斗上下文(不同的类型，不同的语义)
+message PVPBattleContext
+{
+    optional PVPBattleType type     = 1;
+    optional uint32        terr_idx = 2;
+    optional uint32        op_id    = 3;
+}
+
+message PVPHero
+{
+    enum STATE
+    {
+        STATE_ON_IDLE  = 1; // 空闲状态
+        STATE_ON_FIGHT = 2; // 战斗中
+        STATE_ON_CURE  = 3; // 治疗中
+    }
+    
+    optional Common.HeroInfo hero_info = 1;
+    
+    // For 地盘 PVP
+    optional STATE     state         = 2;
+    optional sfixed64  die_timestamp = 3; // 死亡时间戳
+    optional sfixed64  revive_cd     = 4; // 复活cd(单位:秒)
+
+    // For 公会 PVP
+    optional STATE     gvg_state  = 10 [ default = STATE_ON_IDLE ];
+}
+
+message PVPSystem
+{
+    repeated PVPHero  hero_list = 1;
+}
+
+// PVP 英雄类型
+enum PVPHeroType
+{
+    PVP_HERO_TYPE_NORMAL = 1; 
+    PVP_HERO_TYPE_GYM    = 2; // 健身房英雄
+    PVP_HERO_TYPE_FAKED  = 3; // 伪造的英雄
+}

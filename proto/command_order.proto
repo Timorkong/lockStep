@@ -1,0 +1,47 @@
+// 订单服务器消息
+
+package Cmd.Order;
+
+enum CMD
+{
+    CMD_QUERY_UNFULFILLED_ORDER_REQ = 0x0500;
+    CMD_QUERY_UNFULFILLED_ORDER_RSP = 0x0501;
+
+    CMD_FULFILL_ORDER_REQ           = 0x0502;
+    CMD_FULFILL_ORDER_RSP           = 0x0503;
+}
+
+enum RET
+{
+    RET_SYS_ERR         = -1;
+    RET_SUCCESS         = 0;
+}
+
+// 订单信息
+message OrderInfo
+{
+    optional uint64 guid        = 1; // 订单唯一ID
+    optional uint32 product_id  = 2; // 商品ID
+}
+
+// 查询未执行的订单
+message QueryUnfulfilledOrderReq
+{
+}
+
+message QueryUnfulfilledOrderRsp
+{
+    repeated OrderInfo order_list = 1;
+}
+
+// 完成订单
+message FulfillOrderReq
+{
+    repeated uint64 done_list   = 1;
+    repeated uint64 fail_list   = 2;
+}
+
+message FulfillOrderRsp
+{
+}
+

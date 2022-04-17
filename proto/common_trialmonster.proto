@@ -1,0 +1,8 @@
+package Common;
+
+message TrialMonsterPostion
+{
+    optional uint32 monster_id  = 1;
+    optional float  x           = 2;
+    optional float  y           = 3;
+}
