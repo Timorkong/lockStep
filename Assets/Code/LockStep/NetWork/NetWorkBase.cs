@@ -23,20 +23,31 @@ public class NetWorkBase
 
     protected Socket client = null;
 
-    protected NET_MANAGER_STATUS status = NET_MANAGER_STATUS.NONE;
+    protected NET_MANAGER_STATUS mStatus = NET_MANAGER_STATUS.NONE;
 
-    protected void SetNetManagerState(NET_MANAGER_STATUS status)
+    public NET_MANAGER_STATUS Status
     {
-        this.status = status;
+        get { return this.mStatus; }
+        set { this.mStatus = value; }
     }
 
     protected NetWorkStatusCallBack connCB = null;
 
     protected NetWorkStatusCallBack sendCB = null;
 
-    protected NetWorkStatusCallBack receiveCB = null;
+    protected NetWorkReceiveCallBack receiveCB = null;
 
     protected ManualResetEvent connectDone = new ManualResetEvent(false);
+
+    public bool IsConnected
+    {
+        get
+        {
+            if (client != null && mStatus == NET_MANAGER_STATUS.CONNECTED) return true;
+
+            return false;
+        }
+    }
 
     public NetWorkBase()
     {
@@ -44,7 +55,7 @@ public class NetWorkBase
 
         this.isInited = true;
 
-        this.SetNetManagerState(NET_MANAGER_STATUS.NONE);
+        this.Status = NET_MANAGER_STATUS.NONE;
     }
 
     public void Connect(string adress, int port, int maxTimeOut, NetWorkStatusCallBack cb = null)
@@ -63,11 +74,11 @@ public class NetWorkBase
 
             client.BeginConnect(iEP, new AsyncCallback(ConnectCallBack), client);
 
-            SetNetManagerState(NET_MANAGER_STATUS.CONNECTING);
+            this.Status = NET_MANAGER_STATUS.CONNECTING;
 
             if (connectDone.WaitOne(maxTimeOut, false))
             {
-                SetNetManagerState(NET_MANAGER_STATUS.CONNECTED);
+                this.Status = NET_MANAGER_STATUS.CONNECTED;
 
                 if (this.connCB != null)
                 {
@@ -93,7 +104,7 @@ public class NetWorkBase
         {
             socket.EndConnect(resualt);
 
-            SetNetManagerState(NET_MANAGER_STATUS.CONNECTED);
+            this.Status = NET_MANAGER_STATUS.CONNECTED;
 
             connectDone.Set();
 
@@ -101,13 +112,13 @@ public class NetWorkBase
         }
     }
 
-    public void Send(byte[] datas , int offset , int bufflen , NetWorkStatusCallBack cb = null)
+    public void Send(byte[] datas, int offset, int bufflen, NetWorkStatusCallBack cb = null)
     {
         this.sendCB = cb;
 
-        if(isInited == false)
+        if (isInited == false)
         {
-            if(sendCB != null)
+            if (sendCB != null)
             {
                 sendCB(false, "为初始化");
             }
@@ -117,30 +128,30 @@ public class NetWorkBase
 
         try
         {
-            if(client == null)
+            if (client == null)
             {
-                if(this.sendCB != null)
+                if (this.sendCB != null)
                 {
                     sendCB(false, "为初始化");
                 }
                 return;
             }
 
-            if(this.status != NET_MANAGER_STATUS.CONNECTED)
+            if (this.mStatus != NET_MANAGER_STATUS.CONNECTED)
             {
-                if(sendCB != null)
+                if (sendCB != null)
                 {
                     sendCB(false, "为初始化");
                 }
                 return;
             }
 
-            SocketError socketError ;
+            SocketError socketError;
 
             client.BeginSend(datas, offset, bufflen, SocketFlags.None, out socketError, new AsyncCallback(sendCallBack), client);
         }
 
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
 
         }
@@ -149,9 +160,9 @@ public class NetWorkBase
 
     private void sendCallBack(IAsyncResult ar)
     {
-        if(isInited == false || client == null || this.status != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || client == null || this.mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
-            if(sendCB != null)
+            if (sendCB != null)
             {
                 sendCB(false, "为初始化");
             }
@@ -162,27 +173,27 @@ public class NetWorkBase
         var errorCode = SocketError.Success;
         var sendSize = this.client.EndSend(ar, out errorCode);
 
-        if(errorCode != SocketError.Success)
+        if (errorCode != SocketError.Success)
         {
             sendCB(false, "发送失败");
             return;
         }
 
-        if(sendCB != null)
+        if (sendCB != null)
         {
             sendCB(true, "");
         }
     }
 
-    public void Receives(byte[] datas , int offset , int size , NetWorkStatusCallBack cb = null)
+    public void Receives(byte[] datas, int offset, int size, NetWorkReceiveCallBack cb = null)
     {
         this.receiveCB = cb;
 
-        if(isInited == false || client == null || status != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || client == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
-            if(this.receiveCB != null)
+            if (this.receiveCB != null)
             {
-                this.receiveCB(false, "为初始化");
+                this.receiveCB(false, -1, "为初始化");
             }
 
             return;
@@ -193,11 +204,11 @@ public class NetWorkBase
 
     private void receiveCallBack(IAsyncResult ar)
     {
-        if(isInited == false || client == null || status != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || client == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
             if (this.receiveCB != null)
             {
-                this.receiveCB(false, "为初始化");
+                this.receiveCB(false, -1, "为初始化");
             }
 
             return;
@@ -209,11 +220,11 @@ public class NetWorkBase
 
         var receiveSize = client.EndReceive(ar, out socketError);
 
-        if(socketError != SocketError.Success)
+        if (socketError != SocketError.Success)
         {
             if (this.receiveCB != null)
             {
-                this.receiveCB(false, "接收失败");
+                this.receiveCB(false, -1, "接收失败");
             }
 
             return;
@@ -221,7 +232,7 @@ public class NetWorkBase
 
         if (this.receiveCB != null)
         {
-            this.receiveCB(true, "");
+            this.receiveCB(true, -1, "");
         }
     }
 }
