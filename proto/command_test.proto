@@ -1,6 +1,0 @@
-
-message MsgEcho
-{
-    optional string data = 1;
-}
-

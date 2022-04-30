@@ -26,29 +26,7 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
 
     public void InitSystem<T>(params object[] userData) where T : class, IClientSystem
     {
-        if(CurrentSystem != null)
-        {
-            Debug.LogError("��ʼ��ϵͳ������Ϊ��");
-        }
-
-        Type t = typeof(T);
-
-        IClientSystem nextClientSystem = null;
-
-        if(dClientSystem.TryGetValue(t.Name , out nextClientSystem))
-        {
-            CurrentSystem = nextClientSystem;
-        }
-        else
-        {
-            CurrentSystem = Activator.CreateInstance<T>() as IClientSystem;
-            ClientSystem system = CurrentSystem as ClientSystem;
-            system.SystemManager = this;
-            system.SetName(t.Name);
-            dClientSystem.Add(t.Name, CurrentSystem);
-        }
-
-        (CurrentSystem as ClientSystem).OnEnterSystem();
+        this.SwitchSystem<T>();
     }
 
     public void SwitchSystem<T>(SystemContent systemContent = null)  where T:class, IClientSystem

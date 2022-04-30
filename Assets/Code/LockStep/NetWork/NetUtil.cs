@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProtoBuf;
+using System.IO;
 
-public class NetUtil : MonoBehaviour
+public class NetUtil
 {
-    // Start is called before the first frame update
-    void Start()
+    public static T DeserializeMsg<T>(MsgData data , bool showLog = false)
     {
-        
-    }
+        T rsp;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        using(MemoryStream stream  = new MemoryStream(data.msg))
+        {
+            rsp = ProtoBuf.Serializer.Deserialize<T>(stream);
+        }
+
+        return rsp;
     }
 }

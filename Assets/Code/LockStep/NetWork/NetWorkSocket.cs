@@ -28,6 +28,8 @@ public class NetWorkSocket
 
         mOutputBuffer = new NetOutputBuffer(mNetWorkBase);
 
+        mInputBuffer = new NetInputBuffer();
+
         mBuffer = new byte[RingBuffer.DefaultSize];
 
         mPackBuffer = new PackBuffer();
@@ -108,14 +110,14 @@ public class NetWorkSocket
     {
         if (isInited == false)
         {
-            Debug.LogError("NetWork Client is not Init");
+            //Debug.LogError("NetWork Client is not Init");
 
             return;
         }
 
         if (mNetWorkBase.IsConnected == false)
         {
-            Debug.LogError("未初始化");
+           // Debug.LogError("未初始化");
 
             return;
         }
@@ -124,5 +126,12 @@ public class NetWorkSocket
         {
             this.mOutputBuffer.Flush();
         }
+    }
+
+    public void DisConnect()
+    {
+        if (isInited == false || mNetWorkBase == null) return;
+
+        mNetWorkBase.DisConnect();
     }
 }

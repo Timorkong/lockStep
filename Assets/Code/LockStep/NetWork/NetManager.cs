@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class NetManager : MonoSingleton<NetManager>
@@ -30,11 +29,44 @@ public class NetManager : MonoSingleton<NetManager>
         this.mSocket.ConnectToServer(ip, port, timeout);
     }
 
+    public void DisConnect()
+    {
+        if (this.isInited == false) return;
+
+        this.mSocket.DisConnect();
+    }
+
     public int SendCommad<CommandType>(CommandType cmd) where CommandType:IProtocolStream , IGetMsgID
     {
         int ret = -1;
 
-        ret = mSocket.SendCommand<CommandType>(cmd);
+        ret = mSocket.SendCommand(cmd);
+
+        return ret;
+    }
+
+    public int SendMsg<T>(T msg , Cmd.ID.CMD cmd)
+    {
+        int ret = -1;
+
+        byte[] bytes = null;
+
+        try
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                ProtoBuf.Serializer.Serialize<T>(stream, msg);
+
+                bytes = stream.ToArray();
+            }
+        }
+        catch(System.Exception e)
+        {
+            Debug.LogError("send message erro = " + e.Message);
+        }
+        
+
+        ret = mSocket.SendData((uint)cmd, 0, bytes, bytes.Length,1000);
 
         return ret;
     }

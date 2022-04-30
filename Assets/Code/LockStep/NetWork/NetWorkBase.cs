@@ -21,7 +21,7 @@ public class NetWorkBase
 
     protected bool isInited = false;
 
-    protected Socket client = null;
+    protected Socket socket = null;
 
     protected NET_MANAGER_STATUS mStatus = NET_MANAGER_STATUS.NONE;
 
@@ -43,7 +43,7 @@ public class NetWorkBase
     {
         get
         {
-            if (client != null && mStatus == NET_MANAGER_STATUS.CONNECTED) return true;
+            if (socket != null && mStatus == NET_MANAGER_STATUS.CONNECTED) return true;
 
             return false;
         }
@@ -68,11 +68,11 @@ public class NetWorkBase
 
             IPEndPoint iEP = new IPEndPoint(ip, port);
 
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             connectDone.Reset();
 
-            client.BeginConnect(iEP, new AsyncCallback(ConnectCallBack), client);
+            socket.BeginConnect(iEP, new AsyncCallback(ConnectCallBack), socket);
 
             this.Status = NET_MANAGER_STATUS.CONNECTING;
 
@@ -96,7 +96,7 @@ public class NetWorkBase
     {
         if (isInited == false) return;
 
-        if (client == null) return;
+        if (this.socket == null) return;
 
         var socket = (Socket)resualt.AsyncState;
 
@@ -128,7 +128,7 @@ public class NetWorkBase
 
         try
         {
-            if (client == null)
+            if (socket == null)
             {
                 if (this.sendCB != null)
                 {
@@ -148,19 +148,19 @@ public class NetWorkBase
 
             SocketError socketError;
 
-            client.BeginSend(datas, offset, bufflen, SocketFlags.None, out socketError, new AsyncCallback(sendCallBack), client);
+            socket.BeginSend(datas, offset, bufflen, SocketFlags.None, out socketError, new AsyncCallback(sendCallBack), socket);
         }
 
         catch (System.Exception e)
         {
-
+            Debug.LogError("send error = " + e.Message);
         }
 
     }
 
     private void sendCallBack(IAsyncResult ar)
     {
-        if (isInited == false || client == null || this.mStatus != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || this.socket == null || this.mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
             if (sendCB != null)
             {
@@ -171,7 +171,7 @@ public class NetWorkBase
 
         var socket = (Socket)ar.AsyncState;
         var errorCode = SocketError.Success;
-        var sendSize = this.client.EndSend(ar, out errorCode);
+        var sendSize = this.socket.EndSend(ar, out errorCode);
 
         if (errorCode != SocketError.Success)
         {
@@ -189,7 +189,7 @@ public class NetWorkBase
     {
         this.receiveCB = cb;
 
-        if (isInited == false || client == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || socket == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
             if (this.receiveCB != null)
             {
@@ -199,12 +199,12 @@ public class NetWorkBase
             return;
         }
 
-        client.BeginReceive(datas, offset, size, SocketFlags.None, new AsyncCallback(receiveCallBack), this.client);
+        socket.BeginReceive(datas, offset, size, SocketFlags.None, new AsyncCallback(receiveCallBack), this.socket);
     }
 
     private void receiveCallBack(IAsyncResult ar)
     {
-        if (isInited == false || client == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
+        if (isInited == false || this.socket == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
             if (this.receiveCB != null)
             {
@@ -218,7 +218,7 @@ public class NetWorkBase
 
         SocketError socketError = SocketError.Success;
 
-        var receiveSize = client.EndReceive(ar, out socketError);
+        var receiveSize = this.socket.EndReceive(ar, out socketError);
 
         if (socketError != SocketError.Success)
         {
@@ -234,5 +234,16 @@ public class NetWorkBase
         {
             this.receiveCB(true, -1, "");
         }
+    }
+
+    public void DisConnect()
+    {
+        if (this.isInited == false || this.IsConnected == false) return;
+
+        if (this.socket == null) return;
+
+        this.socket.Close();
+
+        this.Status = NET_MANAGER_STATUS.NONE;
     }
 }
