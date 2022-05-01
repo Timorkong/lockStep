@@ -14,14 +14,17 @@ namespace Cmd.ID
     public enum CMD
     {
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_INVALID")]
-      CMD_INVALID = 65535,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_INVALID", Value=0)]
+      CMD_INVALID = 0,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_REQ")]
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_REQ", Value=4096)]
       CMD_HEART_BEAT_REQ = 4096,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP")]
-      CMD_HEART_BEAT_RSP = 4097
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP", Value=4097)]
+      CMD_HEART_BEAT_RSP = 4097,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP1", Value=16)]
+      CMD_HEART_BEAT_RSP1 = 16
     }
   
 }

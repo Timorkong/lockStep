@@ -112,22 +112,7 @@
     <Compile Include="Assets/Code/Protobuf/Proto/command_id.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.Core.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Buffers.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.Core.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Numerics.Vectors.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Collections.Immutable.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Buffers.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Memory.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Collections.Immutable.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/Google.Protobuf.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Memory.dll" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/Google.Protobuf.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml" />
-    <None Include="Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -355,29 +340,8 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net.Core">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets/Code/Protobuf/Protobuf-net/Plugins/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>Assets/Code/Protobuf/plugins/protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
