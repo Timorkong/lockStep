@@ -21,6 +21,15 @@ public class NetWorkSocket
     protected int port = 0;
 
     protected byte[] mBuffer = null;
+    /// <summary>
+    /// 接收到到消息长度
+    /// </summary>
+    protected int mReceiveSize = 0;
+    /// <summary>
+    /// 当前包大小
+    /// </summary>
+    protected int mCurrentPackSize = 0;
+
 
     public NetWorkSocket()
     {
@@ -64,38 +73,83 @@ public class NetWorkSocket
 
     public void ReceiveCallBack(bool isDone, int receiveSize, string errInfo)
     {
-        Debug.LogError(string.Format("connect isDone = {0} receiveSize = {1} errInfo = {2}", isDone, receiveSize, errInfo));
+        Debug.LogError(string.Format("reciveCallback isDone = {0} receiveSize = {1} errInfo = {2}", isDone, receiveSize, errInfo));
+
+        if (isDone)
+        {
+            this.mReceiveSize += receiveSize;
+
+            mInputBuffer.UpdateTail(receiveSize);
+
+            if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
+            {
+                mCurrentPackSize = mInputBuffer.CurrentPackLenth;
+            }
+
+            if (mReceiveSize >= mCurrentPackSize)
+            {
+                int packSize = this.ProcessCommand();
+
+                this.mReceiveSize -= packSize;
+            }
+
+            Debug.LogError(mInputBuffer);
+
+            this.StartReceive();
+        }
     }
 
-    public int SendCommand<CommandType>(CommandType cmd)where CommandType:IProtocolStream,IGetMsgID
+    protected int ProcessCommand()
+    {
+        int msgSize = mInputBuffer.ReadInt32(-1, true);
+
+        uint msgId = mInputBuffer.ReadUint32(-1 , true);
+
+        uint sequence = mInputBuffer.ReadUint32(-1, true);
+
+        MsgData msgData = new MsgData(msgSize);
+
+        msgData.msgID = msgId;
+
+        msgData.sequence = sequence;
+
+        mInputBuffer.Read(msgData.msg, msgSize);
+
+        NetProcess.instance.Dispatch(msgId, msgData);
+        
+        return msgSize + (int)NET_DEFINE.HEAD_SIZE;
+    }
+
+    public int SendCommand<CommandType>(CommandType cmd) where CommandType : IProtocolStream, IGetMsgID
     {
         int pos = 0;
-        cmd.encode(this.mBuffer,ref pos);
-        return SendData(cmd.GetMsgId() , cmd.GetSequence() ,mBuffer , pos , 0);
+        cmd.encode(this.mBuffer, ref pos);
+        return SendData(cmd.GetMsgId(), cmd.GetSequence(), mBuffer, pos, 0);
     }
 
-    public int SendData(uint msgId , uint sequence , byte[] msgBytes , int msgLen , int timeOut , PushNetErrorCallBack cb = null)
+    public int SendData(uint msgId, uint sequence, byte[] msgBytes, int msgLen, int timeOut, PushNetErrorCallBack cb = null)
     {
-        if(sequence > 0)
+        if (sequence > 0)
         {
             mPackBuffer.WritePack(msgId, sequence, msgBytes, (short)msgLen);
         }
 
-        if(mNetWorkBase.Status != NetWorkBase.NET_MANAGER_STATUS.CONNECTED)
+        if (mNetWorkBase.Status != NetWorkBase.NET_MANAGER_STATUS.CONNECTED)
         {
             Debug.LogError("链接未创建");
 
             return -1;
         }
 
-        if(this.isInited == false)
+        if (this.isInited == false)
         {
             Debug.LogError("未初始化");
 
             return -2;
         }
 
-        mOutputBuffer.WriteShort((short)msgLen);
+
+        mOutputBuffer.WriteUint((uint)msgLen);
 
         mOutputBuffer.WriteUint(msgId);
 
@@ -117,7 +171,7 @@ public class NetWorkSocket
 
         if (mNetWorkBase.IsConnected == false)
         {
-           // Debug.LogError("未初始化");
+            // Debug.LogError("未初始化");
 
             return;
         }

@@ -103,4 +103,16 @@ public class RingBuffer
 
         Array.Clear(mBuffer, 0, mBuffer.Length);
     }
+
+
+    public override string ToString()
+    {
+        var output = "len = " + this.Lenth.ToString() + " ";
+
+        for(int i = Head; i < Tail; i++)
+        {
+            output += mBuffer[i].ToString() + " ";
+        }
+        return output;
+    }
 }

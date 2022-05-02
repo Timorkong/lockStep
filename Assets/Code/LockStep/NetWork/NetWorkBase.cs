@@ -204,6 +204,8 @@ public class NetWorkBase
 
     private void receiveCallBack(IAsyncResult ar)
     {
+        Debug.LogError("receive back");
+
         if (isInited == false || this.socket == null || mStatus != NET_MANAGER_STATUS.CONNECTED)
         {
             if (this.receiveCB != null)
@@ -232,7 +234,7 @@ public class NetWorkBase
 
         if (this.receiveCB != null)
         {
-            this.receiveCB(true, -1, "");
+            this.receiveCB(true, receiveSize, "");
         }
     }
 

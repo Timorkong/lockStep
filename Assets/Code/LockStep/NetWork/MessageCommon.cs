@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum NET_DEFINE
 {
-    HEAD_LENTH_SIZE = 2,//包头长度字段大小
+    HEAD_LENTH_SIZE = 4,//包头长度字段大小
     HEAD_MSG_ID_SIZE = 4,//包头消息号大小
     HEAD_SEQUENCE_SIZE = 4,//包头消息序列号大小
     HEAD_SIZE = HEAD_LENTH_SIZE + HEAD_MSG_ID_SIZE + HEAD_SEQUENCE_SIZE, //包头大小
@@ -14,11 +14,25 @@ public enum NET_DEFINE
 
 public class MsgData
 {
-    public int msgID = 0;
+    public int msgSize = 0;
+    public uint msgID = 0;
     public uint sequence = 0;
     public byte[] msg = null;
     public MsgData(int size)
     {
+        this.msgSize = size;
         msg = new byte[size];
+    }
+
+    public override string ToString()
+    {
+        string output = string.Format("msgSize = {0} msgId = {1} sequence = {2} msg = ", msgSize, msgID, sequence);
+
+        for(int i = 0;i < msgSize; i++)
+        {
+            output += msg[i].ToString() + " ";
+        }
+
+        return output;
     }
 }

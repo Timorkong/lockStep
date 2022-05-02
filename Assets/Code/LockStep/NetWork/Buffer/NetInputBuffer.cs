@@ -8,37 +8,12 @@ public class NetInputBuffer : RWBuffer
     {
     }
 
-
-    public bool Peek(byte[] buff, int peekLen)
+    public int CurrentPackLenth
     {
-        int dataLen = this.Lenth;
+        get {
+            int ret = ReadInt32(this.Head,false);
 
-        if (dataLen < peekLen)
-        {
-            Debug.LogError("获取失败，空间不足");
-
-            return false;
+            return ret;
         }
-
-        int indexHead = Head;
-
-        for (int i = 0; i < peekLen; i++)
-        {
-            buff[i] = this.Buffer[indexHead++];
-            indexHead %= BufferLen;
-        }
-
-        return true;
-    }
-
-    public bool UpdateHead(int len)
-    {
-        if (len == 0) return false;
-
-        if (len > Lenth) return false;
-
-        Head = (Head + len) % BufferLen;
-
-        return true;
     }
 }

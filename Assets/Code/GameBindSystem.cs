@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using UnityEngine;
 
-public class GameBindSystem :Singleton<GameBindSystem>
+public class GameBindSystem : Singleton<GameBindSystem>
 {
     public void BindMessgeHandle()
     {
@@ -10,13 +10,17 @@ public class GameBindSystem :Singleton<GameBindSystem>
 
         MethodInfo[] methodInfo = type.GetMethods(BindingFlags.Static | BindingFlags.Public);
 
-        foreach(var method in methodInfo)
+        foreach (var method in methodInfo)
         {
             var attribute = method.GetCustomAttribute<MessageHandleAttribute>();
 
             if (attribute != null)
             {
-                NetProcess.instance.AddMsgHandle<MsgData>(attribute.msgId, null);
+                NetProcess.instance.AddMsgHandle<MsgData>(attribute.msgId, new Action<MsgData>(data =>
+                {
+                    object[] param = new object[] { data };
+                    method.Invoke(this, param);
+                }));
             }
         }
     }

@@ -10,6 +10,8 @@ public class GameApplaction : MonoSingleton<GameApplaction>
 
     public override void Init()
     {
+        InitBindSystem();
+
         InitClientSystem();
 
         playerInfo = new PlayerInfo();
@@ -17,6 +19,11 @@ public class GameApplaction : MonoSingleton<GameApplaction>
         Application.targetFrameRate = 30;
 
         mInit = true;
+    }
+
+    void InitBindSystem()
+    {
+        GameBindSystem.instance.BindMessgeHandle();
     }
 
     void InitClientSystem()

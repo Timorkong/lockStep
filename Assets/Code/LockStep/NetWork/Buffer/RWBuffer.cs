@@ -57,40 +57,100 @@ public class RWBuffer : RingBuffer, IRead, IWrite
 
     #region Read
 
-    public virtual int Read(byte[] buff, int readLen)
+    public virtual bool Read(byte[] buff, int readLen, bool skip = true)
     {
-        return 0;
+        if (this.Lenth < readLen)
+        {
+            Debug.LogError("获取失败，空间不足");
+
+            return false;
+        }
+
+        int indexHead = Head;
+
+        for (int i = 0; i < readLen; i++)
+        {
+            buff[i] = this.Buffer[indexHead++];
+
+            indexHead %= BufferLen;
+        }
+
+        if (skip) UpdateHead(readLen);
+
+        return true;
     }
 
-    public virtual int ReadInt32(int pos)
+    public virtual int ReadInt32(int pos = -1, bool skip = true)
     {
         int value = 0;
 
-        for(int i = 0;i < 4; i++)
+        if (pos == -1) pos = this.Head;
+
+        for (int i = 0; i < 4; i++)
         {
-            value |= (int)(this.ReadByte(pos++) << (i * 8));
+            pos %= BufferLen;
+
+            value |= (int)(this.ReadByte(pos++, skip) << (i * 8));
         }
 
         return value;
     }
 
-    public virtual short ReadShort(int pos)
+    public virtual uint ReadUint32(int pos = -1, bool skip = true)
+    {
+        return (uint)ReadInt32(pos ,skip);
+    }
+
+
+    public virtual short ReadShort(int pos = -1, bool skip = true)
     {
         short value = 0;
 
-        for(int i = 0; i < 2; i++)
+        if (pos == -1) pos = this.Head;
+
+        for (int i = 0; i < 2; i++)
         {
-            value |= (short)(this.ReadByte(pos++) << (i * 8));
+            pos %= BufferLen;
+
+            value |= (short)(this.ReadByte(pos++, skip) << (i * 8));
         }
 
         return value;
     }
 
-    public virtual byte ReadByte(int pos)
+    public virtual byte ReadByte(int pos = -1, bool skip = true)
     {
+        if (pos == -1) pos = this.Head;
+
+        pos %= BufferLen;
+
         byte value = this.Buffer[pos];
 
+        if (skip) UpdateHead(1);
+
         return value;
+    }
+
+    public bool UpdateHead(int len)
+    {
+        if (len == 0) return false;
+
+        if (len > Lenth) return false;
+
+        Head = (Head + len) % BufferLen;
+
+        return true;
+    }
+
+    public bool UpdateTail(int len)
+    {
+        if (len == 0) return false;
+
+        if (len > FreeLenth) return false;
+
+        Tail = (len + Tail) % BufferLen;
+
+        return true;
     }
 
     #endregion

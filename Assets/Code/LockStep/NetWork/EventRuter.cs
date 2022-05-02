@@ -23,14 +23,13 @@ public class EventRuter<T>
     {
         bool flag = true;
 
-        if (mEventTable.ContainsKey(type))
-        {
-            Delegate d = mEventTable[type];
+        if (mEventTable.ContainsKey(type) == false) return false;
 
-            if(d != null && d.GetType() != handle.GetType())
-            {
-                flag = false;
-            }
+        Delegate d = mEventTable[type];
+
+        if (d != null && d.GetType() != handle.GetType())
+        {
+            flag = false;
         }
 
         return flag;
@@ -111,7 +110,7 @@ public class EventRuter<T>
 
             if (action != null)
             {
-                action.Invoke(args);
+                action(args);
             }
         }
     }

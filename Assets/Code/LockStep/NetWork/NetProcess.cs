@@ -11,15 +11,20 @@ public class NetProcess : Singleton<NetProcess>
 
     uint receiveMaxSequence = 0;
 
-    public void AddMsgHandle<MsgData>(uint msgId , Action<MsgData> handle)
+    public void AddMsgHandle<T>(uint msgId , Action<T> handle)
     {
         RemoveMsgHandle(msgId, handle);
         msgRuter.On(msgId, handle);
     }
 
-    public void RemoveMsgHandle<MsgData>(uint msgId , Action<MsgData> handle)
+    public void RemoveMsgHandle<T>(uint msgId , Action<T> handle)
     {
         msgRuter.Off(msgId, handle);
+    }
+
+    public void Dispatch<T>(uint msgId , T data)
+    {
+        msgRuter.DisPatch<T>(msgId, data);
     }
         
 
