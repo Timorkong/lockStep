@@ -17,6 +17,7 @@ public class CompileProtobuff : MonoBehaviour
         rootDir = Directory.GetCurrentDirectory();
         string protoPath = rootDir + $"/../common/proto/";
         string compileName = protoPath + "compile.sh";
+        UnityEngine.Debug.LogError(compileName);
         Directory.SetCurrentDirectory(protoPath);
         UnityEngine.Debug.LogError(protoPath);
         try

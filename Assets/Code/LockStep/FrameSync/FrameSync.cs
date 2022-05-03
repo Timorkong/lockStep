@@ -166,7 +166,7 @@ public class FrameSync:Singleton<FrameSync>
 
                 inputData data = fighterInput.input;
 
-                if(GameApplaction.instance.playerInfo.seat == seat)
+                if(GameApplaction.Instance.playerInfo.seat == seat)
                 {
 
                 }

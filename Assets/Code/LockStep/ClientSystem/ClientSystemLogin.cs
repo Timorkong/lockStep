@@ -11,6 +11,6 @@ public class ClientSystemLogin : ClientSystem
     {
         base.OnStart(systemContent);
 
-        NetManager.instance.Connect2Server(ip, port, 10000);
+        NetManager.Instance.Connect2Server(ip, port, 10000);
     }
 }

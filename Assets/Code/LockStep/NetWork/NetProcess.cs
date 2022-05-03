@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public delegate void OnMSGDeserialized(Cmd.ID.CMD cmd);
+
 public class NetProcess : Singleton<NetProcess>
 {
     Queue<MsgData> msgQueue = new Queue<MsgData>();
 
     private EventRuter<uint> msgRuter = new EventRuter<uint>();
+
+    public OnMSGDeserialized onMSGDeserialized;
 
     uint receiveMaxSequence = 0;
 
@@ -35,6 +39,8 @@ public class NetProcess : Singleton<NetProcess>
 
     public MsgData Pop()
     {
+        if (msgQueue.Count == 0) return null;
+
         MsgData ret = this.msgQueue.Dequeue();
 
         return ret;
@@ -60,6 +66,10 @@ public class NetProcess : Singleton<NetProcess>
     private void Process(MsgData msg)
     {
         if (this.receiveMaxSequence < msg.sequence) this.receiveMaxSequence = msg.sequence;
+
+        if (onMSGDeserialized != null) onMSGDeserialized((Cmd.ID.CMD)msg.msgID);
+
+        NetProcess.Instance.Dispatch(msg.msgID, msg);
     }
 
 }

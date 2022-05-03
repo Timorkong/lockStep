@@ -77,20 +77,28 @@ public class NetWorkSocket
 
         if (isDone)
         {
-            this.mReceiveSize += receiveSize;
-
-            mInputBuffer.UpdateTail(receiveSize);
-
-            if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
+            try
             {
-                mCurrentPackSize = mInputBuffer.CurrentPackLenth;
+                this.mReceiveSize += receiveSize;
+
+                mInputBuffer.UpdateTail(receiveSize);
+
+                if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
+                {
+                    mCurrentPackSize = mInputBuffer.CurrentPackLenth;
+                }
+
+                if (mReceiveSize >= mCurrentPackSize)
+                {
+                    int packSize = this.ProcessCommand();
+
+                    this.mReceiveSize -= packSize;
+                }
+
             }
-
-            if (mReceiveSize >= mCurrentPackSize)
+            catch (System.Exception e)
             {
-                int packSize = this.ProcessCommand();
-
-                this.mReceiveSize -= packSize;
+                Debug.LogError(e.Message);
             }
 
             Debug.LogError(mInputBuffer);
@@ -115,8 +123,8 @@ public class NetWorkSocket
 
         mInputBuffer.Read(msgData.msg, msgSize);
 
-        NetProcess.instance.Dispatch(msgId, msgData);
-        
+        NetProcess.Instance.Push(msgData);
+
         return msgSize + (int)NET_DEFINE.HEAD_SIZE;
     }
 

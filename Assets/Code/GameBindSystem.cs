@@ -16,7 +16,7 @@ public class GameBindSystem : Singleton<GameBindSystem>
 
             if (attribute != null)
             {
-                NetProcess.instance.AddMsgHandle<MsgData>(attribute.msgId, new Action<MsgData>(data =>
+                NetProcess.Instance.AddMsgHandle<MsgData>(attribute.msgId, new Action<MsgData>(data =>
                 {
                     object[] param = new object[] { data };
                     method.Invoke(this, param);

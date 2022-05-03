@@ -7,6 +7,14 @@ public class NetManager : MonoSingleton<NetManager>
 
     protected bool isInited = false;
 
+    public NetWorkSocket NetSocket
+    {
+        get
+        {
+            return this.mSocket;
+        }
+    }
+
     public NetManager()
     {
         this.mSocket = new NetWorkSocket();
@@ -22,6 +30,8 @@ public class NetManager : MonoSingleton<NetManager>
         }
 
         this.mSocket.Tick();
+
+        NetProcess.Instance.Tick(0);
     }
 
     public void Connect2Server(string ip , int port,int timeout)

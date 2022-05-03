@@ -8,7 +8,14 @@ public class GameApplaction : MonoSingleton<GameApplaction>
 
     public PlayerInfo playerInfo;
 
-    public override void Init()
+    protected override void Awake()
+    {
+        base.Awake();
+
+        this.InitSystem();
+    }
+
+    public void InitSystem()
     {
         InitBindSystem();
 
@@ -23,7 +30,7 @@ public class GameApplaction : MonoSingleton<GameApplaction>
 
     void InitBindSystem()
     {
-        GameBindSystem.instance.BindMessgeHandle();
+        GameBindSystem.Instance.BindMessgeHandle();
     }
 
     void InitClientSystem()
@@ -34,25 +41,20 @@ public class GameApplaction : MonoSingleton<GameApplaction>
         {
             case EnumClientSystem.Battle:
                 {
-                    ClientSystemManager.instance.InitSystem<ClientSystemBattle>();
+                    ClientSystemManager.Instance.InitSystem<ClientSystemBattle>();
                     break;
                 }
             case EnumClientSystem.Login:
                 {
-                    ClientSystemManager.instance.InitSystem<ClientSystemLogin>();
+                    ClientSystemManager.Instance.InitSystem<ClientSystemLogin>();
                     break;
                 }
             case EnumClientSystem.Town:
                 {
-                    ClientSystemManager.instance.InitSystem<ClientSystemTown>();
+                    ClientSystemManager.Instance.InitSystem<ClientSystemTown>();
                     break;
                 }
         }
-    }
-
-    private void Start()
-    {
-        Init();
     }
 
     private void Update()
@@ -61,7 +63,7 @@ public class GameApplaction : MonoSingleton<GameApplaction>
 
         float deltaTime = Time.deltaTime;
 
-        ClientSystemManager.instance.Update(deltaTime);
+        ClientSystemManager.Instance.Update(deltaTime);
     }
 
     private void LateUpdate()

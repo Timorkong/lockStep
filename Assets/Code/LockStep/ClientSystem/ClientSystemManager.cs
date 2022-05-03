@@ -74,7 +74,7 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
             {
                 TargetSystem.BeforEnter();
             }
-            GameApplaction.instance.StartCoroutine(_SwitchSystemCoroutine(systemContent));
+            GameApplaction.Instance.StartCoroutine(_SwitchSystemCoroutine(systemContent));
         }
     }
 

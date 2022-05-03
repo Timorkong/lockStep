@@ -41,7 +41,7 @@ public class BattleMain
     {
         var deltaTime = (int)(Time.deltaTime *  GloableLogic.VALUE_1000);
 
-        FrameSync.instance.UpdateFrame();
+        FrameSync.Instance.UpdateFrame();
 
         if(this.mBattle != null)
         {

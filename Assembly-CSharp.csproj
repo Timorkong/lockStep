@@ -74,8 +74,10 @@
     <Compile Include="Assets/Code/LockStep/FrameSync/GameStartFrame.cs" />
     <Compile Include="Assets/Code/LockStep/GlobalLogic.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/NetOutputBuffer.cs" />
+    <Compile Include="Assets/Code/Protobuf/Proto/command_protocol_room.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/SkillFrameCommand.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemLogin.cs" />
+    <Compile Include="Assets/Code/Window/RoomList.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/IBattle.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemManager.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/BattleFactory.cs" />
@@ -91,11 +93,13 @@
     <Compile Include="Assets/Code/GameBindSystem.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/RSP/command_rsp.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/PVEBattle.cs" />
+    <Compile Include="Assets/Code/Protobuf/Proto/command_id.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/FrameSync.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/NetInputBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/BaseFrameCommand.cs" />
     <Compile Include="Assets/Code/LockStep/Global.cs" />
     <Compile Include="Assets/Code/Attribute/UserDefineAttribute.cs" />
+    <Compile Include="Assets/Code/Protobuf/Proto/command_protocol.cs" />
     <Compile Include="Assets/Code/LockStep/GameApplaction.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemTown.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/FrameCommandFactory.cs" />
@@ -108,8 +112,11 @@
     <Compile Include="Assets/Code/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/PackBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/ProtocolRelayServer.cs" />
-    <Compile Include="Assets/Code/Protobuf/Proto/command_protocol.cs" />
-    <Compile Include="Assets/Code/Protobuf/Proto/command_id.cs" />
+    <Compile Include="Assets/Code/Singleton/SingleWindow.cs" />
+    <Compile Include="Assets/Code/Util/CommonEx.cs" />
+    <Compile Include="Assets/Code/Util/Util.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/REQ/command_room_req.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/RSP/command_room_rsp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />

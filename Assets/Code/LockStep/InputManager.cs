@@ -47,24 +47,24 @@ public class InputManager
                 run = false,
             };
 
-            if(FrameSync.instance.nDegree != nDegree || FrameSync.instance.bInMoveMode != bInMoving)
+            if(FrameSync.Instance.nDegree != nDegree || FrameSync.Instance.bInMoveMode != bInMoving)
             {
-                FrameSync.instance.FirtFrameCommand(cmd);
+                FrameSync.Instance.FirtFrameCommand(cmd);
 
-                FrameSync.instance.nDegree = nDegree;
+                FrameSync.Instance.nDegree = nDegree;
 
-                FrameSync.instance.bInMoveMode = bInMoving;
+                FrameSync.Instance.bInMoveMode = bInMoving;
             }
         }
         else
         {
-            if(FrameSync.instance.bInMoveMode != bInMoving)
+            if(FrameSync.Instance.bInMoveMode != bInMoving)
             {
                 StopFrameCommand cmd = new StopFrameCommand();
 
-                FrameSync.instance.FirtFrameCommand(cmd);
+                FrameSync.Instance.FirtFrameCommand(cmd);
 
-                FrameSync.instance.bInMoveMode = bInMoving;
+                FrameSync.Instance.bInMoveMode = bInMoving;
             }
         }
     }

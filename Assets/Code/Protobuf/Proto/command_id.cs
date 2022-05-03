@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Option: missing-value detection (*Specified/ShouldSerialize*/Reset*) enabled
-    
 // Generated from: command_id.proto
 namespace Cmd.ID
 {
@@ -19,14 +17,32 @@ namespace Cmd.ID
       [global::ProtoBuf.ProtoEnum(Name=@"CMD_INVALID", Value=0)]
       CMD_INVALID = 0,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_REQ", Value=4096)]
-      CMD_HEART_BEAT_REQ = 4096,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_REQ", Value=1000)]
+      CMD_HEART_BEAT_REQ = 1000,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP", Value=4097)]
-      CMD_HEART_BEAT_RSP = 4097,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP", Value=1001)]
+      CMD_HEART_BEAT_RSP = 1001,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP1", Value=16)]
-      CMD_HEART_BEAT_RSP1 = 16
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_REQ", Value=1002)]
+      CMD_CREATE_ROOM_REQ = 1002,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_RSP", Value=1003)]
+      CMD_CREATE_ROOM_RSP = 1003,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_REQ", Value=1004)]
+      CMD_LEAVE_ROOM_REQ = 1004,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_RSP", Value=1005)]
+      CMD_LEAVE_ROOM_RSP = 1005,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_NOTICE", Value=1006)]
+      CMD_LEAVE_ROOM_NOTICE = 1006,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_REQ", Value=1007)]
+      CMD_ROOM_LIST_REQ = 1007,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_RSP", Value=1008)]
+      CMD_ROOM_LIST_RSP = 1008
     }
   
 }

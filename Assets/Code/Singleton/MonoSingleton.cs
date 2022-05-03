@@ -3,46 +3,51 @@
 /// </summary>
 using UnityEngine;
 
-public abstract class MonoSingleton<T> : MonoBehaviour where T : MonoSingleton<T>{
-	
-	private static T m_Instance = null;
-    
-	public static T instance{
-        get{
-			if( m_Instance == null ){
-            	m_Instance = GameObject.FindObjectOfType(typeof(T)) as T;
-                if( m_Instance == null ){
-                    m_Instance = new GameObject("Singleton of " + typeof(T).ToString(), typeof(T)).GetComponent<T>();
-					 m_Instance.Init();
-                    m_Instance.gameObject.transform.SetSiblingIndex(0);
+public abstract class MonoSingleton<T> : MonoBehaviour where T : UnityEngine.Component
+{
+    /// <summary>
+    /// 单例
+    /// </summary>
+    private static T m_instance = default(T);
+
+    /// <summary>
+    /// 单例
+    /// </summary>
+    public static T Instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<T>();
+                if (m_instance == null)
+                {
+                    GameObject go = new GameObject(typeof(T).Name);
+                    m_instance = go.AddComponent<T>();
                 }
-               
             }
-            return m_Instance;
+            return m_instance;
         }
     }
 
-    public virtual void Awake()
+    protected virtual void Awake()
     {
-        if (m_Instance == null)
+        if (m_instance == null)
         {
-            m_Instance = this as T;
+            m_instance = this as T;
         }
     }
- 
-    public virtual void Init(){}
- 
 
     protected virtual void OnApplicationQuit()
     {
-        m_Instance = null;
+        m_instance = null;
     }
 
     protected virtual void OnDestroy()
     {
-        if (m_Instance == this)
+        if (m_instance == this)
         {
-            m_Instance = null;
+            m_instance = null;
         }
     }
 }
