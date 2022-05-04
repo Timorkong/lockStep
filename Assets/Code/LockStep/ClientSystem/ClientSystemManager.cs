@@ -33,17 +33,15 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
     {
         if(CurrentSystem != null && CurrentSystem.GetType() == typeof(T))
         {
-            Debug.LogErrorFormat("��ϵͳ�л��� �޷�֧�ִ� {0} -> {0}", typeof(T).Name);
+            Debug.LogErrorFormat("切换system失败{0} -> {0}", typeof(T).Name);
             return;
         }
 
         if(TargetSystem != null)
         {
-            Debug.LogErrorFormat("[ϵͳ�л�] ��һ��ϵͳ�����л� {0}", null != TargetSystem ? TargetSystem.GetType().Name : "[invalid]");
+            Debug.LogErrorFormat("[切换sytem] 目标{0}", null != TargetSystem ? TargetSystem.GetType().Name : "[invalid]");
             return;
         }
-
-        Debug.LogError("��ʼ�л�ϵͳ");
 
         Type t = typeof(T);
         IClientSystem nextClientSystem = null;

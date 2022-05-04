@@ -304,4 +304,16 @@ public class Util
 
         return ret;
     }
+
+    static public string Bytes2String(byte[] bytes)
+    {
+        string ret = "";
+
+        for (int i = 0; i < bytes.Length; i++)
+        {
+            ret += bytes[i].ToString() + " ";
+        }
+
+        return ret;
+    }
 }

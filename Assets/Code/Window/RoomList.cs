@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cmd.ID;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomList : SingleWindow<RoomList>
 {
@@ -11,13 +12,26 @@ public class RoomList : SingleWindow<RoomList>
 
     public override CMD ShowCMD =>  CMD.CMD_ROOM_LIST_RSP;
 
-    public void Refresh(PROTOCOL_ROOM.CMD_ROOM_LIST_RSP rsp)
+    protected override void Awake()
+    {
+        base.Awake();
+
+        this.RoomPrefab.SetActive(false);
+    }
+
+    public void Refresh(List<PROTOCOL_ROOM.RoomInfo> room_list)
     {
         Util.DestroyAllChildren(RoomParent);
 
-        foreach(var roomInf in rsp.room_list)
+        foreach(var roomInfo in room_list)
         {
             GameObject prefab = GameObject.Instantiate(RoomPrefab, RoomParent.transform);
+
+            prefab.SetActive(true);
+
+            Text RoomName = prefab.transform.FindNode<Text>("RoomName/RoomName");
+
+            RoomName.text = roomInfo.room_name;
         }
     }
 
@@ -33,5 +47,12 @@ public class RoomList : SingleWindow<RoomList>
         Hide();
 
         Login.Instance.Show();
+    }
+
+    public void OnClickCreateRoom()
+    {
+        Hide();
+
+        RoomInfo.Instance.Show();
     }
 }

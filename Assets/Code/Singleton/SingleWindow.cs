@@ -13,7 +13,7 @@ public interface IMutexWindow
 
 public class SingleWindow<T> : MonoSingleton<T>, IMutexWindow where T : UnityEngine.Component
 {
-    public GameObject window;
+    protected GameObject window;
 
     private Cmd.ID.CMD curShowCMD = Cmd.ID.CMD.CMD_INVALID;
 

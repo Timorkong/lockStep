@@ -13,4 +13,20 @@ public partial class command_req
 
         var sendLen = NetManager.Instance.SendMsg(req, Cmd.ID.CMD.CMD_ROOM_LIST_REQ);
     }
+
+    public static void CMD_CREATE_ROOM_REQ()
+    {
+        CMD_CREATE_ROOM_REQ req = new CMD_CREATE_ROOM_REQ();
+
+        req.room_name = "default player enter room";
+
+        NetManager.Instance.SendMsg(req, Cmd.ID.CMD.CMD_CREATE_ROOM_REQ);
+    }
+
+    public static void CMD_LEAVE_ROOM_REQ()
+    {
+        CMD_LEAVE_ROOM_REQ req = new CMD_LEAVE_ROOM_REQ();
+
+        NetManager.Instance.SendMsg(req, Cmd.ID.CMD.CMD_LEAVE_ROOM_REQ);
+    }
 }

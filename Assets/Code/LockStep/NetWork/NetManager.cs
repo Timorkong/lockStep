@@ -80,4 +80,12 @@ public class NetManager : MonoSingleton<NetManager>
 
         return ret;
     }
+
+
+    protected override void OnApplicationQuit()
+    {
+        base.OnApplicationQuit();
+
+        this.DisConnect();
+    }
 }

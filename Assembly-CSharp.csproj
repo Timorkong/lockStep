@@ -66,6 +66,7 @@
     <Compile Include="Assets/Code/LockStep/PlayerInfo.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/NetManager.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemBattle.cs" />
+    <Compile Include="Assets/Code/Singleton/SingleWindow.cs" />
     <Compile Include="Assets/Code/Singleton/Singleton.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/NetWorkBase.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/BaseBattle.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemLogin.cs" />
     <Compile Include="Assets/Code/Window/RoomList.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/IBattle.cs" />
+    <Compile Include="Assets/Code/Util/Util.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemManager.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/BattleFactory.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/StopFrameCommand.cs" />
@@ -86,7 +88,9 @@
     <Compile Include="Assets/Code/LockStep/FrameSync/IFrameCommand.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/RingBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/NetProcess.cs" />
+    <Compile Include="Assets/Code/Util/CommonEx.cs" />
     <Compile Include="Assets/Code/LockStep/InputManager.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/REQ/command_room_req.cs" />
     <Compile Include="Assets/Edirot/CompileProtobuff.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/Dungeon/IDungeonManager.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/NetUtil.cs" />
@@ -99,6 +103,7 @@
     <Compile Include="Assets/Code/LockStep/FrameSync/BaseFrameCommand.cs" />
     <Compile Include="Assets/Code/LockStep/Global.cs" />
     <Compile Include="Assets/Code/Attribute/UserDefineAttribute.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/RSP/command_room_rsp.cs" />
     <Compile Include="Assets/Code/Protobuf/Proto/command_protocol.cs" />
     <Compile Include="Assets/Code/LockStep/GameApplaction.cs" />
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemTown.cs" />
@@ -112,11 +117,7 @@
     <Compile Include="Assets/Code/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/PackBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/ProtocolRelayServer.cs" />
-    <Compile Include="Assets/Code/Singleton/SingleWindow.cs" />
-    <Compile Include="Assets/Code/Util/CommonEx.cs" />
-    <Compile Include="Assets/Code/Util/Util.cs" />
-    <Compile Include="Assets/Code/LockStep/NetWork/REQ/command_room_req.cs" />
-    <Compile Include="Assets/Code/LockStep/NetWork/RSP/command_room_rsp.cs" />
+    <Compile Include="Assets/Code/Window/RoomInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />

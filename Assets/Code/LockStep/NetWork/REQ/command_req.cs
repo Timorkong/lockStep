@@ -17,7 +17,5 @@ public partial class command_req
         req.name = "fdafdafdafd";
 
         var sendLen = NetManager.Instance.SendMsg<CMD_HEART_BEAT_REQ>(req, Cmd.ID.CMD.CMD_HEART_BEAT_REQ);
-
-        Debug.LogError("send len = " + sendLen.ToString());
     }
 }

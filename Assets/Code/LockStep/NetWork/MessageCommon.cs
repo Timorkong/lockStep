@@ -26,12 +26,7 @@ public class MsgData
 
     public override string ToString()
     {
-        string output = string.Format("msgSize = {0} msgId = {1} sequence = {2} msg = ", msgSize, msgID, sequence);
-
-        for(int i = 0;i < msgSize; i++)
-        {
-            output += msg[i].ToString() + " ";
-        }
+        string output = string.Format("msgSize = {0} msgId = {1} sequence = {2} msg = ", msgSize, msgID, sequence,Util.Bytes2String(msg));
 
         return output;
     }

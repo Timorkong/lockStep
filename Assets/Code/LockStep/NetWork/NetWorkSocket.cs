@@ -63,7 +63,8 @@ public class NetWorkSocket
 
     public void ConnectCallBack(bool isDone, string errInfo)
     {
-        Debug.LogError(string.Format("connect isDone = {0} errInfo = {1}", isDone, errInfo));
+        if (Global.Setting.ShowNetWorkLog)
+            Debug.Log(string.Format("connect isDone = {0} errInfo = {1}", isDone, errInfo));
     }
 
     public void StartReceive()
@@ -73,8 +74,6 @@ public class NetWorkSocket
 
     public void ReceiveCallBack(bool isDone, int receiveSize, string errInfo)
     {
-        Debug.LogError(string.Format("reciveCallback isDone = {0} receiveSize = {1} errInfo = {2}", isDone, receiveSize, errInfo));
-
         if (isDone)
         {
             try
@@ -82,26 +81,29 @@ public class NetWorkSocket
                 this.mReceiveSize += receiveSize;
 
                 mInputBuffer.UpdateTail(receiveSize);
-
-                if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
+                while (true)
                 {
-                    mCurrentPackSize = mInputBuffer.CurrentPackLenth;
+                    if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
+                    {
+                        mCurrentPackSize = mInputBuffer.CurrentPackLenth;
+                    }
+
+                    if (mReceiveSize >= mCurrentPackSize)
+                    {
+                        int packSize = this.ProcessCommand();
+
+                        this.mReceiveSize -= packSize;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
-
-                if (mReceiveSize >= mCurrentPackSize)
-                {
-                    int packSize = this.ProcessCommand();
-
-                    this.mReceiveSize -= packSize;
-                }
-
             }
             catch (System.Exception e)
             {
                 Debug.LogError(e.Message);
             }
-
-            Debug.LogError(mInputBuffer);
 
             this.StartReceive();
         }
@@ -109,9 +111,11 @@ public class NetWorkSocket
 
     protected int ProcessCommand()
     {
+        string bytes = mInputBuffer.ToString();
+
         int msgSize = mInputBuffer.ReadInt32(-1, true);
 
-        uint msgId = mInputBuffer.ReadUint32(-1 , true);
+        uint msgId = mInputBuffer.ReadUint32(-1, true);
 
         uint sequence = mInputBuffer.ReadUint32(-1, true);
 
@@ -122,6 +126,11 @@ public class NetWorkSocket
         msgData.sequence = sequence;
 
         mInputBuffer.Read(msgData.msg, msgSize);
+
+        if (Global.Setting.ShowNetWorkLog)
+        {
+            Debug.Log(string.Format("receive msg : size = {0} msgId = {1} sequence = {2} msg = {3}", msgSize, msgId, sequence, bytes));
+        }
 
         NetProcess.Instance.Push(msgData);
 
@@ -164,6 +173,11 @@ public class NetWorkSocket
         mOutputBuffer.WriteUint(sequence);
 
         mOutputBuffer.Write(msgBytes, msgLen);
+
+        if (Global.Setting.ShowNetWorkLog)
+        {
+            UnityEngine.Debug.Log(string.Format("send msg: size = {0} msgId = {1} sequence = {2} bytes = {3}", msgLen, msgId, sequence, mOutputBuffer));
+        }
 
         return msgLen + (int)NET_DEFINE.HEAD_SIZE;
     }

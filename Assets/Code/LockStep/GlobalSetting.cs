@@ -7,4 +7,6 @@ public class GlobalSetting : ScriptableObject
     public EnumClientSystem startSystem = EnumClientSystem.Login;
 
     public int TestLevel;
+
+    public bool ShowNetWorkLog = false;
 }
