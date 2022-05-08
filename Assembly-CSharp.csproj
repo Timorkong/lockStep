@@ -59,6 +59,7 @@
     <Compile Include="Assets/Code/LockStep/ClientSystem/IClientSystem.cs" />
     <Compile Include="Assets/Code/Window/Login.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/REQ/command_req.cs" />
+    <Compile Include="Assets/Code/Window/RoomInfo.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/BattleMain.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/Battle/Dungeon/Logic/BeScence.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/MoveFrameCommand.cs" />
@@ -117,7 +118,13 @@
     <Compile Include="Assets/Code/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/PackBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/ProtocolRelayServer.cs" />
-    <Compile Include="Assets/Code/Window/RoomInfo.cs" />
+    <Compile Include="Assets/Code/Protobuf/Proto/command_protocol_war.cs" />
+    <Compile Include="Assets/Code/Protobuf/Proto/command_protocol_common.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/REQ/command_req_war.cs" />
+    <Compile Include="Assets/Code/LockStep/NetWork/RSP/command_rsp_war.cs" />
+    <Compile Include="Assets/Code/Window/Loading.cs" />
+    <Compile Include="Assets/Code/LockStep/ScenceManager/SceneManager.cs" />
+    <Compile Include="Assets/Code/Util/DontDestory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />

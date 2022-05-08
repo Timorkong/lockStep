@@ -21,7 +21,7 @@ public class RoomInfo : SingleWindow<RoomInfo>
         UserPrefab.SetActive(false);
     }
 
-    public void Refresh(PROTOCOL_ROOM.RoomInfo room_info)
+    public void Refresh(PROTOCOL_COMMON.RoomInfo room_info)
     {
         Util.DestroyAllChildren(UserParent);
 
@@ -53,5 +53,16 @@ public class RoomInfo : SingleWindow<RoomInfo>
         command_req.CMD_LEAVE_ROOM_REQ();
 
         RoomList.Instance.Show();
+    }
+
+    public void OnClickEnterGame()
+    {
+        command_req.CMD_ENTER_GAME_REQ();
+
+        Hide();
+
+        Loading.Instance.Show();
+
+        SceneManager.Instance.LoadScence("Level1");
     }
 }

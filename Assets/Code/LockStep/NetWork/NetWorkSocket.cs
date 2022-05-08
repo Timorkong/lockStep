@@ -81,7 +81,7 @@ public class NetWorkSocket
                 this.mReceiveSize += receiveSize;
 
                 mInputBuffer.UpdateTail(receiveSize);
-                while (true)
+                while (mReceiveSize > 0)
                 {
                     if (mReceiveSize >= (int)NET_DEFINE.HEAD_SIZE)
                     {

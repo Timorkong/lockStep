@@ -19,7 +19,7 @@ public class RoomList : SingleWindow<RoomList>
         this.RoomPrefab.SetActive(false);
     }
 
-    public void Refresh(List<PROTOCOL_ROOM.RoomInfo> room_list)
+    public void Refresh(List<PROTOCOL_COMMON.RoomInfo> room_list)
     {
         Util.DestroyAllChildren(RoomParent);
 

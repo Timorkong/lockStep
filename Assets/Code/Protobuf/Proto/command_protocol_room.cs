@@ -8,51 +8,9 @@
 //------------------------------------------------------------------------------
 
 // Generated from: command_protocol_room.proto
+// Note: requires additional types generated from: command_protocol_common.proto
 namespace PROTOCOL_ROOM
 {
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"UserInfo")]
-  public partial class UserInfo : global::ProtoBuf.IExtensible
-  {
-    public UserInfo() {}
-    
-    private string _user_name = "";
-    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"user_name", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue("")]
-    public string user_name
-    {
-      get { return _user_name; }
-      set { _user_name = value; }
-    }
-    private global::ProtoBuf.IExtension extensionObject;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
-  
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"RoomInfo")]
-  public partial class RoomInfo : global::ProtoBuf.IExtensible
-  {
-    public RoomInfo() {}
-    
-    private string _room_name = "";
-    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_name", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue("")]
-    public string room_name
-    {
-      get { return _room_name; }
-      set { _room_name = value; }
-    }
-    private readonly global::System.Collections.Generic.List<PROTOCOL_ROOM.UserInfo> _user_list = new global::System.Collections.Generic.List<PROTOCOL_ROOM.UserInfo>();
-    [global::ProtoBuf.ProtoMember(2, Name=@"user_list", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<PROTOCOL_ROOM.UserInfo> user_list
-    {
-      get { return _user_list; }
-    }
-  
-    private global::ProtoBuf.IExtension extensionObject;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
-  
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_ROOM_LIST_REQ")]
   public partial class CMD_ROOM_LIST_REQ : global::ProtoBuf.IExtensible
   {
@@ -68,9 +26,9 @@ namespace PROTOCOL_ROOM
   {
     public CMD_ROOM_LIST_RSP() {}
     
-    private readonly global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo> _room_list = new global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo>();
+    private readonly global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo> _room_list = new global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo>();
     [global::ProtoBuf.ProtoMember(1, Name=@"room_list", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo> room_list
+    public global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo> room_list
     {
       get { return _room_list; }
     }
@@ -103,10 +61,10 @@ namespace PROTOCOL_ROOM
   {
     public CMD_CREATE_ROOM_RSP() {}
     
-    private PROTOCOL_ROOM.RoomInfo _room_info = null;
+    private PROTOCOL_COMMON.RoomInfo _room_info = null;
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
-    public PROTOCOL_ROOM.RoomInfo room_info
+    public PROTOCOL_COMMON.RoomInfo room_info
     {
       get { return _room_info; }
       set { _room_info = value; }
@@ -131,9 +89,9 @@ namespace PROTOCOL_ROOM
   {
     public CMD_LEAVE_ROOM_RSP() {}
     
-    private readonly global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo> _room_list = new global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo>();
+    private readonly global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo> _room_list = new global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo>();
     [global::ProtoBuf.ProtoMember(1, Name=@"room_list", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<PROTOCOL_ROOM.RoomInfo> room_list
+    public global::System.Collections.Generic.List<PROTOCOL_COMMON.RoomInfo> room_list
     {
       get { return _room_list; }
     }
@@ -148,10 +106,10 @@ namespace PROTOCOL_ROOM
   {
     public CMD_LEAVE_ROOM_NOTICE() {}
     
-    private PROTOCOL_ROOM.RoomInfo _room_info = null;
+    private PROTOCOL_COMMON.RoomInfo _room_info = null;
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
-    public PROTOCOL_ROOM.RoomInfo room_info
+    public PROTOCOL_COMMON.RoomInfo room_info
     {
       get { return _room_info; }
       set { _room_info = value; }

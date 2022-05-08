@@ -33,4 +33,9 @@ public class Login : SingleWindow<Login>
         Hide();
         RoomList.Instance.Show();
     }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+    }
 }

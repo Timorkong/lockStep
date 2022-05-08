@@ -42,7 +42,28 @@ namespace Cmd.ID
       CMD_ROOM_LIST_REQ = 1007,
             
       [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_RSP", Value=1008)]
-      CMD_ROOM_LIST_RSP = 1008
+      CMD_ROOM_LIST_RSP = 1008,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_REQ", Value=1009)]
+      CMD_ENTER_GAME_REQ = 1009,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_RSP", Value=1010)]
+      CMD_ENTER_GAME_RSP = 1010,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_REQ", Value=1011)]
+      CMD_START_GAME_REQ = 1011,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_RSP", Value=1012)]
+      CMD_START_GAME_RSP = 1012,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_MOVE_REQ", Value=1013)]
+      CMD_WAR_MOVE_REQ = 1013,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_MOVE_RSP", Value=1014)]
+      CMD_WAR_MOVE_RSP = 1014,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_COMMAND_NOTICE", Value=1015)]
+      CMD_WAR_COMMAND_NOTICE = 1015
     }
   
 }
