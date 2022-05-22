@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 // Generated from: command_protocol_war.proto
+// Note: requires additional types generated from: command_protocol_common.proto
 namespace PROTOCOL_WAR
 {
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_ENTER_GAME_REQ")]
@@ -15,6 +16,14 @@ namespace PROTOCOL_WAR
   {
     public CMD_ENTER_GAME_REQ() {}
     
+    private PROTOCOL_COMMON.pre_battle_data _data = null;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"data", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public PROTOCOL_COMMON.pre_battle_data data
+    {
+      get { return _data; }
+      set { _data = value; }
+    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
@@ -25,6 +34,14 @@ namespace PROTOCOL_WAR
   {
     public CMD_ENTER_GAME_RSP() {}
     
+    private PROTOCOL_COMMON.pre_battle_data _data = null;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"data", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public PROTOCOL_COMMON.pre_battle_data data
+    {
+      get { return _data; }
+      set { _data = value; }
+    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
@@ -45,41 +62,23 @@ namespace PROTOCOL_WAR
   {
     public CMD_START_GAME_RSP() {}
     
-    private global::ProtoBuf.IExtension extensionObject;
-    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
-  
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_WAR_MOVE_REQ")]
-  public partial class CMD_WAR_MOVE_REQ : global::ProtoBuf.IExtensible
-  {
-    public CMD_WAR_MOVE_REQ() {}
-    
-    private bool _is_down = default(bool);
-    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"is_down", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
-    public bool is_down
+    private PROTOCOL_COMMON.RoomInfo _room_info = null;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public PROTOCOL_COMMON.RoomInfo room_info
     {
-      get { return _is_down; }
-      set { _is_down = value; }
-    }
-    private int _degree = default(int);
-    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"degree", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    [global::System.ComponentModel.DefaultValue(default(int))]
-    public int degree
-    {
-      get { return _degree; }
-      set { _degree = value; }
+      get { return _room_info; }
+      set { _room_info = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_WAR_MOVE_RSP")]
-  public partial class CMD_WAR_MOVE_RSP : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_WAR_MOVE")]
+  public partial class CMD_WAR_MOVE : global::ProtoBuf.IExtensible
   {
-    public CMD_WAR_MOVE_RSP() {}
+    public CMD_WAR_MOVE() {}
     
     private int _seat = default(int);
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"seat", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
@@ -89,31 +88,31 @@ namespace PROTOCOL_WAR
       get { return _seat; }
       set { _seat = value; }
     }
-    private bool _is_down = default(bool);
-    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"is_down", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(default(bool))]
-    public bool is_down
+    private float _move_x = default(float);
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"move_x", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.ComponentModel.DefaultValue(default(float))]
+    public float move_x
     {
-      get { return _is_down; }
-      set { _is_down = value; }
+      get { return _move_x; }
+      set { _move_x = value; }
     }
-    private int _degree = default(int);
-    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"degree", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    [global::System.ComponentModel.DefaultValue(default(int))]
-    public int degree
+    private float _move_y = default(float);
+    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"move_y", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
+    [global::System.ComponentModel.DefaultValue(default(float))]
+    public float move_y
     {
-      get { return _degree; }
-      set { _degree = value; }
+      get { return _move_y; }
+      set { _move_y = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_WAR_COMMAND_NOTICE")]
-  public partial class CMD_WAR_COMMAND_NOTICE : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_WAR_SEQUENCE_NOTICE")]
+  public partial class CMD_WAR_SEQUENCE_NOTICE : global::ProtoBuf.IExtensible
   {
-    public CMD_WAR_COMMAND_NOTICE() {}
+    public CMD_WAR_SEQUENCE_NOTICE() {}
     
     private int _sequence = default(int);
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"sequence", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
@@ -122,14 +121,6 @@ namespace PROTOCOL_WAR
     {
       get { return _sequence; }
       set { _sequence = value; }
-    }
-    private byte[] _commands = null;
-    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"commands", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(null)]
-    public byte[] commands
-    {
-      get { return _commands; }
-      set { _commands = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

@@ -62,7 +62,5 @@ public class RoomInfo : SingleWindow<RoomInfo>
         Hide();
 
         Loading.Instance.Show();
-
-        SceneManager.Instance.LoadScence("Level1");
     }
 }

@@ -13,24 +13,21 @@ public class NetProcess : Singleton<NetProcess>
 
     public OnMSGDeserialized onMSGDeserialized;
 
-    uint receiveMaxSequence = 0;
-
-    public void AddMsgHandle<T>(uint msgId , Action<T> handle)
+    public void AddMsgHandle<T>(uint msgId, Action<T> handle)
     {
         RemoveMsgHandle(msgId, handle);
         msgRuter.On(msgId, handle);
     }
 
-    public void RemoveMsgHandle<T>(uint msgId , Action<T> handle)
+    public void RemoveMsgHandle<T>(uint msgId, Action<T> handle)
     {
         msgRuter.Off(msgId, handle);
     }
 
-    public void Dispatch<T>(uint msgId , T data)
+    public void Dispatch<T>(uint msgId, T data)
     {
         msgRuter.DisPatch<T>(msgId, data);
     }
-        
 
     public void Push(MsgData data)
     {
@@ -65,11 +62,9 @@ public class NetProcess : Singleton<NetProcess>
 
     private void Process(MsgData msg)
     {
-        if (this.receiveMaxSequence < msg.sequence) this.receiveMaxSequence = msg.sequence;
-
         if (onMSGDeserialized != null) onMSGDeserialized((Cmd.ID.CMD)msg.msgID);
 
-        NetProcess.Instance.Dispatch(msg.msgID, msg);
+        Dispatch(msg.msgID, msg);
     }
 
 }

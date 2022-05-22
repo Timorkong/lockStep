@@ -24,7 +24,7 @@ public class NetManager : MonoSingleton<NetManager>
 
     public void Update()
     {
-        if(isInited == false)
+        if (isInited == false)
         {
             return;
         }
@@ -34,7 +34,7 @@ public class NetManager : MonoSingleton<NetManager>
         NetProcess.Instance.Tick(0);
     }
 
-    public void Connect2Server(string ip , int port,int timeout)
+    public void Connect2Server(string ip, int port, int timeout)
     {
         this.mSocket.ConnectToServer(ip, port, timeout);
     }
@@ -46,16 +46,7 @@ public class NetManager : MonoSingleton<NetManager>
         this.mSocket.DisConnect();
     }
 
-    public int SendCommad<CommandType>(CommandType cmd) where CommandType:IProtocolStream , IGetMsgID
-    {
-        int ret = -1;
-
-        ret = mSocket.SendCommand(cmd);
-
-        return ret;
-    }
-
-    public int SendMsg<T>(T msg , Cmd.ID.CMD cmd)
+    public int SendMsg<T>(T msg, Cmd.ID.CMD cmd, bool bSyncFrame = false)
     {
         int ret = -1;
 
@@ -70,13 +61,13 @@ public class NetManager : MonoSingleton<NetManager>
                 bytes = stream.ToArray();
             }
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError("send message erro = " + e.Message);
         }
-        
 
-        ret = mSocket.SendData((uint)cmd, 0, bytes, bytes.Length,1000);
+
+        ret = mSocket.SendData((uint)cmd, bytes, bytes.Length, 1000, null, bSyncFrame);
 
         return ret;
     }

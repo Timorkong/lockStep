@@ -108,49 +108,45 @@ public class NetWorkSocket
             this.StartReceive();
         }
     }
-
+    string debugBytes = "";
     protected int ProcessCommand()
     {
-        string bytes = mInputBuffer.ToString();
+        if (Global.Setting.ShowNetWorkLog) debugBytes = mInputBuffer.ToString();
 
         int msgSize = mInputBuffer.ReadInt32(-1, true);
 
         uint msgId = mInputBuffer.ReadUint32(-1, true);
 
-        uint sequence = mInputBuffer.ReadUint32(-1, true);
-
         MsgData msgData = new MsgData(msgSize);
 
         msgData.msgID = msgId;
-
-        msgData.sequence = sequence;
 
         mInputBuffer.Read(msgData.msg, msgSize);
 
         if (Global.Setting.ShowNetWorkLog)
         {
-            Debug.Log(string.Format("receive msg : size = {0} msgId = {1} sequence = {2} msg = {3}", msgSize, msgId, sequence, bytes));
+            Debug.Log(string.Format("receive msg : size = {0} msgId = {1} msg = {2}", msgSize, msgId, debugBytes));
         }
-
-        NetProcess.Instance.Push(msgData);
-
+        //战斗帧消息
+        if (isFrameSyncCmd((Cmd.ID.CMD)msgId))
+        {
+            FrameSync.Instance.PushNetCommand(msgData);
+        }
+        else//系统消息
+        {
+            NetProcess.Instance.Push(msgData);
+        }
         return msgSize + (int)NET_DEFINE.HEAD_SIZE;
     }
 
-    public int SendCommand<CommandType>(CommandType cmd) where CommandType : IProtocolStream, IGetMsgID
+    private bool isFrameSyncCmd(Cmd.ID.CMD cmd)
     {
-        int pos = 0;
-        cmd.encode(this.mBuffer, ref pos);
-        return SendData(cmd.GetMsgId(), cmd.GetSequence(), mBuffer, pos, 0);
+        if (cmd > Cmd.ID.CMD.CMD_FRAME_SYNC_MIN && cmd < Cmd.ID.CMD.CMD_FRAME_SYNC_MAX) return true;
+        return false;
     }
 
-    public int SendData(uint msgId, uint sequence, byte[] msgBytes, int msgLen, int timeOut, PushNetErrorCallBack cb = null)
+    public int SendData(uint msgId,byte[] msgBytes, int msgLen, int timeOut, PushNetErrorCallBack cb = null,bool bSyncFrame = false)
     {
-        if (sequence > 0)
-        {
-            mPackBuffer.WritePack(msgId, sequence, msgBytes, (short)msgLen);
-        }
-
         if (mNetWorkBase.Status != NetWorkBase.NET_MANAGER_STATUS.CONNECTED)
         {
             Debug.LogError("链接未创建");
@@ -166,17 +162,15 @@ public class NetWorkSocket
         }
 
 
-        mOutputBuffer.WriteUint((uint)msgLen);
+        mOutputBuffer.WriteUint((uint)msgLen, bSyncFrame);
 
-        mOutputBuffer.WriteUint(msgId);
-
-        mOutputBuffer.WriteUint(sequence);
+        mOutputBuffer.WriteUint(msgId, bSyncFrame);
 
         mOutputBuffer.Write(msgBytes, msgLen);
 
         if (Global.Setting.ShowNetWorkLog)
         {
-            UnityEngine.Debug.Log(string.Format("send msg: size = {0} msgId = {1} sequence = {2} bytes = {3}", msgLen, msgId, sequence, mOutputBuffer));
+            UnityEngine.Debug.Log(string.Format("send msg: size = {0} msgId = {1} bytes = {2}", msgLen, msgId, mOutputBuffer.ToString()));
         }
 
         return msgLen + (int)NET_DEFINE.HEAD_SIZE;

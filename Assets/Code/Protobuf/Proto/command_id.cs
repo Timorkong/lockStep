@@ -23,47 +23,59 @@ namespace Cmd.ID
       [global::ProtoBuf.ProtoEnum(Name=@"CMD_HEART_BEAT_RSP", Value=1001)]
       CMD_HEART_BEAT_RSP = 1001,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_REQ", Value=1002)]
-      CMD_CREATE_ROOM_REQ = 1002,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_REQ", Value=2000)]
+      CMD_CREATE_ROOM_REQ = 2000,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_RSP", Value=1003)]
-      CMD_CREATE_ROOM_RSP = 1003,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_CREATE_ROOM_RSP", Value=2001)]
+      CMD_CREATE_ROOM_RSP = 2001,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_REQ", Value=1004)]
-      CMD_LEAVE_ROOM_REQ = 1004,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_REQ", Value=2002)]
+      CMD_LEAVE_ROOM_REQ = 2002,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_RSP", Value=1005)]
-      CMD_LEAVE_ROOM_RSP = 1005,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_RSP", Value=2003)]
+      CMD_LEAVE_ROOM_RSP = 2003,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_LEAVE_ROOM_NOTICE", Value=1006)]
-      CMD_LEAVE_ROOM_NOTICE = 1006,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_UPDATE_ROOM_INFO_NOTICE", Value=2004)]
+      CMD_UPDATE_ROOM_INFO_NOTICE = 2004,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_REQ", Value=1007)]
-      CMD_ROOM_LIST_REQ = 1007,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_REQ", Value=2005)]
+      CMD_ROOM_LIST_REQ = 2005,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_RSP", Value=1008)]
-      CMD_ROOM_LIST_RSP = 1008,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ROOM_LIST_RSP", Value=2006)]
+      CMD_ROOM_LIST_RSP = 2006,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_REQ", Value=1009)]
-      CMD_ENTER_GAME_REQ = 1009,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_JOIN_ROOM_REQ", Value=2007)]
+      CMD_JOIN_ROOM_REQ = 2007,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_RSP", Value=1010)]
-      CMD_ENTER_GAME_RSP = 1010,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_JOIN_ROOM_RSP", Value=2008)]
+      CMD_JOIN_ROOM_RSP = 2008,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_REQ", Value=1011)]
-      CMD_START_GAME_REQ = 1011,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_REQ", Value=3000)]
+      CMD_ENTER_GAME_REQ = 3000,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_RSP", Value=1012)]
-      CMD_START_GAME_RSP = 1012,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_ENTER_GAME_RSP", Value=3001)]
+      CMD_ENTER_GAME_RSP = 3001,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_MOVE_REQ", Value=1013)]
-      CMD_WAR_MOVE_REQ = 1013,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_REQ", Value=3002)]
+      CMD_START_GAME_REQ = 3002,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_MOVE_RSP", Value=1014)]
-      CMD_WAR_MOVE_RSP = 1014,
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_START_GAME_RSP", Value=3003)]
+      CMD_START_GAME_RSP = 3003,
             
-      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_COMMAND_NOTICE", Value=1015)]
-      CMD_WAR_COMMAND_NOTICE = 1015
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_FRAME_SYNC_MIN", Value=10000)]
+      CMD_FRAME_SYNC_MIN = 10000,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_FRAME_TRANSPOND", Value=10001)]
+      CMD_FRAME_TRANSPOND = 10001,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_SEQUENCE_NOTICE", Value=10002)]
+      CMD_WAR_SEQUENCE_NOTICE = 10002,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_WAR_MOVE", Value=10003)]
+      CMD_WAR_MOVE = 10003,
+            
+      [global::ProtoBuf.ProtoEnum(Name=@"CMD_FRAME_SYNC_MAX", Value=20000)]
+      CMD_FRAME_SYNC_MAX = 20000
     }
   
 }

@@ -72,23 +72,17 @@ public class ClientSystemManager : Singleton<ClientSystemManager>
             {
                 TargetSystem.BeforEnter();
             }
-            GameApplaction.Instance.StartCoroutine(_SwitchSystemCoroutine(systemContent));
+
+            if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnExitSystem();
+
+            CurrentSystem = TargetSystem;
+
+            TargetSystem = null;
+
+            if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnEnterSystem();
+
+            if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnStartSystem(systemContent);
         }
-    }
-
-    IEnumerator _SwitchSystemCoroutine(SystemContent systemContent)
-    {
-        if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnExitSystem();
-
-        CurrentSystem = TargetSystem;
-
-        TargetSystem = null;
-
-        if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnEnterSystem();
-
-        if (CurrentSystem != null) (CurrentSystem as ClientSystem).OnStartSystem(systemContent);
-
-        yield return null;
     }
 
     private void _onChangeClear()

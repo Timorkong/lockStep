@@ -24,21 +24,21 @@ public class RWBuffer : RingBuffer, IRead, IWrite
         return size;
     }
 
-    public void WriteShort(short value)
+    public void WriteShort(short value, bool bSyncFrame = false)
     {
         value = IPAddress.HostToNetworkOrder(value);
         this.WriteByte((byte)((value >> 0) & 0xff));
         this.WriteByte((byte)((value >> 8) & 0xff));
     }
 
-    public void WriteUint(uint value)
+    public void WriteUint(uint value, bool bSyncFrame = false)
     {
-        this.WriteInt32((int)value);
+        this.WriteInt32((int)value, bSyncFrame);
     }
 
-    public void WriteInt32(int value)
+    public void WriteInt32(int value, bool bSyncFrame = false)
     {
-        value = IPAddress.HostToNetworkOrder(value);
+        if (!bSyncFrame) value = IPAddress.HostToNetworkOrder(value);
 
         for (int i = 0; i < 4; i++)
         {

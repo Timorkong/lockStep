@@ -9,4 +9,6 @@ public class GlobalSetting : ScriptableObject
     public int TestLevel;
 
     public bool ShowNetWorkLog = false;
+
+    public bool ShowSequence = false;
 }

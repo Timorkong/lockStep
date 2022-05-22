@@ -29,4 +29,13 @@ public partial class command_req
 
         NetManager.Instance.SendMsg(req, Cmd.ID.CMD.CMD_LEAVE_ROOM_REQ);
     }
+
+    public static void CMD_JOIN_ROOM_REQ(int room_unique_id)
+    {
+        CMD_JOIN_ROOM_REQ req = new CMD_JOIN_ROOM_REQ();
+
+        req.room_unquie_id = room_unique_id;
+
+        NetManager.Instance.SendMsg(req, Cmd.ID.CMD.CMD_JOIN_ROOM_REQ);
+    }
 }

@@ -6,24 +6,27 @@ public class BattleMain
 {
     protected static EnumBattleType mBattleType = EnumBattleType.None;
 
-    private IBattle mBattle = null;
+    public BaseBattle mBattle = null;
 
     protected static BattleMain mBattleMain = null;
+
+    public static PROTOCOL_COMMON.pre_battle_data data = null;
 
     public static BattleMain Instance
     {
         get { return mBattleMain; }
     }
 
-    protected void InitBattle(IBattle battle)
+    protected void InitBattle(BaseBattle battle)
     {
         this.mBattle = battle;
+
+        mBattle.InitBattle();
     }
 
     public BattleMain(EnumBattleType type)
     {
         mBattleType = type;
-
     }
 
     public static BattleMain OpenBattle(EnumBattleType battleType , EnumSyncMode syncMode)
@@ -45,7 +48,7 @@ public class BattleMain
 
         if(this.mBattle != null)
         {
-            this.mBattle.Update(deltaTime);
+            this.mBattle.UpdateLogic(deltaTime);
         }
     }
 }

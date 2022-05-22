@@ -6,7 +6,7 @@ public class GameApplaction : MonoSingleton<GameApplaction>
 {
     private bool mInit = false;
 
-    public PlayerInfo playerInfo;
+    public int playerSeat = -1;
 
     protected override void Awake()
     {
@@ -20,8 +20,6 @@ public class GameApplaction : MonoSingleton<GameApplaction>
         InitBindSystem();
 
         InitClientSystem();
-
-        playerInfo = new PlayerInfo();
 
         Application.targetFrameRate = 30;
 

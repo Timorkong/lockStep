@@ -65,6 +65,7 @@ public class ClientSystem : IClientSystem
     }
 
     private bool m_bStart = false;
+
     public bool BStart
     {
         get
@@ -81,9 +82,7 @@ public class ClientSystem : IClientSystem
     {
         if(curState != EnumClienSystemState.onError)
         {
-            curState = EnumClienSystemState.onTick;
-
-            BattleMain.OpenBattle(EnumBattleType.DunGeon, EnumSyncMode.LocalFrame);
+            curState = EnumClienSystemState.onEnter;
 
             OnEnter();
         }

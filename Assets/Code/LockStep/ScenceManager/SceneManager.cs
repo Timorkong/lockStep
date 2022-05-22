@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public delegate void OnLoadScence(Scene scene, LoadSceneMode mode);
+
+public delegate void OnDestroying(Scene scene);
+
 public class SceneManager : MonoSingleton<SceneManager>
 {
+    public OnLoadScence onLoadScence;
+
+    public OnDestroying onDestroying;
 
     private void Start()
     {
@@ -20,14 +27,15 @@ public class SceneManager : MonoSingleton<SceneManager>
 
     private void Loading(Scene scene, LoadSceneMode move)
     {
-        
-
-        Debug.Log("scence is loaded " + scene.name);
+        if (onLoadScence != null) onLoadScence(scene, move);
         //dosomething
     }
+
     private void Destroying(Scene scene)
     {
         //dosomething
+
+        if (onDestroying != null) onDestroying(scene);
     }
 
 }

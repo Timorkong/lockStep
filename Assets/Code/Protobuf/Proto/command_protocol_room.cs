@@ -61,8 +61,16 @@ namespace PROTOCOL_ROOM
   {
     public CMD_CREATE_ROOM_RSP() {}
     
+    private int _player_seat = default(int);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"player_seat", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(int))]
+    public int player_seat
+    {
+      get { return _player_seat; }
+      set { _player_seat = value; }
+    }
     private PROTOCOL_COMMON.RoomInfo _room_info = null;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public PROTOCOL_COMMON.RoomInfo room_info
     {
@@ -101,13 +109,57 @@ namespace PROTOCOL_ROOM
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
   }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_LEAVE_ROOM_NOTICE")]
-  public partial class CMD_LEAVE_ROOM_NOTICE : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_UPDATE_ROOM_INFO_NOTICE")]
+  public partial class CMD_UPDATE_ROOM_INFO_NOTICE : global::ProtoBuf.IExtensible
   {
-    public CMD_LEAVE_ROOM_NOTICE() {}
+    public CMD_UPDATE_ROOM_INFO_NOTICE() {}
     
     private PROTOCOL_COMMON.RoomInfo _room_info = null;
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public PROTOCOL_COMMON.RoomInfo room_info
+    {
+      get { return _room_info; }
+      set { _room_info = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_JOIN_ROOM_REQ")]
+  public partial class CMD_JOIN_ROOM_REQ : global::ProtoBuf.IExtensible
+  {
+    public CMD_JOIN_ROOM_REQ() {}
+    
+    private int _room_unquie_id = default(int);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"room_unquie_id", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(int))]
+    public int room_unquie_id
+    {
+      get { return _room_unquie_id; }
+      set { _room_unquie_id = value; }
+    }
+    private global::ProtoBuf.IExtension extensionObject;
+    global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+      { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
+  }
+  
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"CMD_JOIN_ROOM_RSP")]
+  public partial class CMD_JOIN_ROOM_RSP : global::ProtoBuf.IExtensible
+  {
+    public CMD_JOIN_ROOM_RSP() {}
+    
+    private int _player_seat = default(int);
+    [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"player_seat", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::System.ComponentModel.DefaultValue(default(int))]
+    public int player_seat
+    {
+      get { return _player_seat; }
+      set { _player_seat = value; }
+    }
+    private PROTOCOL_COMMON.RoomInfo _room_info = null;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"room_info", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public PROTOCOL_COMMON.RoomInfo room_info
     {

@@ -8,9 +8,9 @@ public interface IWrite
 
     void WriteByte(byte value);
 
-    void WriteShort(short value);
+    void WriteShort(short value, bool bSyncFrame = false);
 
-    void WriteUint(uint value);
+    void WriteUint(uint value, bool bSyncFrame = false);
 
-    void WriteInt32(int value);
+    void WriteInt32(int value, bool bSyncFrame = false);
 }

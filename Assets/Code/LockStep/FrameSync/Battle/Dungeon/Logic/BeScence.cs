@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class BeScence
 {
-    private BeDungeon mBeDungeon = null;
+    public BeDungeon mBeDungeon = null;
+
+    public BeEntity mainEntity = null;
+
+    public List<BeEntity> beEntities = new List<BeEntity>();
 
     public BeScence(BeDungeon dungeon)
     {
         this.mBeDungeon = dungeon;
-    }
 
-    public void Init()
-    {
-
+        dungeon.beScence = this;
     }
 
     public void Update()
     {
-        
+        if (mainEntity != null) mainEntity.Update();
     }
 }
