@@ -7,7 +7,7 @@ public class GeScence
 {
     public BeScence beScence = null;
 
-    public GeDungeon parent = null;
+    public GeDungeon geDungeon = null;
 
     public List<GeEntity> geEntities = new List<GeEntity>();
 
@@ -17,7 +17,9 @@ public class GeScence
     {
         this.beScence = beScence;
 
-        this.parent = geDungeon;
+        this.geDungeon = geDungeon;
+
+        geDungeon.geScence = this;
 
         mCanUpdate = false;
 

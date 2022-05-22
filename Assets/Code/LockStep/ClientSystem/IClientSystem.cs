@@ -17,4 +17,9 @@ public interface IClientSystem
     void Update(float deltaTime);
 
     void BeforEnter();
+
+    EnumClienSystemState curState
+    {
+        get;set;
+    }
 }

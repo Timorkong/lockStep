@@ -5,39 +5,46 @@ using PROTOCOL_WAR;
 
 public class MoveFrameCommand : BaseFrameCommand, IFrameCommand
 {
-    public float move_x = 0;
-
-    public float move_y = 0;
-
     private PROTOCOL_WAR.CMD_WAR_MOVE cmd = null;
 
-    public Cmd.ID.CMD GetID()
+    public Cmd.ID.CMD CmdId
     {
-        return Cmd.ID.CMD.CMD_WAR_MOVE;
+        get
+        {
+            return Cmd.ID.CMD.CMD_WAR_MOVE;
+        }
     }
-
 
     public MoveFrameCommand(MsgData msgData) : base(msgData)
     {
         cmd = NetUtil.DeserializeMsg<CMD_WAR_MOVE>(msgData);
 
+        this.PlayerSeat = cmd.seat;
+
         if (Global.Setting.ShowNetWorkLog)
         {
-            Debug.LogError(GetString());
+            Debug.LogError(ToString());
         }
     }
 
-   
     public void ExecCommand()
     {
+        var beEntity = GetActorBySeat();
 
+        if (beEntity != null)
+        {
+            beEntity.SetMoveDir(cmd.move_x, cmd.move_y);
+        }
     }
 
-    public string GetString()
+    public string GetString
     {
-        var ret = string.Format("收到战斗帧移动 seat = {0} move_x = {1} move_y = {2}", cmd.seat, cmd.move_x, cmd.move_y);
+        get
+        {
+            var ret = string.Format("收到战斗帧移动 seat = {0} move_x = {1} move_y = {2}", cmd.seat, cmd.move_x, cmd.move_y);
 
-        return ret;
+            return ret;
+        }
     }
 }
 
@@ -45,9 +52,9 @@ public class SyncSequenceCommand : BaseFrameCommand, IFrameCommand
 {
     private PROTOCOL_WAR.CMD_WAR_SEQUENCE_NOTICE cmd = null;
 
-    public Cmd.ID.CMD GetID()
+    public Cmd.ID.CMD CmdId
     {
-        return Cmd.ID.CMD.CMD_WAR_SEQUENCE_NOTICE;
+        get { return Cmd.ID.CMD.CMD_WAR_SEQUENCE_NOTICE; }
     }
 
     public SyncSequenceCommand(MsgData msgData) : base(msgData)
@@ -56,19 +63,24 @@ public class SyncSequenceCommand : BaseFrameCommand, IFrameCommand
 
         if (Global.Setting.ShowSequence)
         {
-            Debug.LogError(GetString());
+            Debug.LogError(ToString());
         }
     }
 
+    public override uint Sequence => (uint)cmd.sequence;
+
     public void ExecCommand()
     {
-
+        
     }
 
-    public string GetString()
+    public string GetString
     {
-        var ret = string.Format("收到帧同步数据 sequence = {0} ", cmd.sequence);
+        get
+        {
+            var ret = string.Format("收到帧同步数据 sequence = {0} ", cmd.sequence);
 
-        return ret;
+            return ret;
+        }
     }
 }

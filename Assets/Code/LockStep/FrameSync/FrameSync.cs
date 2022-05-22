@@ -30,33 +30,15 @@ public class FrameSync : Singleton<FrameSync>
 {
     protected Queue<IFrameCommand> frameQueue = new Queue<IFrameCommand>();
 
-    const int cFrameMin = 2;
-
-    static int debugCurFrameNeedUpdate = 0;
-
     private EnumSyncMode syncMode = EnumSyncMode.LocalFrame;
 
     private EnumFrameSyncState frameSyncState = EnumFrameSyncState.OnCreate;
-
-    private IDungeonManager mMainLogic = null;
-
-    private float _timePre = 0;
 
     public uint serverFrame;
 
     public uint serverFrameMs;
 
-    public uint serverFramelater = 0;
-
-    public float timeStart;
-
     public uint curFrame;
-
-    public uint endFrame;
-
-    public uint frameMs;
-
-    public uint freamSpeed = 1;
 
     public float fLocalAcc = 0;
 
@@ -64,58 +46,11 @@ public class FrameSync : Singleton<FrameSync>
 
     public static uint logicFrameStep = 2;
 
-    public static int logicFrameStepDelta = 0;
-
-    private bool mIsGetStartFrame = false;
-
-    public bool isFire = true;
-
-    public bool bInMoveMode;
-    public bool isGetStartFrame
-    {
-        get
-        {
-            return mIsGetStartFrame;
-        }
-        private set
-        {
-            mIsGetStartFrame = value;
-        }
-    }
-
-    public void SetMainLogic(IDungeonManager mainLogic)
-    {
-        mMainLogic = mainLogic;
-    }
-
     public void StartFrameSync(EnumSyncMode syncMode)
     {
         this.syncMode = syncMode;
 
-        Debug.LogError("[֡ͬ��] ��ʼ֡ͬ��");
-    }
-
-    public void FirtFrameCommand(IFrameCommand cmd, bool force = false)
-    {
-        if (!isFire) return;
-
-        switch (syncMode)
-        {
-            case EnumSyncMode.LocalFrame:
-                {
-                    frameQueue.Enqueue(cmd);
-
-                    BaseFrameCommand baseFrame = cmd as BaseFrameCommand;
-
-                    baseFrame.seat = 0;
-
-                    break;
-                }
-            case EnumSyncMode.SyncFrame:
-                {
-                    break;
-                }
-        }
+        Debug.LogError("set sync mode = " + syncMode);
     }
 
     public void UpdateFrame()
@@ -196,12 +131,17 @@ public class FrameSync : Singleton<FrameSync>
     {
         IFrameCommand frameCmd = FrameCommandFactory.CreateCommand(msg);
 
+        if (frameCmd.CmdId == Cmd.ID.CMD.CMD_WAR_SEQUENCE_NOTICE)
+        {
+            SetServerFrame(frameCmd.Sequence);
+        }
+
         frameQueue.Enqueue(frameCmd);
     }
 
     public void SetServerFrame(uint frame)
     {
-
+        this.serverFrame = frame;
     }
 
     void UpdateLocalFrameCommand()
@@ -229,26 +169,33 @@ public class FrameSync : Singleton<FrameSync>
 
             UpdateLocalFrameCommand();
 
-            if (mMainLogic != null)
-            {
-                mMainLogic.Update(frameRate);
-            }
-
             fLocalAcc -= frameRate;
         }
     }
 
     void UpdateSyncFrame()
     {
-        int framesNeedUpdate = (int)(endFrame - curFrame) / (int)logicFrameStep / 2;
+        int framesNeedUpdate = (int)(serverFrame - curFrame);
 
-        framesNeedUpdate = Mathf.Clamp(framesNeedUpdate, cFrameMin / (int)logicFrameStep, 100);
+        framesNeedUpdate = Mathf.Clamp(framesNeedUpdate, 0, 100);
 
-        debugCurFrameNeedUpdate = framesNeedUpdate;
+        while (framesNeedUpdate >= 0 && frameQueue.Count > 0)
+        {
+            var cmd = frameQueue.Dequeue();
 
-        int curFrameNeedUpdate = framesNeedUpdate;
+            if (cmd.CmdId == Cmd.ID.CMD.CMD_WAR_SEQUENCE_NOTICE)
+            {
+                curFrame = cmd.Sequence;
 
-        long curClientTimeMs = (long)(Time.realtimeSinceStartup - timeStart) * GlobalLogic.VALUE_1000 * freamSpeed;
+                framesNeedUpdate--;
+            }
+
+            cmd.ExecCommand();
+
+            BattleMain.Instance.mBattle.UpdateLogic(0);
+        }
+
+        BattleMain.Instance.mBattle.UpdateView(0);
     }
 
     public void ClearCmdQueue()

@@ -4,24 +4,35 @@ using UnityEngine;
 
 public class BaseFrameCommand 
 {
-    public byte seat = 0xFF;
+    private int seat = 0xFF;
 
     private MsgData msgData = null;
+
+    private BeEntity beEntity = null;
 
     public BaseFrameCommand(MsgData msgData)
     {
         this.msgData = msgData;
     }
 
-    public byte GetSeat()
+    public virtual int PlayerSeat
     {
-        return seat;
+        get { return seat; }
+        set { this.seat = value; }
     }
 
-    public void GetActorBySeat(byte seatData)
+    public virtual uint Sequence
     {
-
+        get { return 0; }
     }
+
+    public BeEntity GetActorBySeat()
+    {
+        beEntity = BattleMain.Instance.mBattle.beScence.GetEntityBySeat(PlayerSeat);
+
+        return this.beEntity;
+    }
+
     protected void BaseReset()
     {
         seat = 0xFF;

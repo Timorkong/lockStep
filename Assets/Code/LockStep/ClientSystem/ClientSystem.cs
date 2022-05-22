@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnumClienSystemState
+{
+    onNone,
+    onInit,
+    onEnter,
+    onTick,
+    onExit,
+    onEnd,
+    onError,
+}
+
 public class ClientSystem : IClientSystem
 {
-    public enum EnumClienSystemState
-    {
-        onNone,
-        onInit,
-        onEnter,
-        onTick,
-        onExit,
-        onEnd,
-        onError,
-    }
-
     /// <summary>
     /// ��ǰ״̬
     /// </summary>

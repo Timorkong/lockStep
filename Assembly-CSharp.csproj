@@ -126,6 +126,7 @@
     <Compile Include="Assets/Code/LockStep/NetWork/MessageCommon.cs" />
     <Compile Include="Assets/Code/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/PackBuffer.cs" />
+    <Compile Include="Assets/Code/Enum/EnumID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />

@@ -11,4 +11,6 @@ public class GlobalSetting : ScriptableObject
     public bool ShowNetWorkLog = false;
 
     public bool ShowSequence = false;
+
+    public EnumSyncMode SyncMode = EnumSyncMode.SyncFrame;
 }

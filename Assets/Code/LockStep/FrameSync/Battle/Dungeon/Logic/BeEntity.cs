@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BeEntity
 {
+    public EntityType entityType = EntityType.Player;
+
     public BeScence beScence = null;
 
     public float speed = 1;
@@ -14,13 +16,22 @@ public class BeEntity
 
     public int seat = 0;
 
-    public BeEntity(BeScence beScence , int seat)
+    public BeEntity(BeScence beScence, int seat)
     {
         this.beScence = beScence;
 
         this.seat = seat;
 
-        beScence.beEntities.Add(this);
+        beScence.AddEntity(this);
+    }
+
+    public void SetMoveDir(float x , float y)
+    {
+        moveDir.x = x;
+
+        moveDir.z = y;
+
+        moveDir.Normalize();
     }
 
     public void Update()

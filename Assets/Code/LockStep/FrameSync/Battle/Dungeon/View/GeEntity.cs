@@ -16,6 +16,8 @@ public class GeEntity
 
         this.geScence = geScence;
 
+        geScence.geEntities.Add(this);
+
         var go = Resources.Load<GameObject>("Char/Char1/Char1");
 
         model = GameObject.Instantiate(go);

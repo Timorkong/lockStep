@@ -28,6 +28,10 @@ public partial class command_rsp
             BattleMain.Instance.mBattle.CreateEntity(user.user_seat);
         }
 
+        ClientSystemManager.Instance.CurrentSystem.curState = EnumClienSystemState.onTick;
+
+        FrameSync.Instance.StartFrameSync(Global.Setting.SyncMode);
+
         Loading.Instance.Hide();
 
         InputManager.Instance.Show();

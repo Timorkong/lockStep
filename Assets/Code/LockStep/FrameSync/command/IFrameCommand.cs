@@ -5,11 +5,14 @@ using System;
 
 public interface IFrameCommand
 {
-    Cmd.ID.CMD GetID();
+    Cmd.ID.CMD CmdId { get; }
 
-    byte GetSeat();
+    uint Sequence { get; }
+
+    int PlayerSeat { get; }
+
+    string GetString { get; }
 
     void ExecCommand();
 
-    string GetString();
 }

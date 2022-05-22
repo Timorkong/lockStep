@@ -8,7 +8,36 @@ public class BeScence
 
     public BeEntity mainEntity = null;
 
-    public List<BeEntity> beEntities = new List<BeEntity>();
+    protected List<BeEntity> beEntities = new List<BeEntity>();
+
+    protected Dictionary<int, BeEntity> dicSeat2Entity = new Dictionary<int, BeEntity>();
+
+    public void AddEntity(BeEntity beEntity)
+    {
+        switch (beEntity.entityType)
+        {
+            case EntityType.Player:
+                {
+                    dicSeat2Entity.Add(beEntity.seat, beEntity);
+
+                    break;
+                }
+        }
+
+        beEntities.Add(beEntity);
+    }
+
+    public BeEntity GetEntityBySeat(int seat)
+    {
+        BeEntity ret = null;
+
+        if(this.dicSeat2Entity.TryGetValue(seat , out ret))
+        {
+            
+        }
+
+        return ret;
+    }
 
     public BeScence(BeDungeon dungeon)
     {
@@ -19,6 +48,9 @@ public class BeScence
 
     public void Update()
     {
-        if (mainEntity != null) mainEntity.Update();
+        foreach(var entity in beEntities)
+        {
+            entity.Update();
+        }
     }
 }

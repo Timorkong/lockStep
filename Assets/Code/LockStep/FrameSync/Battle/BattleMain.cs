@@ -42,13 +42,6 @@ public class BattleMain
 
     public void Update()
     {
-        var deltaTime = (int)(Time.deltaTime *  GloableLogic.VALUE_1000);
-
         FrameSync.Instance.UpdateFrame();
-
-        if(this.mBattle != null)
-        {
-            this.mBattle.UpdateLogic(deltaTime);
-        }
     }
 }

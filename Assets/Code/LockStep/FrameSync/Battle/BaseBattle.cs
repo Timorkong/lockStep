@@ -35,7 +35,6 @@ public class BaseBattle : IBattle, IUpdate
         this.mBattleType = battleType;
 
         this.SyncMode = syncMode;
-
     }
 
     public void InitBattle()
