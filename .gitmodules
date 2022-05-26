@@ -1,3 +1,6 @@
 [submodule "submoudle"]
 	path = submoudle
 	url = https://github.com/Timorkong/submoudle.git
+[submodule "lockstepcore"]
+	path = lockstepcore
+	url = https://github.com/Timorkong/lockstepcore.git
