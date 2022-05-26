@@ -54,7 +54,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
-    <Analyzer Include="/Users/konglingzhao/Desktop/lockStep/lockStep/Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/CustomData.cs" />
