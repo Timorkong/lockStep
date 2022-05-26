@@ -119,6 +119,7 @@
     <Compile Include="Assets/Code/LockStep/ClientSystem/ClientSystemTown.cs" />
     <Compile Include="Assets/Code/LockStep/FrameSync/command/FrameCommandFactory.cs" />
     <Compile Include="Assets/Code/LockStep/GloableLogic.cs" />
+    <Compile Include="Assets/Code/Enum/EnumID.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/RWBuffer.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/IRead.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/EventRuter.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Assets/Code/LockStep/NetWork/MessageCommon.cs" />
     <Compile Include="Assets/Code/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/Code/LockStep/NetWork/Buffer/PackBuffer.cs" />
-    <Compile Include="Assets/Code/Enum/EnumID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Code/Protobuf/plugins/protobuf-net.dll" />
