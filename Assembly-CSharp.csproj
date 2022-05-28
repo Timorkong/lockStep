@@ -56,7 +56,81 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/CustomData.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/IClientSystem.cs" />
+    <Compile Include="Assets/lockstepcore/Window/Login.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/REQ/command_req.cs" />
+    <Compile Include="Assets/lockstepcore/Window/RoomInfo.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/BattleMain.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/BeScence.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/command/MoveFrameCommand.cs" />
+    <Compile Include="Assets/lockstepcore/Singleton/MonoSingleton.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/RSP/command_rsp_war.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/PlayerInfo.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetManager.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemBattle.cs" />
+    <Compile Include="Assets/lockstepcore/Singleton/SingleWindow.cs" />
+    <Compile Include="Assets/lockstepcore/Singleton/Singleton.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetWorkBase.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/BaseBattle.cs" />
+    <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol_war.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystem.cs" />
+    <Compile Include="Assets/lockstepcore/Util/DontDestory.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/BeDungeon.cs" />
+    <Compile Include="Assets/lockstepcore/Window/Loading.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/GlobalLogic.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/NetOutputBuffer.cs" />
+    <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol_room.cs" />
+    <Compile Include="Assets/test/AdressTest.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemLogin.cs" />
+    <Compile Include="Assets/lockstepcore/Window/RoomList.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/IBattle.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/GeDungeon.cs" />
+    <Compile Include="Assets/lockstepcore/Util/Util.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemManager.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/BattleFactory.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/IWrite.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/command/IFrameCommand.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/RingBuffer.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetProcess.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/BeEntity.cs" />
+    <Compile Include="Assets/lockstepcore/Util/CommonEx.cs" />
+    <Compile Include="Assets/lockstepcore/Window/InputManager.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/GeScence.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/REQ/command_room_req.cs" />
     <Compile Include="Assets/Edirot/CompileProtobuff.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/IDungeonManager.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ScenceManager/SceneManager.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetUtil.cs" />
+    <Compile Include="Assets/lockstepcore/GameBindSystem.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/RSP/command_rsp.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/PVEBattle.cs" />
+    <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_id.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/FrameSync.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/NetInputBuffer.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/command/BaseFrameCommand.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/Global.cs" />
+    <Compile Include="Assets/lockstepcore/Attribute/UserDefineAttribute.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/RSP/command_room_rsp.cs" />
+    <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/REQ/command_req_war.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/GameApplaction.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/GeEntity.cs" />
+    <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol_common.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemTown.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/command/FrameCommandFactory.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/GloableLogic.cs" />
+    <Compile Include="Assets/lockstepcore/Enum/EnumID.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/RWBuffer.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/IRead.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/EventRuter.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetWorkSocket.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/MessageCommon.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/GlobalSetting.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/PackBuffer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -283,6 +357,9 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>/Applications/Unity/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
