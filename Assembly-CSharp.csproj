@@ -128,6 +128,14 @@
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/MessageCommon.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/PackBuffer.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/IPlayerState.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/PlayerState.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerStateManager.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/ObjectPoolContainer.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/ObjectPool.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/PoolManager.cs" />
+    <Compile Include="Assets/lockstepcore/Math/FixedNumber.cs" />
+    <Compile Include="Assets/lockstepcore/Math/FixedVec3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll" />
