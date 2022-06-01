@@ -62,17 +62,22 @@
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/REQ/command_req.cs" />
     <Compile Include="Assets/lockstepcore/Window/RoomInfo.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/BattleMain.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/PoolManager.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/BeScence.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/ObjectPoolContainer.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/command/MoveFrameCommand.cs" />
     <Compile Include="Assets/lockstepcore/Singleton/MonoSingleton.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/RSP/command_rsp_war.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/PlayerInfo.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/PlayerState.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetManager.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemBattle.cs" />
     <Compile Include="Assets/lockstepcore/Singleton/SingleWindow.cs" />
     <Compile Include="Assets/lockstepcore/Singleton/Singleton.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetWorkBase.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerStateManager.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/BaseBattle.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/IPlayerState.cs" />
     <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol_war.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystem.cs" />
     <Compile Include="Assets/lockstepcore/Util/DontDestory.cs" />
@@ -82,8 +87,10 @@
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/NetOutputBuffer.cs" />
     <Compile Include="Assets/lockstepcore/Protobuf/Proto/command_protocol_room.cs" />
     <Compile Include="Assets/test/AdressTest.cs" />
+    <Compile Include="Assets/lockstepcore/Math/FixedVec3.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystemLogin.cs" />
     <Compile Include="Assets/lockstepcore/Window/RoomList.cs" />
+    <Compile Include="Assets/lockstepcore/Pool/ObjectPool.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/IBattle.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/GeDungeon.cs" />
     <Compile Include="Assets/lockstepcore/Util/Util.cs" />
@@ -126,16 +133,10 @@
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/EventRuter.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/NetWorkSocket.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/MessageCommon.cs" />
+    <Compile Include="Assets/lockstepcore/Math/FixedNumber.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/PackBuffer.cs" />
-    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/IPlayerState.cs" />
-    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerState/PlayerState.cs" />
-    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/PlayerStateManager/PlayerStateManager.cs" />
-    <Compile Include="Assets/lockstepcore/Pool/ObjectPoolContainer.cs" />
-    <Compile Include="Assets/lockstepcore/Pool/ObjectPool.cs" />
-    <Compile Include="Assets/lockstepcore/Pool/PoolManager.cs" />
-    <Compile Include="Assets/lockstepcore/Math/FixedNumber.cs" />
-    <Compile Include="Assets/lockstepcore/Math/FixedVec3.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/FollowPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll" />
@@ -716,6 +717,9 @@
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.CacheServer">
       <HintPath>Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
