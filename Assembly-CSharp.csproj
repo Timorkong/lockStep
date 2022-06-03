@@ -82,6 +82,7 @@
     <Compile Include="Assets/lockstepcore/LockStep/ClientSystem/ClientSystem.cs" />
     <Compile Include="Assets/lockstepcore/Util/DontDestory.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/Logic/BeDungeon.cs" />
+    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/FollowPlayer.cs" />
     <Compile Include="Assets/lockstepcore/Window/Loading.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/GlobalLogic.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/NetOutputBuffer.cs" />
@@ -136,7 +137,7 @@
     <Compile Include="Assets/lockstepcore/Math/FixedNumber.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/GlobalSetting.cs" />
     <Compile Include="Assets/lockstepcore/LockStep/NetWork/Buffer/PackBuffer.cs" />
-    <Compile Include="Assets/lockstepcore/LockStep/FrameSync/Battle/Dungeon/View/FollowPlayer.cs" />
+    <Compile Include="Assets/lockstepcore/Level/LevelManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/lockstepcore/Protobuf/plugins/protobuf-net.dll" />
