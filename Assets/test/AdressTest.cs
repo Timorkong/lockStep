@@ -5,10 +5,12 @@ using Table;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
+using System;
 
 public class AdressTest : MonoBehaviour
 {
-    public string key = "local/Level1.level";
+    [NonSerialized]
+    public string key = "c_table_AVATAR.bytes";
 
     private void Start()
     {
@@ -41,13 +43,14 @@ public class AdressTest : MonoBehaviour
 
     IEnumerator IE_Down()
     {
-        var op = Addressables.DownloadDependenciesAsync(key);
-        yield return op;
-        var op1 = Addressables.LoadAssetAsync<GameObject>(key);
+        Debug.LogError("load name = " + key);
+
+        var op1 = Addressables.LoadAssetAsync<UnityEngine.TextAsset>(key);
         yield return op1;
         if (op1.Result != null)
         {
-            GameObject.Instantiate(op1.Result, this.transform);
+            //op1.Result.bytes
+            Debug.LogError("load sucess");
         }
         else
         {

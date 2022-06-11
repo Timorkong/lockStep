@@ -8,8 +8,8 @@ public partial class TablePacker : Editor
 {
     #region 配置信息
 
-    private static string m_ToolsPath = "./../common/tools/";
-    private static string m_LogPath = "./../common/tools/table_tools.log";
+    private static string m_ToolsPath = ".\\..\\common\\tools\\";
+    private static string m_LogPath = ".\\..\\common\\tools\\table_tools.log";
 
     #endregion 配置信息
 
@@ -53,11 +53,11 @@ public partial class TablePacker : Editor
                     }
                     break;
             }
-
+            /*
             var param = string.Format("{0}{1}{2}", toolsPath, cmdFile, cmdPar);
             UnityEngine.Debug.LogError(string.Format("toolsPath = {0} param = {1}", toolsPath, param));
             return;
-
+            */
             Directory.SetCurrentDirectory(toolsPath);
             UnityCallProcess.Call(new UnityCallProcess.CallData()
             {
