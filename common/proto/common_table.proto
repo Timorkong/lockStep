@@ -1,0 +1,21 @@
+syntax = "proto2";
+
+package Table;
+
+// 身体类型
+enum BodyType
+{
+    BODY_TYPE_NONE  = 0; // 未知
+    BODY_TYPE_M     = 1; // 男孩
+    BODY_TYPE_F     = 2; // 女孩
+    BODY_TYPE_C     = 3; // 小孩
+}
+
+// AABB矩形
+message AABB
+{
+    optional float x        = 1; // x
+    optional float y        = 2; // y
+    optional float width    = 3; // 宽
+    optional float height   = 4; // 高
+}

@@ -1,0 +1,10 @@
+{
+    "python.analysis.extraPaths":[
+        "./",
+        "./jpy/",
+        "./../jpy/",
+        "./../../jpy/",
+        "./.Template/",
+        "./../.Template/"
+    ]
+}
