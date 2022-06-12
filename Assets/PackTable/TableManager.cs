@@ -1,3 +1,4 @@
+using Google.Protobuf;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEnumerable where T_1: new()
+public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEnumerable where TableArrayT : IMessage, new() where T_1: new() 
 { 
     /****************  Members  ****************/
     public TableArrayT array;
@@ -118,14 +119,16 @@ public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEn
     [System.Reflection.Obfuscation(Exclude = true, Feature = "renaming")]
     public void OnResourceLoaded(AssetReference res)
     {
+        /*
         byte[] raw_data = null;
         byte[] data = new byte[raw_data.Length - 3];
         for (int i = 0; i < raw_data.Length - 3; data[i] = raw_data[i + 3], ++i) ;
+        array = NetUtil.Deserialize<TableArrayT>(data,false);
 
         using (MemoryStream stream = new MemoryStream(data))
         {
-            array = ProtoBuf.Serializer.Deserialize<TableArrayT>(stream);
-
+           // array = NetUtil.Deserialize<TableArrayT>(data);
+            
             //Debug.Log(res.FileName);
 
             //if (GameApp.Instance.showTableContent && Application.platform == RuntimePlatform.WindowsEditor)
@@ -158,5 +161,7 @@ public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEn
                 Debug.LogError(array.ToString() + " does not has \"rows" + key + " exist!");
             }
         }
+        */
+        
     }
 }
