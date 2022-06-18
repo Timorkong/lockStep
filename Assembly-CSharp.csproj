@@ -68,8 +68,10 @@
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\command\MoveFrameCommand.cs" />
     <Compile Include="Assets\lockstepcore\Singleton\MonoSingleton.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\RSP\command_rsp_war.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\command\CommandProtocolRoom.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\PlayerInfo.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\Battle\Dungeon\Logic\PlayerStateManager\PlayerState\PlayerState.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\command\CommandProtocolCommon.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\NetManager.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\ClientSystem\ClientSystemBattle.cs" />
     <Compile Include="Assets\lockstepcore\PathFinder\MathExtra.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Assets\lockstepcore\Util\DontDestory.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\Battle\Dungeon\Logic\BeDungeon.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\Battle\Dungeon\View\FollowPlayer.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\command\CommandId.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\GlobalLogic.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\Buffer\NetOutputBuffer.cs" />
     <Compile Include="Assets\lockstepcore\Window\Loading.cs" />
@@ -111,18 +114,19 @@
     <Compile Include="Assets\lockstepcore\LockStep\ScenceManager\SceneManager.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\NetUtil.cs" />
     <Compile Include="Assets\lockstepcore\GameBindSystem.cs" />
-    <Compile Include="Assets\PackTable\table_cs\CommonTable.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\table_cs\CommonTable.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\RSP\command_rsp.cs" />
-    <Compile Include="Assets\PackTable\table_cs\CTableAvatar.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\table_cs\CTableAvatar.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\Battle\PVEBattle.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\command\CommandProtocol.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\FrameSync.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\Buffer\NetInputBuffer.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\FrameSync\command\BaseFrameCommand.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\Global.cs" />
     <Compile Include="Assets\lockstepcore\Attribute\UserDefineAttribute.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\RSP\command_room_rsp.cs" />
-    <Compile Include="Assets\PackTable\UnityCallProcess\UnityCallProcess.cs" />
-    <Compile Include="Assets\PackTable\TableManager.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\UnityCallProcess\UnityCallProcess.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\TableManager.cs" />
     <Compile Include="Assets\lockstepcore\PathFinder\MaxHeap.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\REQ\command_req_war.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\GameApplaction.cs" />
@@ -139,25 +143,22 @@
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\MessageCommon.cs" />
     <Compile Include="Assets\lockstepcore\Math\FixedNumber.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\GlobalSetting.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\command\CommandProtocolWar.cs" />
     <Compile Include="Assets\lockstepcore\LockStep\NetWork\Buffer\PackBuffer.cs" />
-    <Compile Include="Assets\PackTable\command\CommandId.cs" />
-    <Compile Include="Assets\PackTable\command\CommandProtocolWar.cs" />
-    <Compile Include="Assets\PackTable\command\CommandProtocolCommon.cs" />
-    <Compile Include="Assets\PackTable\command\CommandProtocol.cs" />
-    <Compile Include="Assets\PackTable\command\CommandProtocolRoom.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\TableLoader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" />
-    <None Include="Assets\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.xml" />
-    <None Include="Assets\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll" />
-    <None Include="Assets\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.xml" />
-    <None Include="Assets\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.xml" />
-    <None Include="Assets\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.xml" />
-    <None Include="Assets\PackTable\Plugins\link.xml" />
-    <None Include="Assets\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll" />
-    <None Include="Assets\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll" />
-    <None Include="Assets\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.xml" />
-    <None Include="Assets\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\link.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.xml" />
+    <None Include="Assets\lockstepcore\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -386,19 +387,19 @@
       <HintPath>D:\2022\Unity 2020.3.24f1c2\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
     <Reference Include="Google.Protobuf">
-      <HintPath>Assets\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll</HintPath>
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers">
-      <HintPath>Assets\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>Assets\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory">
-      <HintPath>Assets\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\2022\Unity 2020.3.24f1c2\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

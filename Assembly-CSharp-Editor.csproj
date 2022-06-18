@@ -26,7 +26,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <NoConfig>true</NoConfig>
@@ -54,10 +54,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="D:\LockStep\lockStep\Assets\lockstepcore\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll" />
+    <Analyzer Include="D:\LockStep\lockStep\Assets\lockstepcore\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll" />
+    <Analyzer Include="D:\LockStep\lockStep\Assets\lockstepcore\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll" />
+    <Analyzer Include="D:\LockStep\lockStep\Assets\lockstepcore\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll" />
+    <Analyzer Include="D:\LockStep\lockStep\Assets\lockstepcore\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PackTable\Editor\TablePacker_Menu.cs" />
-    <Compile Include="Assets\PackTable\Editor\TablePacker.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\Editor\TablePacker_Menu.cs" />
+    <Compile Include="Assets\lockstepcore\PackTable\Editor\TablePacker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -300,32 +305,29 @@
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.13\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>Assets\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.13\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="unityplastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.13\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
     </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>Assets\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics.Vectors">
-      <HintPath>Assets\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.13\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
-    <Reference Include="System.Memory">
-      <HintPath>Assets\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll</HintPath>
+    <Reference Include="System.Buffers">
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Buffers\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>Assets\lockstepcore\Protobuf\plugins\protobuf-net.dll</HintPath>
+    <Reference Include="Google.Protobuf">
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\Google.Protobuf\lib\netstandard2.0\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Runtime.CompilerServices.Unsafe\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory">
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Memory\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>Assets\lockstepcore\PackTable\Plugins\System.Numerics.Vectors\lib\netstandard2.0\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>

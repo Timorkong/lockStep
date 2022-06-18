@@ -15,11 +15,12 @@ public class AdressTest : MonoBehaviour
     private void Start()
     {
         Addressables.InitializeAsync();
-        InitProto();
+        //InitProto();
     }
 
     void InitProto()
     {
+
         string filePath = $"{Application.dataPath}/PackTable/table_byte/c_table_AVATAR.bytes";
         var bytes = File.ReadAllBytes(filePath);
         var copy = new byte[bytes.Length - 3];
@@ -38,7 +39,8 @@ public class AdressTest : MonoBehaviour
 
     public void OnCLickDown()
     {
-        StartCoroutine(IE_Down());
+        // StartCoroutine(IE_Down());
+        TableLoader.Instance.LoadTables();
     }
 
     IEnumerator IE_Down()
